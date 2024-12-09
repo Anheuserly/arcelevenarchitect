@@ -1,55 +1,105 @@
 .contact-info-section {
     background: url('../background/contact-us-word-splashes-background_1036468-21067.avif') no-repeat center center;
     background-size: cover;
-    padding: 40px;
+    padding: 30px; /* Adjusted padding for better layout */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .contact-info-section h2 {
     text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 2.5rem; /* Larger font size for headings */
+    margin-bottom: 20px; /* Adjust spacing */
     color: #333;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4), -1px -1px 2px rgba(255, 255, 255, 0.3);
 }
 
 .contact-details {
-    max-width: 800px;
+    max-width: 100%; /* Full width for smaller screens */
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 15px; /* Slightly increased padding */
 }
 
 .contact-details h3 {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+    font-size: 1.8rem; /* Larger heading */
+    margin-bottom: 20px; /* Better spacing */
     color: #444;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .contact-item {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Better spacing between items */
 }
 
 .contact-item h4 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
+    font-size: 1.4rem; /* Larger subheading */
+    margin-bottom: 8px; /* Adjusted spacing */
     color: #555;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), -1px -1px 2px rgba(255, 255, 255, 0.2);
 }
 
 .contact-item p {
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 1.2rem; /* Larger paragraph text */
+    line-height: 1.6; /* Better readability */
     color: #666;
     text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.2), -0.5px -0.5px 1px rgba(255, 255, 255, 0.2);
 }
 
 .contact-item a {
-    color: #14141491;
+    color: #141414;
     text-decoration: none;
+    font-size: 1.2rem; /* Increased link size */
+    font-weight: 500;
 }
 
 .contact-item a:hover {
     text-decoration: underline;
+}
+
+/* Media query for smaller devices */
+@media (max-width: 768px) {
+    .contact-info-section {
+        padding: 20px; /* Reduce padding slightly */
+    }
+
+    .contact-info-section h2 {
+        font-size: 2rem; /* Slightly smaller heading */
+        margin-bottom: 15px;
+    }
+
+    .contact-details h3 {
+        font-size: 1.5rem; /* Reduced but still readable */
+        margin-bottom: 15px;
+    }
+
+    .contact-item h4 {
+        font-size: 1.2rem; /* Larger on mobile */
+        margin-bottom: 6px;
+    }
+
+    .contact-item p, .contact-item a {
+        font-size: 1.1rem; /* Readable text size */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-info-section {
+        padding: 15px; /* Smallest padding */
+    }
+
+    .contact-info-section h2 {
+        font-size: 1.8rem; /* Balanced heading size */
+    }
+
+    .contact-details h3 {
+        font-size: 1.4rem; /* Subheading adjustment */
+    }
+
+    .contact-item h4 {
+        font-size: 1.1rem; /* Slightly larger subheading */
+    }
+
+    .contact-item p, .contact-item a {
+        font-size: 1rem; /* Text remains readable */
+    }
 }
