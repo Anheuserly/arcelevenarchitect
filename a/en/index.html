@@ -129,23 +129,37 @@
     
 
     <main>
-        <section id="hero">
-            <video autoplay loop muted playsinline>
-                <source src="./video/videoplayback.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="hero-content">
+        <section id="hero" style="position: relative; overflow: hidden; height: 100vh;">
+            <!-- Dailymotion Embed -->
+            <div class="video-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;">
+                <iframe 
+                    src="https://www.dailymotion.com/embed/video/k4IPQXQOL0mtfAC1jXC?autoplay=1&mute=1&loop=1&controls=0&playlist=k4IPQXQOL0mtfAC1jXC" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    allow="autoplay; fullscreen" 
+                    allowfullscreen
+                    style="position: absolute; top: 0; left: 0;">
+                </iframe>
+            </div>
+        
+            <!-- Hero Content -->
+            <div class="hero-content" style="position: relative; z-index: 1; text-align: center; color: white;">
                 <h2>Innovative Architectural Solutions</h2>
                 <p>Transforming spaces, creating experiences</p>
                 <a href="#contact" class="cta-button">Get in Touch</a>
             </div>
-            <p class="m-scrollDown animation-target">Scroll Down<span class="m-scrollDown__bar"></span></p>
-        </div>
+        
+            <!-- Scroll Down Indicator -->
+            <p class="m-scrollDown animation-target" style="position: relative; z-index: 1; text-align: center; color: white;">
+                Scroll Down<span class="m-scrollDown__bar"></span>
+            </p>
         </section>
-
+        
+        
        
 
-        <div class="fixed-scroll">
+        
             <section class="tab-accordion-slide">
 <div class="tab-accordion-slide__list">
     <h2 class="hdg">EXPERTISE</h2>
