@@ -1,0 +1,229 @@
+/* Header */
+header {
+    padding: 20px 50px;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../background/—Pngtree—modern\ liquid\ gradient\ colors\ abstract_1594209.jpg') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Navigation Bar */
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 30px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background: linear-gradient(145deg, #ff6600, #ff9966);
+    color: #fff;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Search Wrapper */
+.search-wrapper {
+    position: relative;
+}
+
+/* Search Button (Magnifying Glass) */
+.search-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.search-toggle:hover {
+    background-color: #f0f0f0; /* Optional: background color change on hover */
+}
+
+/* Magnifying Glass Icon */
+.magnifying-glass {
+    width: 24px;
+    height: 24px;
+    border: 2px solid black;
+    border-radius: 50%;
+    position: relative;
+}
+
+.magnifying-glass::after {
+    content: '';
+    width: 12px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: rotate(45deg);
+    transform-origin: top left;
+}
+
+/* Hidden Search Box */
+.search-box {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: right;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Show the search box with slide and scale effect */
+.search-wrapper.open .search-box {
+    transform: translateY(-50%) scaleX(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Search Input */
+.search-box input {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 50px;
+    width: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    color: #333;
+    transition: width 0.4s ease;
+    outline: none;
+}
+
+.search-box input:focus {
+    width: 200px;
+    padding-left: 10px;
+}
+
+/* Search Button */
+.search-box button {
+    padding: 12px 15px;
+    background: linear-gradient(145deg, #007bff, #0056b3);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.search-box button:hover {
+    background: linear-gradient(145deg, #ff6600, #ff9966);
+}
+
+/* Search Box Close Button */
+.search-box .close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: color 0.3s ease;
+}
+
+.search-box .close-btn:hover {
+    color: #ff6600; /* Optional: color change on hover */
+}
+
+/* Responsive - On Mobile, stack search */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+
+    .search-box {
+        position: static;
+        margin-top: 10px;
+        transform: none;
+    }
+
+    .search-wrapper.open .search-box {
+        transform: none;
+    }
+}
+
+/* Responsive - On Mobile, stack search */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+
+    .search-box {
+        position: static;
+        margin-top: 10px;
+        transform: none;
+    }
+
+    .search-wrapper.open .search-box {
+        transform: none;
+    }
+}
+/* Responsive - On Mobile, stack search */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+
+    .search-box {
+        position: static;
+        margin-top: 10px;
+        transform: none;
+    }
+
+    .search-wrapper.open .search-box {
+        transform: none;
+    }
+}
+
+/* Responsive - On Mobile, stack search */
+@media screen and (max-width: 768px) {
+    header {
+        flex-direction: column;
+    }
+
+    .search-box {
+        position: static;
+        margin-top: 10px;
+        transform: none;
+    }
+
+    .search-wrapper.open .search-box {
+        transform: none;
+    }
+}

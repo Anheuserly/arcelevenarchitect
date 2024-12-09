@@ -117,7 +117,7 @@ function animateValue(obj, start, end, duration) {
 // Usage example (you'll need to add elements with these IDs in your HTML):
 // document.getElementById("projectsCount").innerHTML = "0";
 // animateValue(document.getElementById("projectsCount"), 0, 100, 2000);
-const openNavBtn = document.querySelector('.open-nav-btn');
+        const openNavBtn = document.querySelector('.open-nav-btn');
         const navPanel = document.getElementById('navPanel');
         const closeNavBtn = document.getElementById('closeNav');
 
@@ -136,3 +136,13 @@ const openNavBtn = document.querySelector('.open-nav-btn');
         function openNav() {
             document.getElementById('navPanel').classList.add('active');
         }
+        const searchToggle = document.querySelector('.search-toggle');
+        const searchBox = document.querySelector('.search-box');
+        
+        searchToggle.addEventListener('click', () => {
+            searchBox.style.display = searchBox.style.display === 'flex' ? 'none' : 'flex';
+        });
+        document.querySelector('.search-toggle').addEventListener('click', function() {
+            document.querySelector('.search-wrapper').classList.toggle('open');
+        });
+        
