@@ -1,17 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Footer.css";
-
-// Import social media icons (you can use react-icons or your own SVG icons)
 import { FaFacebook, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
-  const footerNavItems = [
+  const leftNavItems = [
     { name: 'Profile', path: '/profile' },
-    { name: 'Contact Us', path: '/contact' },
+    { name: 'Contact Us', path: '/contact' }
+  ];
+
+  const rightNavItems = [
     { name: 'Instagram Feed', path: '/instagram-feed' },
     { name: 'Blog', path: '/journal' },
     { name: 'Feedback', path: '/feedback' }
+  ];
+
+  const allNavItems = [
+    ...leftNavItems,
+    ...rightNavItems
   ];
 
   const socialLinks = [
@@ -24,10 +30,10 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Left side - Navigation */}
-        <div className="footer-nav">
+        {/* Desktop Navigation - All links in one row */}
+        <div className="footer-nav desktop-nav">
           <ul className="footer-links">
-            {footerNavItems.map((item, index) => (
+            {allNavItems.map((item, index) => (
               <li key={index}>
                 <Link to={item.path}>{item.name}</Link>
               </li>
@@ -35,8 +41,8 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Right side - Social icons and brand name */}
-        <div className="footer-social">
+        {/* Desktop Social and Brand */}
+        <div className="footer-social desktop-social">
           <div className="social-icons">
             {socialLinks.map((social, index) => (
               <a 
@@ -51,6 +57,51 @@ const Footer = () => {
             ))}
           </div>
           <span className="footer-brand-name">ARCELEVENARCHITECT</span>
+        </div>
+
+        {/* Mobile Navigation - Split into left and right */}
+        <div className="mobile-footer-top">
+          {/* Left navigation for mobile */}
+          <div className="footer-nav mobile-nav-left">
+            <ul className="footer-links">
+              {leftNavItems.map((item, index) => (
+                <li key={index}>
+                  <Link to={item.path}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right navigation for mobile */}
+          <div className="footer-nav mobile-nav-right">
+            <ul className="footer-links">
+              {rightNavItems.map((item, index) => (
+                <li key={index}>
+                  <Link to={item.path}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Mobile Social and Brand */}
+        <div className="mobile-footer-bottom">
+          <div className="social-icons">
+            {socialLinks.map((social, index) => (
+              <a 
+                key={index} 
+                href={social.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label={social.label}
+              >
+                {social.icon}
+              </a>
+            ))}
+          </div>
+          <div className="footer-brand-container">
+            <span className="footer-brand-name">ARCELEVENARCHITECT</span>
+          </div>
         </div>
       </div>
     </footer>

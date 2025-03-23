@@ -1,7 +1,7 @@
 /* Footer Styles */
 .footer {
   background-color: white;
-  padding: 20px 30px;
+  padding: 30px;
   box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.05);
   font-family: 'Montserrat', sans-serif;
 }
@@ -14,35 +14,52 @@
   margin: 0 auto;
 }
 
-/* Left side - Navigation */
-.footer-nav {
+/* Desktop Navigation */
+.desktop-nav {
   display: flex;
-  align-items: center;
 }
 
-.footer-links {
+.desktop-nav .footer-links {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.footer-links li {
+.desktop-nav .footer-links li {
   margin-right: 25px;
   position: relative;
 }
 
-.footer-links li:last-child {
+.desktop-nav .footer-links li:last-child {
   margin-right: 0;
 }
 
+/* Desktop Social and Brand */
+.desktop-social {
+  display: flex;
+  align-items: center;
+}
+
+.desktop-social .social-icons {
+  display: flex;
+  margin-right: 20px;
+}
+
+/* Mobile sections - hidden by default */
+.mobile-footer-top,
+.mobile-footer-bottom {
+  display: none;
+}
+
+/* Common styles for links */
 .footer-links a {
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #333; /* Ensuring dark color for visibility on white background */
+  color: #333;
   transition: all 0.3s ease-in-out;
   padding: 5px 0;
   position: relative;
@@ -67,22 +84,12 @@
   width: 100%;
 }
 
-/* Right side - Social icons and brand name */
-.footer-social {
-  display: flex;
-  align-items: center;
-}
-
-.social-icons {
-  display: flex;
-  margin-right: 20px;
-}
-
+/* Common styles for social icons */
 .social-icons a {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #333; /* Ensuring dark color for visibility on white background */
+  color: #333;
   margin-right: 15px;
   font-size: 18px;
   transition: all 0.3s ease;
@@ -97,43 +104,22 @@
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 1.5px;
-  color: #333; /* Ensuring dark color for visibility on white background */
+  color: #333;
   text-transform: uppercase;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 992px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .footer-nav, .footer-social {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .footer-links {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .footer-links li {
-    margin: 0 12px 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .footer {
-    padding: 15px 20px;
+  .desktop-nav .footer-links li {
+    margin-right: 20px;
   }
   
   .footer-links a {
-    font-size: 12px;
+    font-size: 13px;
   }
   
   .social-icons a {
-    font-size: 16px;
+    font-size: 17px;
     margin-right: 12px;
   }
   
@@ -142,23 +128,99 @@
   }
 }
 
-@media (max-width: 576px) {
-  .footer-links {
+@media (max-width: 768px) {
+  .footer {
+    padding: 25px 20px;
+  }
+  
+  /* Hide desktop layout */
+  .desktop-nav, .desktop-social {
+    display: none;
+  }
+  
+  /* Show mobile layout */
+  .footer-container {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+  }
+  
+  .mobile-footer-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .mobile-footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .mobile-nav-left, .mobile-nav-right {
+    min-width: 120px;
+  }
+  
+  .footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
   
   .footer-links li {
-    margin: 5px 0;
+    margin-bottom: 12px;
   }
   
-  .footer-social {
-    flex-direction: column;
-    gap: 10px;
+  .mobile-footer-bottom .social-icons {
+    display: flex;
+    margin-bottom: 15px;
   }
   
-  .social-icons {
-    margin-right: 0;
+  .mobile-footer-bottom .footer-brand-container {
+    margin-top: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer {
+    padding: 20px 15px;
+  }
+  
+  .footer-links a {
+    font-size: 12px;
+  }
+  
+  .social-icons a {
+    font-size: 16px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .footer-brand-name {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  
+  .mobile-footer-top {
+    margin-bottom: 25px;
+  }
+  
+  .footer-links li {
     margin-bottom: 10px;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 360px) {
+  .mobile-nav-left, .mobile-nav-right {
+    min-width: auto;
+  }
+  
+  .footer-links li {
+    margin-bottom: 8px;
+  }
+  
+  .social-icons a {
+    margin-right: 12px;
   }
 }
