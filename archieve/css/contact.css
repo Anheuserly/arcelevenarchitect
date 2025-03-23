@@ -1,0 +1,55 @@
+.contact-info-section {
+    background: url('../background/contact-us-word-splashes-background_1036468-21067.avif') no-repeat center center;
+    background-size: cover;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4), -1px -1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.contact-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.contact-details h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #444;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), -1px -1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.contact-item {
+    margin-bottom: 20px;
+}
+
+.contact-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #555;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2), -1px -1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.contact-item p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.2), -0.5px -0.5px 1px rgba(255, 255, 255, 0.2);
+}
+
+.contact-item a {
+    color: #14141491;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    text-decoration: underline;
+}
