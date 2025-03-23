@@ -42,7 +42,7 @@
 .services-list {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Reduced gap between items */
+  gap: 12px; /* Gap for desktop view */
 }
 
 .service-item-wrapper {
@@ -189,9 +189,9 @@
   .services-sidebar {
     width: 100%;
     height: auto;
-    padding: 40px 30px;
+    padding: 40px 30px 0; /* Removed bottom padding */
     border-right: none;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: none; /* Removed border */
   }
   
   .sidebar-title {
@@ -200,12 +200,16 @@
   }
   
   .services-list {
-    gap: 15px;
+    gap: 0; /* Removed gap for mobile */
+  }
+  
+  .service-item-wrapper {
+    margin-bottom: 0; /* No margin between items */
   }
   
   .service-item {
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 0; /* Removed border radius */
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
@@ -241,8 +245,7 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+    border-radius: 0; /* Removed border radius */
   }
   
   .mobile-service-overlay {
@@ -265,7 +268,7 @@
 
 @media (max-width: 768px) {
   .services-sidebar {
-    padding: 30px 20px;
+    padding: 30px 20px 0; /* Removed bottom padding */
   }
   
   .sidebar-title {
@@ -276,10 +279,6 @@
   .service-item {
     font-size: 15px;
     padding: 12px;
-  }
-  
-  .services-list {
-    gap: 12px;
   }
   
   .mobile-service-overlay {
@@ -297,16 +296,12 @@
 
 @media (max-width: 480px) {
   .services-sidebar {
-    padding: 25px 15px;
+    padding: 25px 15px 0; /* Removed bottom padding */
   }
   
   .sidebar-title {
     font-size: 1.3rem;
     margin-bottom: 15px;
-  }
-  
-  .services-list {
-    gap: 10px;
   }
   
   .service-item {
@@ -335,3 +330,4 @@
     font-size: 1rem;
   }
 }
+
