@@ -7,13 +7,13 @@ const ContactInfo = () => {
       <h2>Contact Information</h2>
       <ul>
         <li>
-          <strong>Phone:</strong> +1 (234) 567-890
+          <strong>Phone:</strong> +91 8527378555
         </li>
         <li>
-          <strong>Email:</strong> example@domain.com
+          <strong>Email:</strong> arcelevenarchitect@gmail.com 
         </li>
         <li>
-          <strong>Address:</strong> 123 Example Street, City, Country
+          <strong>Address:</strong> D 21 Chattarpur<br />New Delhi, DL 110074
         </li>
       </ul>
     </div>
