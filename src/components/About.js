@@ -5,7 +5,7 @@ import '../styles/About.css';
 const About = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'About Us | Arce Eleven Architects';
+  
   }, []);
 
   const pageVariants = {
