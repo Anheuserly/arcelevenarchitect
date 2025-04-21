@@ -22,7 +22,16 @@ function Project() {
       {/* Hero Section with project-specific imagery */}
       <ProjectHero />
       
-    
+      {/* Additional project sections */}
+      <ProjectOverview />
+      <DesignConcept />
+      <ProjectGallery />
+      <MaterialsUsed />
+      <SustainabilityFeatures />
+      <ChallengesAndSolutions />
+      <ClientFeedback />
+      <RelatedProjects />
+      <ContactForInquiry />
     </div>
   );
 }

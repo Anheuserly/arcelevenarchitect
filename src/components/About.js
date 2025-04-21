@@ -31,7 +31,7 @@ const About = () => {
     >
       <div className="about-hero">
         <div className="about-hero-content">
-          <h1>About Arce Eleven Architects</h1>
+          <h1>About Arc 11 Architects</h1>
           <p>Creating spaces that inspire, endure, and transform</p>
         </div>
       </div>

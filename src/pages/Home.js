@@ -31,8 +31,28 @@ function Home() {
       { }
       <About/>
 
+      {/* Studio Philosophy Section */}
+      <StudioPhilosophy />
+
        {/* Services Section */}
        <ServicesOffered />
+
+        {/* Team Members Section */}
+      <TeamMembers />
+
+       {/* Testimonials Section */}
+       <Testimonials />
+
+        
+      {/* Certifications Section */}
+      <Certifications />
+      
+      {/* FAQ Section */}
+      <FAQ />
+      
+      {/* Contact Section */}
+      <ContactSection />
+       
       
      
     </div>

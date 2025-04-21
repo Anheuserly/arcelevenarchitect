@@ -1,22 +1,27 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 import '../styles/ProjectHero.css';
 
-function ProjectHero({ title, subtitle, backgroundImage }) {
+const ProjectHero = ({ title, description, backgroundImage }) => {
   return (
-    <motion.section 
+    <section 
       className="project-hero" 
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      aria-label={title}
     >
-      <div className="project-hero-content">
+      <div className="hero-overlay"></div>
+      <div className="hero-content">
         <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <p>{description}</p>
       </div>
-    </motion.section>
+    </section>
   );
-}
+};
+
+ProjectHero.propTypes = {
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  backgroundImage: PropTypes.string.isRequired,
+};
 
 export default ProjectHero;
