@@ -7,6 +7,8 @@ import { Analytics } from '@vercel/analytics/react'; // ✅ Add this line
 import LoadingScreen from './components/LoadingScreen';
 import Footer from './components/Footer';
 
+import './firebase'; 
+
 // Pages
 import Home from './pages/Home';
 import Project from './pages/Project';

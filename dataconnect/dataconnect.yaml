@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "arcelevenarchitect"
+location: "asia-east1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "arcelevenarchitect"
+      cloudSql:
+        instanceId: "arcelevenarchitect"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
