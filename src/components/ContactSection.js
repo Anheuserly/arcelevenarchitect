@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from 'emailjs-com';
 import '../styles/ContactSection.css';
 
 const ContactSection = () => {
+  const form = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted');
+
+    emailjs
+      .sendForm(
+        'service_7ntkus3',       // Replace with your EmailJS service ID
+        'template_c4tlnrc',      // Replace with your EmailJS template ID
+        form.current,
+        't7dESAGmRr4XSvcq4'        // Replace with your EmailJS public key
+      )
+      .then(
+        (result) => {
+          alert('Message sent successfully!');
+          form.current.reset();
+        },
+        (error) => {
+          alert('Failed to send the message. Please try again later.');
+          console.error(error.text);
+        }
+      );
   };
 
   return (
     <section className="contact-section">
       <div className="section-container">
         <div className="contact-content">
-          <motion.div 
+          <motion.div
             className="contact-info"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -23,7 +42,7 @@ const ContactSection = () => {
             <h2>Get In Touch</h2>
             <div className="section-line"></div>
             <p>We'd love to hear about your project. Contact us to schedule a consultation or learn more about our services.</p>
-            
+
             <div className="contact-details">
               <div className="contact-item">
                 <div className="contact-icon">
@@ -77,33 +96,33 @@ const ContactSection = () => {
               </div>
             </div>
           </motion.div>
-          
-          <motion.div 
+
+          <motion.div
             className="contact-form-container"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <form className="contact-form" onSubmit={handleSubmit}>
+            <form ref={form} className="contact-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" required />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" name="email" required />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="phone">Phone</label>
                 <input type="tel" id="phone" name="phone" />
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="project-type">Project Type</label>
-                <select id="project-type" name="project-type">
+                <select id="project-type" name="project_type">
                   <option value="">Select a project type</option>
                   <option value="residential">Residential</option>
                   <option value="commercial">Commercial</option>
@@ -112,12 +131,12 @@ const ContactSection = () => {
                   <option value="other">Other</option>
                 </select>
               </div>
-              
+
               <div className="form-group full-width">
                 <label htmlFor="message">Message</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
               </div>
-              
+
               <button type="submit" className="btn btn-primary full-width">
                 Send Message
               </button>

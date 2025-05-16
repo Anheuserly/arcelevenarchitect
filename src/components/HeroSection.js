@@ -2,45 +2,40 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../styles/HeroSection.css';
 
 // Import images directly
-import architecture1 from '../path/image/hero/architecture-1.jpg';
-import architecture2 from '../path/image/hero/architecture-2.jpeg';
+import architecture1 from '../path/image/hero/architecture-1.png';
+import architecture2 from '../path/image/hero/architecture-2.png';
 import architecture3 from '../path/image/hero/architecture-3.png';
 import architecture4 from '../path/image/hero/architecture-4.png';
-import architecture5 from '../path/image/hero/architecture-5.png';
+
 
 const HeroSection = () => {
   // Array of hero images with descriptions
   const heroSlides = [
     {
       image: architecture1,
-      title: 'AIIMS',
+      title: 'Private Residence',
       description: 'Clean lines and open spaces define our approach to contemporary living.',
       position: 'center'
     },
     {
       image: architecture2,
-      title: 'Builder Floor, MIRA BAGH',
+      title: 'Jorbagh Villa',
       description: 'Harmonizing innovative architecture with environmental consciousness.',
       position: 'top'
     },
     {
       image: architecture3,
-      title: 'MOODBOARD',
+      title: '4 BHK Apartment, Builder Floor',
       description: 'Reimagining city spaces through thoughtful architectural intervention.',
       position: 'center'
     },
     {
       image: architecture4,
-      title: 'MR TUSHAR FARIDABAD',
+      title: 'Micro 2 BHK Apartment',
       description: 'Creating spaces that transcend trends and stand the test of time.',
       position: 'bottom'
-    },
-    {
-      image: architecture5,
-      title: 'MR VIKRAM',
-      description: 'Where practical design meets aesthetic excellence.',
-      position: 'center'
     }
+    
   ];
 
   const [currentSlide, setCurrentSlide] = useState(0);

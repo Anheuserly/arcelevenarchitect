@@ -1,130 +1,158 @@
-import React, { useState, useEffect } from "react";
-import { MessageCircle, X, Paperclip, Mic, Volume2 } from "lucide-react";
-import "../styles/Chatbot.css";
-
-// Simulate an AI response (this could be extended with actual AI integration)
-const getBotResponse = (userMessage, language) => {
-  // Basic response logic with multi-language support
-  if (language === 'en') {
-    if (userMessage.includes("hello")) return "Hi! How can I assist you today?";
-    if (userMessage.includes("help")) return "What do you need help with? Feel free to ask!";
-    return "I'm sorry, I didn't understand that. Could you try again?";
-  } else if (language === 'es') {
-    if (userMessage.includes("hola")) return "¡Hola! ¿Cómo puedo ayudarte hoy?";
-    if (userMessage.includes("ayuda")) return "¿Con qué necesitas ayuda? ¡No dudes en preguntar!";
-    return "Lo siento, no entendí eso. ¿Podrías intentarlo de nuevo?";
-  }
-  return "Sorry, I don't support this language yet.";
-};
+import React, { useState, useEffect, useRef } from 'react';
+import '../styles/Chatbot.css';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([{ sender: "bot", text: "Hi! How can I assist you today?" }]);
-  const [userInput, setUserInput] = useState("");
-  const [file, setFile] = useState(null);
-  const [language, setLanguage] = useState('en');
-  const [isVoiceInput, setIsVoiceInput] = useState(false);
-  const [notification, setNotification] = useState(false);
+  const [messages, setMessages] = useState([
+    { text: "Hi there! How can I help you today?", sender: "bot" }
+  ]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef(null);
+  const chatbotRef = useRef(null);
 
+  // Load GoDaddy chat script
   useEffect(() => {
-    if (isOpen) {
-      // Basic push notification (this can be extended with a more complex system)
-      setNotification(true);
-      setTimeout(() => setNotification(false), 2000);
-    }
+    const script = document.createElement('script');
+    script.src = 'https://cdn.godaddy.com/mcc/v1/js/gdchat-widget.min.js';
+    script.async = true;
+    script.setAttribute('data-godaddy-id', 'YOUR_GODADDY_ACCOUNT_ID'); // Replace with your GoDaddy account ID
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  // Initialize GoDaddy chat API
+  useEffect(() => {
+    window.gdChat = window.gdChat || {
+      q: [],
+      cmd: function(command, arg) {
+        window.gdChat.q.push([command, arg]);
+      }
+    };
+  }, []);
+
+  // Scroll to bottom of messages
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  // Handle click outside to close chatbot
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chatbotRef.current && !chatbotRef.current.contains(event.target) && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [isOpen]);
 
-  const handleSendMessage = () => {
-    if (userInput.trim()) {
-      // Add user message to chat
-      setMessages([...messages, { sender: "user", text: userInput }]);
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+  };
 
-      // Get bot response
-      const botResponse = getBotResponse(userInput, language);
+  const handleInputChange = (e) => {
+    setInputMessage(e.target.value);
+  };
 
-      // Add bot response to chat
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { sender: "bot", text: botResponse },
-      ]);
+  const sendMessage = () => {
+    if (inputMessage.trim() === '') return;
+
+    // Add user message to chat
+    const userMessage = { text: inputMessage, sender: "user" };
+    setMessages([...messages, userMessage]);
+    setInputMessage('');
+    setIsTyping(true);
+
+    // Send message to GoDaddy chat
+    if (window.gdChat && window.gdChat.cmd) {
+      window.gdChat.cmd('sendMessage', {
+        message: inputMessage,
+        name: 'Website Visitor',
+        email: 'visitor@example.com' // You can dynamically set this if you have user info
+      });
     }
-    setUserInput(""); // Clear input field
+
+    // Simulate bot response
+    setTimeout(() => {
+      setIsTyping(false);
+      setMessages(prev => [
+        ...prev, 
+        { 
+          text: "Thanks for your message! Our team will get back to you soon.", 
+          sender: "bot" 
+        }
+      ]);
+    }, 1500);
   };
 
-  const handleFileUpload = (e) => {
-    const uploadedFile = e.target.files[0];
-    setFile(uploadedFile);
-  };
-
-  const handleVoiceInput = () => {
-    setIsVoiceInput(!isVoiceInput);
-    // Voice input integration (placeholder for actual voice recognition system)
-  };
-
-  const handleChangeLanguage = () => {
-    setLanguage(language === 'en' ? 'es' : 'en'); // Toggle between English and Spanish
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
   };
 
   return (
-    <div className={`chatbot-container ${isOpen ? "open" : ""}`}>
-      <button className="chatbot-toggle" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
-      </button>
+    <div className="chatbot-container" ref={chatbotRef}>
+      {!isOpen && (
+        <button className="chat-toggle-button" onClick={toggleChat}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </button>
+      )}
 
       {isOpen && (
         <div className="chatbot-window">
           <div className="chatbot-header">
-            <h3>Chat with us</h3>
-            <button onClick={() => setIsOpen(false)} className="close-btn">
-              <X size={20} />
-            </button>
+            <h3>Chat with Us</h3>
+            <button className="close-button" onClick={toggleChat}>×</button>
           </div>
+          
           <div className="chatbot-messages">
             {messages.map((message, index) => (
-              <p
-                key={index}
+              <div 
+                key={index} 
                 className={`message ${message.sender === "bot" ? "bot-message" : "user-message"}`}
               >
                 {message.text}
-              </p>
+              </div>
             ))}
-            {file && (
-              <div className="file-preview">
-                <span>{file.name}</span>
-                <button onClick={() => setFile(null)}>Remove</button>
+            
+            {isTyping && (
+              <div className="message bot-message typing">
+                <span className="dot"></span>
+                <span className="dot"></span>
+                <span className="dot"></span>
               </div>
             )}
+            
+            <div ref={messagesEndRef} />
           </div>
-          <div className="chatbot-input-area">
+          
+          <div className="chatbot-input">
             <input
               type="text"
-              placeholder="Type a message..."
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              className="chatbot-input"
+              placeholder="Type your message..."
+              value={inputMessage}
+              onChange={handleInputChange}
+              onKeyPress={handleKeyPress}
             />
-            <div className="chatbot-actions">
-              <input
-                type="file"
-                accept="image/*, .pdf, .docx"
-                onChange={handleFileUpload}
-                className="file-input"
-              />
-              <button onClick={handleVoiceInput} className="voice-button">
-                <Mic size={24} />
-              </button>
-              <button onClick={handleChangeLanguage} className="language-toggle">
-                {language === 'en' ? 'Español' : 'English'}
-              </button>
-              <button onClick={handleSendMessage} className="send-button">
-                Send
-              </button>
-            </div>
+            <button onClick={sendMessage}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
           </div>
         </div>
       )}
-
-      {notification && <div className="push-notification">You have a new message!</div>}
     </div>
   );
 };
