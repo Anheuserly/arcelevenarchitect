@@ -79,7 +79,7 @@
 
 /* Title and description styling */
 .slide-title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -98,7 +98,7 @@
 }
 
 .slide-description {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.6;
@@ -156,7 +156,7 @@
 }
 
 .scroll-indicator span {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.8rem;
   letter-spacing: 2px;
   margin-bottom: 8px;
