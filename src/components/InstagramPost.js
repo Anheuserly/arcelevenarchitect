@@ -1,64 +1,66 @@
-import React, { useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+import React from 'react';
 
-const InstagramPost = ({ post, onClick, index }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
-
-  const getMediaUrl = () => {
-    return post.thumbnailUrl || post.mediaUrl;
-  };
-
-  const formatCaption = (caption) => {
-    if (!caption) return '';
-    return caption.length > 100 ? caption.substring(0, 100) + '...' : caption;
-  };
-
-  const getPostIcon = () => {
-    switch (post.type) {
-      case 'video':
-        return '▶️';
-      case 'carousel_album':
-        return '📷';
-      default:
-        return '';
+const InstagramPost = ({ post }) => {
+  const getPostIcon = (type) => {
+    switch (type) {
+      case 'reel': return '🎥';
+      case 'video': return '📹';
+      case 'carousel': return '🖼️';
+      default: return '📷';
     }
   };
 
+  const getEmbedUrl = (instagramLink) => {
+    // Extract post ID from Instagram URL
+    const match = instagramLink.match(/\/(p|reel)\/([A-Za-z0-9_-]+)/);
+    if (match) {
+      const postId = match[2];
+      return `https://www.instagram.com/p/${postId}/embed/`;
+    }
+    return null;
+  };
+
+  const embedUrl = getEmbedUrl(post.instagramLink);
+
   return (
-    <div 
-      className={`instagram-post ${imageLoaded ? 'loaded' : ''}`}
-      onClick={onClick}
-      style={{ animationDelay: `${index * 0.1}s` }}
-    >
-      <div className="post-media">
-        {!imageError ? (
-          <img
-            src={getMediaUrl()}
-            alt={formatCaption(post.caption)}
-            onLoad={() => setImageLoaded(true)}
-            onError={() => setImageError(true)}
-            loading="lazy"
-          />
-        ) : (
-          <div className="image-error">
-            <span>Failed to load image</span>
-          </div>
-        )}
-        
-        <div className="post-overlay">
-          <div className="post-stats">
-            <span className="likes">❤️ {post.likes}</span>
-            <span className="comments">💬 {post.comments}</span>
-          </div>
-          <div className="post-type">{getPostIcon()}</div>
-        </div>
+    <div className="instagram-post">
+      <div className="post-type">
+        <span className={`type-badge ${post.type}`}>
+          {getPostIcon(post.type)} {post.type}
+        </span>
       </div>
-      
-      <div className="post-info">
-        <p className="post-caption">{formatCaption(post.caption)}</p>
-        <span className="post-time">
-          {formatDistanceToNow(new Date(post.timestamp), { addSuffix: true })}
+
+      {/* Instagram Embed */}
+      {embedUrl && (
+        <div className="post-embed">
+          <iframe
+            src={embedUrl}
+            width="100%"
+            height="400"
+            frameBorder="0"
+            scrolling="no"
+            allowTransparency="true"
+            allow="encrypted-media"
+            title={`Instagram ${post.type}`}
+          />
+        </div>
+      )}
+
+      <div className="post-content">
+        <p className="post-caption">{post.caption}</p>
+      </div>
+
+      <div className="post-footer">
+        <a 
+          href={post.instagramLink} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="view-on-instagram"
+        >
+          View on Instagram →
+        </a>
+        <span className="post-date">
+          {new Date(post.createdAt).toLocaleDateString()}
         </span>
       </div>
     </div>

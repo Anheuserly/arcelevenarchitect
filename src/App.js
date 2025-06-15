@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react'; // ✅ Add this line
 
 // Components
 import LoadingScreen from './components/LoadingScreen';
+import Chatbot from './components/Chatbot'; // ✅ Import ChatBot component
 import Footer from './components/Footer';
 
 import './firebase'; 
@@ -66,6 +67,7 @@ function App() {
               </Routes>
             </AnimatePresence>
             <Footer />
+            <Chatbot />
             <Analytics /> {/* ✅ Add Analytics at the bottom inside Router */}
           </div>
         </Router>
