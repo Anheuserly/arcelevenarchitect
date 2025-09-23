@@ -1,0 +1,59 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.contact-page {
+  @apply min-h-screen bg-gray-50 py-12;
+}
+
+.contact-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.contact-header {
+  @apply text-center mb-12;
+}
+
+.contact-title {
+  @apply text-3xl font-extrabold text-gray-900;
+}
+
+.contact-subtitle {
+  @apply mt-4 max-w-2xl mx-auto text-gray-500;
+}
+
+.contact-form-wrapper {
+  @apply bg-white rounded-lg shadow-md p-6 mb-12;
+}
+
+.contact-form {
+  @apply grid grid-cols-1 gap-y-6;
+}
+
+.contact-form input,
+.contact-form textarea {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm 
+    focus:ring-indigo-500 focus:border-indigo-500;
+}
+
+.contact-form button {
+  @apply w-full py-3 px-6 rounded-md text-white font-medium 
+    bg-indigo-600 hover:bg-indigo-700 focus:outline-none 
+    focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+}
+
+.contact-info-grid {
+  @apply grid gap-8 md:grid-cols-2;
+}
+
+.contact-card {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+.contact-card h2 {
+  @apply text-xl font-semibold text-gray-900 mb-4;
+}
+
+.contact-card p {
+  @apply text-gray-500 mb-2;
+}

@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Footer Base */
+.footer {
+  @apply bg-gray-900 text-gray-200 py-10 mt-10;
+}
+
+.footer-container {
+  @apply max-w-7xl mx-auto px-6 space-y-8;
+}
+
+.footer-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10;
+}
+
+/* Company Info */
+.company-logo {
+  @apply flex items-center gap-3 mb-4;
+}
+
+.logo-icon {
+  @apply w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-full font-bold text-lg;
+}
+
+.company-name {
+  @apply text-xl font-semibold;
+}
+
+.company-description {
+  @apply text-gray-400 text-sm leading-relaxed;
+}
+
+/* Social Icons */
+.social-icons {
+  @apply flex gap-4 mt-4;
+}
+
+.social-icon {
+  @apply p-2 rounded-full bg-gray-800 hover:bg-red-600 transition-colors duration-300 text-gray-300 hover:text-white;
+}
+
+/* Section Titles */
+.section-title {
+  @apply text-lg font-semibold text-white mb-4;
+}
+
+/* Service Areas */
+.service-areas {
+  @apply grid grid-cols-2 gap-2;
+}
+
+.area-item {
+  @apply text-gray-400 text-sm hover:text-white cursor-pointer;
+}
+
+/* Quick Links */
+.quick-links {
+  @apply space-y-2;
+}
+
+.link {
+  @apply text-gray-400 text-sm hover:text-red-500 transition-colors duration-200;
+}
+
+/* App Cards */
+.app-card {
+  @apply bg-gray-800 rounded-xl p-4 mb-4 shadow-md hover:shadow-lg transition duration-300;
+}
+
+.app-title {
+  @apply text-white font-semibold mb-1;
+}
+
+.app-description {
+  @apply text-gray-400 text-sm mb-3;
+}
+
+.download-btn {
+  @apply flex items-center gap-2 text-sm text-white bg-red-600 px-3 py-2 rounded-lg hover:bg-red-700 transition;
+}
+
+.download-icon {
+  @apply w-5 h-5;
+}
+
+/* Contact Section */
+.contact-section {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 mt-10;
+}
+
+.contact-item {
+  @apply flex items-start gap-3;
+}
+
+.contact-icon {
+  @apply w-10 h-10 flex items-center justify-center rounded-full bg-red-600 text-white;
+}
+
+.contact-label {
+  @apply text-sm font-medium text-gray-300;
+}
+
+.contact-value {
+  @apply text-gray-400 text-sm;
+}
+
+/* Copyright */
+.copyright {
+  @apply border-t border-gray-700 mt-10 pt-6 text-center text-gray-500 text-sm;
+}
+
+.copyright-link {
+  @apply ml-2 text-red-500 hover:text-red-400 transition;
+}

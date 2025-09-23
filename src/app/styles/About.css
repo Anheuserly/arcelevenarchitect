@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+.about-page {
+  @apply min-h-screen bg-gray-50 py-16 font-sans;
+  font-family: "Helvetica", Arial, sans-serif;
+}
+
+.about-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.about-header {
+  @apply text-center mb-12;
+}
+
+.about-title {
+  @apply text-4xl font-extrabold text-gray-900;
+}
+
+.about-subtitle {
+  @apply mt-4 max-w-2xl mx-auto text-lg text-gray-600 leading-relaxed;
+}
+
+.about-intro {
+  @apply max-w-3xl mx-auto mb-16 text-gray-700 text-base leading-7;
+}
+
+.about-intro p {
+  @apply mb-6;
+}
+
+.about-grid {
+  @apply grid gap-8 md:grid-cols-2 mb-16;
+}
+
+.about-card {
+  @apply bg-white rounded-2xl shadow-lg p-8 transition-transform duration-300 ease-in-out;
+}
+
+.about-card:hover {
+  @apply -translate-y-2 shadow-xl;
+}
+
+.about-card-title {
+  @apply text-2xl font-semibold text-gray-900 mb-4;
+}
+
+.about-card-text {
+  @apply text-gray-600 leading-7;
+}
+
+.about-values {
+  @apply mt-16 text-center;
+}
+
+.about-values-title {
+  @apply text-3xl font-bold text-gray-900 mb-12;
+}
+
+.about-values-grid {
+  @apply grid gap-8 md:grid-cols-3;
+}
+
+.about-value-heading {
+  @apply text-xl font-semibold text-gray-900 mb-2;
+}
+
+.about-value-text {
+  @apply text-gray-600 leading-7;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .about-title {
+    @apply text-3xl;
+  }
+
+  .about-subtitle {
+    @apply text-base;
+  }
+
+  .about-card-title {
+    @apply text-xl;
+  }
+}
