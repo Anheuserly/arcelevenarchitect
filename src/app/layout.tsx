@@ -44,9 +44,9 @@ export const metadata = {
     creator: "@arcelevenarchitect",
   },
   icons: {
-    icon: "/arcelevenarchitect.svg",
-    shortcut: "/arcelevenarchitect.svg",
-    apple: "/arcelevenarchitect.svg",
+    icon: "/Arcelevenarchitect.svg",
+    shortcut: "/Arcelevenarchitect.svg",
+    apple: "/Arcelevenarchitect.svg",
   },
 };
 
@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/amcmep.svg" />
+        <link rel="icon" href="/Arcelevenarchitect.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
       </head>
