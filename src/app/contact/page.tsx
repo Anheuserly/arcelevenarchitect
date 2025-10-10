@@ -55,8 +55,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Studio Address</h3>
                     <p className="text-gray-600">
-                      Architectural Studio No. 11<br />
-                      Design District, South Delhi<br />
+                      House No. 535, Second Floor<br />
+                      128-D21, Chattarpur Pahadi<br />
                       New Delhi, Delhi 110074
                     </p>
                   </div>
@@ -71,8 +71,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Phone</h3>
                     <p className="text-gray-600">
-                      <a href="tel:+919871936847" className="hover:text-red-600 transition-colors duration-300">
-                        +91-9871936847
+                      <a href="tel:+918527378555" className="hover:text-red-600 transition-colors duration-300">
+                        +91-85273 78555
                       </a>
                     </p>
                   </div>
@@ -87,8 +87,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Email</h3>
                     <p className="text-gray-600">
-                      <a href="mailto:studio@arc11architect.com" className="hover:text-red-600 transition-colors duration-300">
-                        studio@arc11architect.com
+                      <a href="mailto:arcelevenarchitect@gmail.com-600 transition-colors duration-300">
+                       arcelevenarchitect@gmail.com
                       </a>
                     </p>
                   </div>
@@ -157,7 +157,7 @@ export default function ContactPage() {
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Visit Our Studio</h2>
           <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.8856281986364!2d77.1821376!3d28.506875399999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1f768fdfa54b%3A0xd41288173e5dfa86!2sShree%20Ganesh%20Enterprises!5e0!3m2!1sen!2sin!4v1725958500000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.8856281986364!2d77.1846957!3d28.5068683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8b99e39acef87ea3%3A0x6f5f84cfaba72863!2sARC%2011%20ARCHITECT!5e0!3m2!1sen!2sin!4v1728274410000!5m2!1sen!2sin"
               width="100%"
               height="450"
               style={{ border: 0 }}

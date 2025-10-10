@@ -45,9 +45,10 @@ export default function SEO() {
       { "@type": "WebPage", url: "https://www.arcelevenarchitect.com/services", name: "Services" },
     ],
     sameAs: [
-      "https://www.facebook.com/arcelevenarchitect",
-      "https://www.linkedin.com/company/arcelevenarchitect",
-      "https://www.google.com/maps/place/Shree+Ganesh+Enterprises/@28.5068754,77.1821376,17z",
+      "https://www.instagram.com/arc11studio_/",
+      "https://koloapp.in/delhi/architects/shashank-saini--delhi",
+      "https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/?originalSubdomain=in",
+      "https://www.facebook.com/profile.php?id=61578009358525",
     ],
     serviceType: [
       "Architecture Design",
@@ -96,8 +97,10 @@ export default function SEO() {
     url: "https://www.arcelevenarchitect.com",
     logo: "https://www.arcelevenarchitect.com/amcmep-icon.png",
     sameAs: [
-      "https://www.facebook.com/arcelevenarchitect",
-      "https://www.linkedin.com/company/arcelevenarchitect",
+      "https://www.instagram.com/arc11studio_/",
+      "https://koloapp.in/delhi/architects/shashank-saini--delhi",
+      "https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/?originalSubdomain=in",
+      "https://www.facebook.com/profile.php?id=61578009358525",
     ],
   };
 

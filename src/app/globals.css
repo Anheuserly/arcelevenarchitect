@@ -1,8 +1,17 @@
 @import "tailwindcss";
 
+/* Font Face Declaration */
+@font-face {
+  font-family: 'Ubin Sans';
+  src: url('/fonts/UbinSans-Variable.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Global font */
 body, html {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Ubin Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* Hide default summary arrow in <details> */
