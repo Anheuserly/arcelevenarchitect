@@ -69,6 +69,47 @@
   @apply text-gray-600 leading-7;
 }
 
+.about-team {
+  @apply text-center mt-20;
+}
+
+.about-team-title {
+  @apply text-3xl font-bold text-gray-900 mb-3;
+}
+
+.about-team-subtitle {
+  @apply text-gray-600 text-lg mb-12;
+}
+
+.about-team-grid {
+  @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-items-center;
+}
+
+.about-team-card {
+  @apply bg-white rounded-2xl shadow-lg p-8 w-full max-w-xs transition-transform duration-300 ease-in-out;
+}
+
+.about-team-card:hover {
+  @apply -translate-y-2 shadow-2xl;
+}
+
+.about-team-photo {
+  @apply w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden bg-gray-100;
+}
+
+.team-photo {
+  @apply w-full h-full object-cover rounded-full;
+}
+
+.team-name {
+  @apply text-xl font-semibold text-gray-900 mb-1;
+}
+
+.team-role {
+  @apply text-gray-600 text-base;
+}
+
+
 /* Responsive tweaks */
 @media (max-width: 768px) {
   .about-title {

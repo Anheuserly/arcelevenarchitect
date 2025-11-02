@@ -1,5 +1,6 @@
+import Image from "next/image";
 import React from "react";
-import "../styles/About.css"; // adjust path if needed
+import "../styles/About.css";
 
 export const metadata = {
   title: "About Us - ARC 11 ARCHITECT",
@@ -12,6 +13,7 @@ export default function Page() {
   return (
     <div className="about-page">
       <div className="about-container">
+        {/* Header */}
         <div className="about-header">
           <h1 className="about-title">About Us</h1>
           <p className="about-subtitle">
@@ -19,11 +21,13 @@ export default function Page() {
           </p>
         </div>
 
+        {/* Intro */}
         <div className="about-intro">
           <p>
             ARC 11 ARCHITECT is a creative architecture studio dedicated to
             crafting thoughtful and innovative design solutions. Since 2015,
-            we&apos;ve specialized in <strong>architecture, construction, and interior design</strong>,
+            we&apos;ve specialized in{" "}
+            <strong>architecture, construction, and interior design</strong>,
             delivering modern spaces that balance striking aesthetics with
             practical functionality.
           </p>
@@ -37,6 +41,7 @@ export default function Page() {
           </p>
         </div>
 
+        {/* Mission & Vision */}
         <div className="about-grid">
           <div className="about-card">
             <h2 className="about-card-title">Our Mission</h2>
@@ -57,6 +62,7 @@ export default function Page() {
           </div>
         </div>
 
+        {/* Values */}
         <div className="about-values">
           <h2 className="about-values-title">Our Values</h2>
           <div className="about-values-grid">
@@ -83,6 +89,61 @@ export default function Page() {
             </div>
           </div>
         </div>
+
+        {/* Team Section */}
+        <section className="about-team">
+          <h2 className="about-team-title">Meet Our Team</h2>
+          <p className="about-team-subtitle">
+            The creative minds shaping the identity of ARC 11 ARCHITECT.
+          </p>
+
+          <div className="about-team-grid">
+            {/* Team Member 1 */}
+            <div className="about-team-card">
+              <div className="about-team-photo">
+                <Image
+                  src="/images/team-placeholder.jpg"
+                  alt="Shashank Saini - Founder"
+                  width={120}
+                  height={120}
+                  className="team-photo"
+                />
+              </div>
+              <h3 className="team-name">Shashank Saini</h3>
+              <p className="team-role">Founder</p>
+            </div>
+
+            {/* Team Member 2 */}
+            <div className="about-team-card">
+              <div className="about-team-photo">
+                <Image
+                  src="/images/team-placeholder.jpg"
+                  alt="Ujjwal Sinha - Co-Founder"
+                  width={120}
+                  height={120}
+                  className="team-photo"
+                />
+              </div>
+              <h3 className="team-name">Ujjwal Sinha</h3>
+              <p className="team-role">Co-Founder</p>
+            </div>
+
+            {/* Team Member 3 */}
+            <div className="about-team-card">
+              <div className="about-team-photo">
+                <Image
+                  src="/images/team-placeholder.jpg"
+                  alt="Sohel Latif - Partner"
+                  width={120}
+                  height={120}
+                  className="team-photo"
+                />
+              </div>
+              <h3 className="team-name">Sohel Latif</h3>
+              <p className="team-role">Partner</p>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

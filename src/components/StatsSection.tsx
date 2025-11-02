@@ -6,7 +6,7 @@ export default function StatsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
           <div>
-            <div className="text-5xl font-extrabold mb-3 font-['Ubin_Sans']">500+</div>
+            <div className="text-5xl font-extrabold mb-3 font-['Ubin_Sans']">125+</div>
             <p className="text-gray-300">Projects Completed</p>
           </div>
           <div>
