@@ -130,6 +130,19 @@ export default function Navigation() {
               >
                 Journal
               </Link>
+              {/* Added Estimator link here */}
+              <Link
+                href="/estimator"
+                className={`px-3 py-2 text-base font-medium font-['Ubin_Sans'] ${
+                  isActive("/estimator") 
+                    ? "text-red-500" 
+                    : lastScrollY > 50 
+                      ? "text-gray-900" 
+                      : "text-gray-900"
+                } hover:text-red-500 transition-colors duration-300`}
+              >
+                Estimator
+              </Link>
               <Link
                 href="/contact"
                 className={`px-3 py-2 text-base font-medium font-['Ubin_Sans'] ${
@@ -225,6 +238,14 @@ export default function Navigation() {
               onClick={() => setIsMenuOpen(false)}
             >
               Journal
+            </Link>
+            {/* Added Estimator link for mobile */}
+            <Link
+              href="/estimator"
+              className="block text-gray-900 text-lg py-2 hover:text-red-500 transition-colors duration-300 font-['Ubin_Sans']"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Estimator
             </Link>
             <Link
               href="/contact"
