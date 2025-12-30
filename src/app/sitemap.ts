@@ -1,7 +1,10 @@
 // app/sitemap.ts
 import { MetadataRoute } from "next";
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+// 🔒 REQUIRED for `output: "export"`
+export const dynamic = "force-static";
+
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.arcelevenarchitect.com";
 
   // ============================================================
@@ -48,15 +51,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // ============================================================
-  // 2️⃣ DYNAMIC ROUTES (Optional — Projects, Journal Articles)
-  // Add this only if you have dynamic pages like:
-  // /projects/[slug]
-  // /journal/[slug]
+  // 2️⃣ DYNAMIC ROUTES (STATICALLY KNOWN SLUGS ONLY)
+  // IMPORTANT: Must be build-time constants for static export
   // ============================================================
 
-  // Example: Fetch your projects (if you use JSON / DB / API)
-  // Replace with real data source later.
-  const projectSlugs: string[] = []; // e.g. ["modern-villa", "office-design"]
+  const projectSlugs: string[] = [];
+  const journalSlugs: string[] = [];
 
   const dynamicProjects: MetadataRoute.Sitemap = projectSlugs.map((slug) => ({
     url: `${baseUrl}/projects/${slug}`,
@@ -64,9 +64,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: "weekly",
     priority: 0.7,
   }));
-
-  // Example: Fetch your journal/blog posts
-  const journalSlugs: string[] = []; // e.g. ["interior-trends-2025", "architecture-guide"]
 
   const dynamicJournal: MetadataRoute.Sitemap = journalSlugs.map((slug) => ({
     url: `${baseUrl}/journal/${slug}`,
