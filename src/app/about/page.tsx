@@ -10,12 +10,22 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-  title: "About Us - ARC 11 ARCHITECT",
+  title: "About Arc 11 Architect – Architecture & Interior Design Studio",
   description:
-    "ARC 11 ARCHITECT is a creative architecture studio crafting thoughtful and innovative design solutions. Since 2021, we’ve specialized in architecture, construction, and interior design, delivering modern spaces that balance aesthetics with functionality across Chhatarpur, New Delhi.",
+    "Learn about Arc 11 Architect, a New Delhi–based architecture and interior design studio delivering modern residential and commercial architecture, construction, and interior solutions across Delhi NCR.",
+  keywords: [
+    "Arc 11 Architect",
+    "architecture studio in New Delhi",
+    "interior design studio Delhi NCR",
+    "architectural firm in Delhi",
+    "residential architecture",
+    "commercial architecture",
+    "architecture and interior design practice",
+    "modern architecture studio",
+    "interior designers in New Delhi",
+  ],
   alternates: { canonical: "https://www.arcelevenarchitect.com/about" },
 };
-
 // ===================== PAGE =====================
 
 export default function Page() {

@@ -5,6 +5,22 @@ import Image from "next/image";
 import React from "react";
 import ProfilePic from "../../static/Arcelevenarchitect_logo.png"; // Replace with actual image
 
+export const metadata = {
+  title: "Shashank Saini – Founder & Lead Architect | Arc 11 Architect",
+  description:
+    "Shashank Saini is the Founder and Lead Architect at Arc 11 Architect, a New Delhi–based architecture and interior design studio delivering residential and commercial projects across Delhi NCR.",
+  keywords: [
+    "Shashank Saini architect",
+    "Founder of Arc 11 Architect",
+    "Lead architect Arc 11 Architect",
+    "architect in New Delhi",
+    "interior designer Delhi NCR",
+    "architecture professional Delhi",
+    "commercial and residential architect",
+  ],
+  alternates: { canonical: "https://www.arcelevenarchitect.com/profile" },
+};
+
 export default function PortfolioPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-16">

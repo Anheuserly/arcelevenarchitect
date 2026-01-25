@@ -2,10 +2,19 @@
 import ContactForm from "../contact/ContactForm/page";
 
 export const metadata = {
-  title: "Contact Us - ARC 11 ARCHITECT | Architectural Design Studio",
+  title: "Contact Arc 11 Architect – Architecture & Interior Design Studio",
   description:
-    "Get in touch with ARC 11 ARCHITECT. Let's discuss your architectural vision and transform it into reality with our innovative design solutions.",
-  alternates: { canonical: "https://www.arc11architect.com/contact" },
+    "Contact Arc 11 Architect, a New Delhi–based architecture and interior design studio. Get in touch to discuss residential or commercial architecture, interior design, renovation, or turnkey construction projects.",
+  keywords: [
+    "Arc 11 Architect contact",
+    "architecture studio contact New Delhi",
+    "interior design studio Delhi NCR",
+    "architectural firm in New Delhi",
+    "contact architecture studio",
+    "interior designers Delhi NCR",
+    "architecture consultation Delhi",
+  ],
+  alternates: { canonical: "https://www.arcelevenarchitect.com/contact" },
 };
 
 export default function ContactPage() {

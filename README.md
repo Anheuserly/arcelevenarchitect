@@ -40,3 +40,6 @@ Sitemap → All important pages submitted to Google.
 Robots.txt → Allows crawling & points to sitemap.
 
 Ready for Google Business Profile integration → Once you create GBP, Google will connect it to your site.
+
+
+

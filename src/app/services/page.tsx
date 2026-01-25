@@ -14,11 +14,25 @@ import computationalImg from "../../../public/services/computational.jpg";
 import sustainabilityImg from "../../../public/services/sustainability.jpg";
 
 export const metadata = {
-  title: "Our Services - ARC 11 ARCHITECT | Architecture & Interior Design",
+  title: "Architecture & Interior Design Services in Delhi NCR | Arc 11 Architect",
   description:
-    "ARC 11 ARCHITECT offers architecture, interior, urban, landscape, structural, MEP, computational/BIM, and sustainable design solutions for residential and commercial projects.",
+    "Arc 11 Architect offers professional architecture, interior design, urban planning, landscape design, structural engineering, MEP, BIM, and sustainable design services for residential and commercial projects across Delhi NCR and PAN India.",
+  keywords: [
+    "Arc 11 Architect services",
+    "architecture services Delhi NCR",
+    "interior design services Delhi NCR",
+    "architectural design services",
+    "commercial architecture services",
+    "residential architecture services",
+    "interior designers in Delhi NCR",
+    "architectural firm services India",
+    "MEP design services",
+    "BIM and computational design services",
+    "sustainable architecture services",
+  ],
   alternates: { canonical: "https://www.arcelevenarchitect.com/services" },
 };
+
 
 const services = [
   {

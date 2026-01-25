@@ -1,7 +1,25 @@
-"use client";
+
 
 import React from "react";
 import Link from "next/link";
+
+export const metadata = {
+  title: "Projects & Portfolio – Arc 11 Architect | Architecture & Interior Design",
+  description:
+    "Explore the portfolio of Arc 11 Architect featuring residential and commercial architecture, interior design, renovation, and turnkey projects across Delhi NCR, Noida, Gurgaon, Ghaziabad, and beyond.",
+  keywords: [
+    "Arc 11 Architect projects",
+    "architecture portfolio Delhi NCR",
+    "interior design projects Delhi NCR",
+    "residential architecture projects",
+    "commercial architecture projects",
+    "interior renovation projects",
+    "villa design projects",
+    "apartment interior projects",
+    "architecture firm portfolio India",
+  ],
+  alternates: { canonical: "https://www.arcelevenarchitect.com/projects" },
+};
 
 const projects = [
   {

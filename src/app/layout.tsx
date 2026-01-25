@@ -5,150 +5,58 @@ import "../app/globals.css";
 import SEO from "../components/SEO";
 import FloatingWhatsApp from "../components/FloatingWhatsApp";
 
-
 // ========================================================================
-//                 🔥 FINAL ADVANCED METADATA FOR ARC 11 ARCHITECT
+//                 🔥 FINAL ADVANCED METADATA – ARC 11 ARCHITECT
 // ========================================================================
 export const metadata = {
   title:
-    "ARC 11 ARCHITECT – Modern Architecture, Interior Design, 3D Visualization, Construction & Renovation Experts",
+    "Arc 11 Architect – Modern Architecture, Interior Design, 3D Visualization & Turnkey Construction",
 
   description:
-    "ARC 11 ARCHITECT delivers high-end architectural design, luxury interiors, 3D visualizations, façade design, conceptual space planning, vastu-based layouts, commercial interiors, residential architecture, office design, restaurant & café interiors, farmhouse planning, villa design, apartment interiors, workspace modernization, and turnkey construction services across Delhi NCR and PAN India.",
+    "Arc 11 Architect delivers premium architectural design, luxury interiors, 3D visualizations, façade design, space planning, vastu-based layouts, residential & commercial architecture, renovations, and turnkey construction services across Delhi NCR and PAN India.",
 
-  keywords: [
+keywords: [
     // BRAND
-    "ARC 11 Architect",
+    "Arc 11 Architect",
     "Arc Eleven Architect",
-    "ARC 11 Studio",
-    "architecture firm Delhi NCR",
-    "interior design studio India",
+    "Arc 11 Architecture Studio",
 
-    // ARCHITECTURE
-    "best architects in Delhi",
-    "architects in Delhi NCR",
-    "top architecture firms Delhi",
-    "modern architecture India",
-    "architectural planning Delhi",
-    "building architecture design",
-    "luxury home architect Delhi",
-    "villa architecture designers",
-    "farmhouse architectural design",
-    "commercial architecture India",
-    "office architecture design",
-    "bungalow architectural design",
-    "apartment layout plans",
-    "townhouse architectural planning",
-    "industrial architecture consultants",
-    "residential architectural services",
+    // CORE SERVICES (GENERIC)
+    "architecture studio India",
+    "interior design studio Delhi NCR",
+    "architectural design services",
+    "interior design services",
+    "residential architecture",
+    "commercial architecture",
+    "turnkey construction services",
+    "3D architectural visualization",
+    "facade design services",
+    "space planning and design",
 
-    // INTERIOR DESIGN
-    "interior designers in Delhi NCR",
-    "luxury interior design Delhi",
-    "modern interior designers India",
-    "3BHK interior design",
-    "4BHK interior design",
-    "villa interior designers",
-    "office interior designers",
-    "modular kitchen designers",
-    "wardrobe design India",
-    "restaurant interior designers",
-    "cafe interior design",
-    "retail store interior design",
-    "hotel interior designers India",
-    "commercial interior design Delhi",
-    "kids room interior design",
-    "minimalist interior design India",
-
-    // SPECIALIZED DESIGN
-    "3D visualization architects",
-    "3D rendering services",
-    "architectural walkthrough design",
-    "façade design experts",
-    "elevation designers Delhi",
-    "landscape designers Delhi NCR",
-    "luxury exterior design India",
-    "modern home elevation design",
-
-    // RENOVATION & TURNKEY
-    "home renovation contractors Delhi",
-    "office renovation services",
-    "turnkey interior contractors",
-    "turnkey construction company Delhi",
-    "complete home renovation",
-    "kitchen renovation Delhi",
-    "bathroom renovation India",
-
-    // DRAFTING & DRAWINGS
-    "architectural drawing services",
-    "floor plan design India",
-    "MEP & structural drawings",
-    "interior working drawings",
-    "municipal approval drawings",
-    "building plan approval Delhi",
-
-    // VASTU DESIGN
-    "Vastu compliant architecture",
-    "Vastu home design Delhi",
-    "Vastu interior planning",
-    "Vastu architect near me",
-
-    // CONSTRUCTION
-    "civil construction company Delhi",
-    "residential construction Delhi",
-    "commercial construction contractors India",
-    "building contractors Delhi NCR",
-    "villa construction experts",
-    "interior execution company Delhi",
-
-    // HIGH-INTENT SEARCH KEYWORDS
-    "best architect near me",
-    "interior designer near me",
-    "architecture firm near me",
-    "house design architect Delhi",
-    "modern house design India",
-    "luxury home interior design India",
-    "Delhi top architect",
-    "high-end interior design Delhi",
-
-    // GEOGRAPHIC SEO
-    "architects in Delhi NCR",
-    "architects in Gurugram",
-    "interior designers Gurugram",
-    "architects in Noida",
-    "interior design Faridabad",
-    "Delhi architecture consultancy",
-    "India architecture firm",
-
-    // LSI SEO EXTENSIONS
-    "space planning experts",
-    "home interior makeover",
-    "commercial space designers",
-    "corporate interior specialists",
-    "fabrication and carpentry services",
-    "material selection consultants",
-    "luxury furniture design Delhi",
-    "end-to-end architecture solutions",
-    "modern minimalist design India"
+    // POSITIONING (SAFE)
+    "architecture and interior design firm",
+    "design and build studio",
+    "architecture consultancy India",
   ],
 
-  authors: [{ name: "ARC 11 ARCHITECT", url: "https://www.arcelevenarchitect.com" }],
+
+  authors: [{ name: "Arc 11 Architect", url: "https://www.arcelevenarchitect.com" }],
 
   alternates: { canonical: "https://www.arcelevenarchitect.com" },
 
   openGraph: {
     title:
-      "ARC 11 ARCHITECT – Luxury Architecture, Interiors, 3D Visualization & Construction Services",
+      "Arc 11 Architect – Luxury Architecture, Interiors & Construction Services",
     description:
-      "Premium modern architecture, luxury interior design, 3D visualization, elevation design, renovation, and turnkey construction services across Delhi NCR & PAN India.",
+      "Modern architecture, luxury interior design, 3D visualization, elevation design, renovation, and turnkey construction services across India.",
     url: "https://www.arcelevenarchitect.com",
-    siteName: "ARC 11 ARCHITECT",
+    siteName: "Arc 11 Architect",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ARC 11 ARCHITECT Services",
+        alt: "Arc 11 Architect – Architecture & Interior Design Studio",
       },
     ],
     locale: "en_IN",
@@ -157,17 +65,16 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "ARC 11 ARCHITECT – Modern Architecture & Interior Design Experts",
+    title: "Arc 11 Architect – Modern Architecture & Interior Design Studio",
     description:
-      "Creative architectural design, luxury interiors, commercial spaces, and turnkey construction solutions across India.",
+      "Creative architectural design, luxury interiors, commercial spaces, and turnkey construction solutions.",
     images: ["/og-image.png"],
-    creator: "@arcelevenarchitect",
   },
 
   icons: {
-    icon: "/Arcelevenarchitect.svg",
-    shortcut: "/Arcelevenarchitect.svg",
-    apple: "/Arcelevenarchitect.svg",
+    icon: "/arc-11-architect.svg",
+    shortcut: "/arc-11-architect.svg",
+    apple: "/arc-11-architect.svg",
   },
 };
 
@@ -178,16 +85,22 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/Arcelevenarchitect.svg" />
+        <meta name="application-name" content="Arc 11 Architect" />
+        <meta name="apple-mobile-web-app-title" content="Arc 11 Architect" />
+
+        <link rel="icon" href="/arc-11-architect.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
       </head>
 
       <body className="bg-amcmep-bg text-amcmep-text antialiased font-sans text-sm">
         <Navigation />
 
         <main className="flex-grow p-4">{children}</main>
-
 
         <FloatingWhatsApp />
         <Footer />
