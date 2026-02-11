@@ -15,6 +15,8 @@ type JournalRecord = {
   $createdAt?: string;
 };
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   title: "Admin Journal",
   robots: { index: false, follow: false },

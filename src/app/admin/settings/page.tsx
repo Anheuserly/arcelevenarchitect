@@ -3,6 +3,8 @@ import AdminShell from "@/components/admin/AdminShell";
 import { getPermissions } from "@/lib/adminRoles";
 import { requireAdminContext } from "@/lib/adminAccess";
 
+export const runtime = "edge";
+
 export const metadata: Metadata = {
   title: "Admin Settings",
   robots: { index: false, follow: false },

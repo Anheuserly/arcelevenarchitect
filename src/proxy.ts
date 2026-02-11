@@ -1,6 +1,8 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 const SESSION_COOKIE = "admin_session";
 const ADMIN_HOST = "admin.arcelevenarchitect.com";
 

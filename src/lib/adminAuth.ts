@@ -1,4 +1,3 @@
-import crypto from "node:crypto";
 import { listDocumentsServer } from "@/lib/appwriteServer";
 import { normalizeRole } from "@/lib/adminRoles";
 
@@ -11,15 +10,25 @@ type AdminRecord = {
   password_hash?: string;
 };
 
-function hashHex(algorithm: "sha256" | "sha512", input: string): string {
-  return crypto.createHash(algorithm).update(input).digest("hex");
+const textEncoder = new TextEncoder();
+
+function bytesToHex(bytes: Uint8Array): string {
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function hashHex(algorithm: "sha256" | "sha512", input: string): Promise<string> {
+  const digest = await crypto.subtle.digest(
+    algorithm.toUpperCase(),
+    textEncoder.encode(input)
+  );
+  return bytesToHex(new Uint8Array(digest));
 }
 
 async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
   // Compatibility fallback for setups where plain text or SHA hashes are stored.
   if (storedHash === password) return true;
-  if (storedHash === hashHex("sha256", password)) return true;
-  if (storedHash === hashHex("sha512", password)) return true;
+  if (storedHash === (await hashHex("sha256", password))) return true;
+  if (storedHash === (await hashHex("sha512", password))) return true;
 
   // bcrypt hashes require bcryptjs dependency in this runtime.
   if (storedHash.startsWith("$2a$") || storedHash.startsWith("$2b$") || storedHash.startsWith("$2y$")) {
