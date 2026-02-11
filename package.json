@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "build:cf": "npx @opennextjs/cloudflare@latest build",
+    "build:cf:pages": "npm run build:cf && cp .open-next/worker.js .open-next/assets/_worker.js",
     "start": "next start",
     "lint": "eslint"
   },
