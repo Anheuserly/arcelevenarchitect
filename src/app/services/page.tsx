@@ -1,135 +1,121 @@
+import type { Metadata } from "next";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
 
-
-import Link from "next/link";
-import React from "react";
-
-// Import images (make sure these exist in /public or /assets folder)
-import architecturalImg from "../../../public/services/architectural.jpg";
-import interiorImg from "../../../public/services/interior.jpg";
-import urbanImg from "../../../public/services/urban.jpg";
-import landscapeImg from "../../../public/services/landscape.jpg";
-import structuralImg from "../../../public/services/structural.jpg";
-import mepImg from "../../../public/services/mep.jpg";
-import computationalImg from "../../../public/services/computational.jpg";
-import sustainabilityImg from "../../../public/services/sustainability.jpg";
-
-export const metadata = {
-  title: "Architecture & Interior Design Services in Delhi NCR | Arc 11 Architect",
+export const metadata: Metadata = {
+  title: "Services",
   description:
-    "Arc 11 Architect offers professional architecture, interior design, urban planning, landscape design, structural engineering, MEP, BIM, and sustainable design services for residential and commercial projects across Delhi NCR and PAN India.",
+    "Architecture, interior design, urban design, landscape, BIM, and project delivery services by Arc 11 Architect.",
   keywords: [
-    "Arc 11 Architect services",
-    "architecture services Delhi NCR",
-    "interior design services Delhi NCR",
-    "architectural design services",
-    "commercial architecture services",
-    "residential architecture services",
-    "interior designers in Delhi NCR",
-    "architectural firm services India",
-    "MEP design services",
-    "BIM and computational design services",
-    "sustainable architecture services",
+    "architectural services",
+    "interior design services",
+    "BIM services India",
+    "project delivery architecture",
   ],
-  alternates: { canonical: "https://www.arcelevenarchitect.com/services" },
 };
 
-
-const services = [
+export const services = [
   {
-    id: 1,
-    title: "Architectural Design",
-    description: "Comprehensive design services for new buildings and structures, from concept to completion.",
-    image: architecturalImg,
+    title: "Architectural Design & Master Planning",
+    description:
+      "Comprehensive architectural solutions including site analysis, spatial planning, and built-form strategy for residential, commercial, and mixed-use developments—from concept to completion.",
   },
   {
-    id: 2,
-    title: "Interior Design",
-    description: "Thoughtful interior spaces that complement the architecture and enhance user experience.",
-    image: interiorImg,
+    title: "Interior Architecture & Design",
+    description:
+      "Thoughtfully crafted interior environments featuring curated material palettes, lighting design, custom furniture, and seamless spatial flow that enhance user experience and identity.",
   },
   {
-    id: 3,
     title: "Urban Design & Planning",
-    description: "Creating cohesive, sustainable urban environments that foster community and connection.",
-    image: urbanImg,
+    description:
+      "Designing cohesive, human-centered, and sustainable urban environments that promote community interaction, accessibility, and long-term resilience.",
   },
   {
-    id: 4,
     title: "Landscape Design",
-    description: "Designing outdoor spaces that blend functionality with aesthetics.",
-    image: landscapeImg,
+    description:
+      "Functional and aesthetic outdoor spaces integrating greenery, circulation, and environmental sensitivity to complement the built environment.",
   },
   {
-    id: 5,
     title: "Structural Engineering",
-    description: "Ensuring stability and durability of buildings with expert engineering solutions.",
-    image: structuralImg,
+    description:
+      "Robust engineering solutions ensuring safety, stability, and durability while aligning structural performance with architectural intent.",
   },
   {
-    id: 6,
-    title: "MEP Engineering",
-    description: "Mechanical, Electrical, and Plumbing solutions for efficient building performance.",
-    image: mepImg,
-  },
-  {
-    id: 7,
     title: "Computational Design & BIM",
-    description: "Advanced computational tools and BIM for precise modeling, planning, and collaboration.",
-    image: computationalImg,
+    description:
+      "Advanced digital workflows using computational tools and Building Information Modeling (BIM) for precise visualization, coordination, and efficient project delivery.",
   },
   {
-    id: 8,
+    title: "Project Delivery & Execution",
+    description:
+      "Detailed documentation, tender assistance, and on-site execution oversight to ensure quality control, cost efficiency, and predictable timelines.",
+  },
+  {
+    title: "Workspace, Hospitality & Wellness Design",
+    description:
+      "Experience-driven environments for offices, boutique hotels, and wellness spaces that balance functionality, comfort, and brand identity.",
+  },
+  {
     title: "Sustainability & Resilience",
-    description: "Eco-friendly and resilient designs promoting energy efficiency and sustainable development.",
-    image: sustainabilityImg,
+    description:
+      "Environmentally responsible design strategies focused on energy efficiency, resource optimization, climate responsiveness, and long-term sustainability.",
   },
 ];
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-extrabold text-gray-900">Our Services</h1>
-          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-            ARC 11 ARCHITECT provides a comprehensive suite of services for residential and commercial projects, from architecture and interior design to structural, MEP, and sustainable solutions.
+    <div className="bg-[var(--background)]">
+      <SiteHeader />
+      <main className="section-padding">
+        <div className="mx-auto max-w-6xl px-6">
+          <p className="kicker">Services</p>
+          <h1 className="mt-5 text-4xl sm:text-5xl">A full-spectrum design partner.</h1>
+          <p className="mt-6 max-w-2xl text-lg">
+            We deliver a disciplined, workshop-led process from concept to construction. Every
+            engagement includes clarity on scope, schedule, and design intent.
           </p>
-        </div>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition-shadow duration-300"
-            >
-              <img
-                src={service.image.src}
-                alt={service.title}
-                className="w-full h-56 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
-                <p className="text-gray-600 text-sm">{service.description}</p>
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {services.map((item) => (
+              <div key={item.title} className="card p-8">
+                <h3 className="text-2xl">{item.title}</h3>
+                <p className="mt-3 text-sm">{item.description}</p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="mt-12 text-center">
-          <div className="bg-white rounded-lg shadow-md p-8 inline-block">
-            <h2 className="text-2xl font-bold text-gray-900">Looking for a custom solution?</h2>
-            <p className="mt-2 text-gray-600">We tailor our architectural and design services to meet your unique project requirements.</p>
-            <div className="mt-6">
-              <Link
-                href="/contact"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Contact Us
-              </Link>
+          <div className="mt-14 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="subtle-card p-8">
+              <h2 className="text-3xl">Deliverables</h2>
+              <ul className="mt-4 space-y-3 text-sm text-[var(--muted)]">
+                <li>Detailed drawing sets and coordination packages</li>
+                <li>Material and finish specifications</li>
+                <li>Lighting and automation schematics</li>
+                <li>Custom furniture design and sourcing</li>
+                <li>On-site quality reviews and site reports</li>
+              </ul>
+            </div>
+            <div className="card p-8">
+              <h2 className="text-3xl">Engagement Models</h2>
+              <div className="mt-4 space-y-4 text-sm text-[var(--muted)]">
+                <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
+                  <span>Architecture + Interior</span>
+                  <span className="text-[var(--foreground)]">End-to-End</span>
+                </div>
+                <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
+                  <span>Interior Only</span>
+                  <span className="text-[var(--foreground)]">12-20 weeks</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span>Consulting</span>
+                  <span className="text-[var(--foreground)]">Retainer</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
+      <SiteFooter />
     </div>
   );
 }

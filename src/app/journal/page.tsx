@@ -1,82 +1,103 @@
-// app/journal/page.tsx
-"use client";
+import type { Metadata } from "next";
+import JournalFeed from "@/components/journal/JournalFeed";
+import SiteFooter from "@/components/SiteFooter";
+import SiteHeader from "@/components/SiteHeader";
+import { listDocumentsServer } from "@/lib/appwriteServer";
 
-import { useState, useEffect } from "react";
-import { databases, COLLECTIONS, DATABASE_ID } from "../../lib/appwrite";
-import Link from "next/link";
+type JournalPost = {
+  title: string;
+  tag: string;
+  date: string;
+  excerpt: string;
+};
 
-export default function JournalPage() {
-  const [entries, setEntries] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+const fallbackPosts: JournalPost[] = [
+  {
+    title: "Materiality: limestone, lime plaster, and warm metals",
+    tag: "Materiality",
+    date: "Jan 2026",
+    excerpt:
+      "How to build depth without excess—layering tactile finishes and subtle light.",
+  },
+  {
+    title: "Designing for monsoon climates",
+    tag: "Climate",
+    date: "Dec 2025",
+    excerpt: "Shading, drainage, and ventilation strategies for resilient homes.",
+  },
+  {
+    title: "Small homes, generous living",
+    tag: "Residential",
+    date: "Nov 2025",
+    excerpt: "Layout techniques that make 2BHK spaces feel open and calm.",
+  },
+  {
+    title: "The quiet power of daylight",
+    tag: "Lighting",
+    date: "Oct 2025",
+    excerpt: "Daylight choreography that shapes mood and reduces energy loads.",
+  },
+  {
+    title: "Crafting modern classical",
+    tag: "Design",
+    date: "Sep 2025",
+    excerpt: "Balancing timeless proportion with contemporary detailing.",
+  },
+  {
+    title: "Studio tools: CAD to BIM",
+    tag: "Process",
+    date: "Aug 2025",
+    excerpt: "How we coordinate design intent across disciplines and vendors.",
+  },
+];
 
-  useEffect(() => {
-    const fetchJournal = async () => {
-      try {
-        const response = await databases.listDocuments(
-          DATABASE_ID,
-          COLLECTIONS.JOURNAL
-        );
-        setEntries(response.documents);
-      } catch (error) {
-        console.error("Error fetching journal entries:", error);
-      } finally {
-        setLoading(false);
+export default async function JournalPage() {
+  const collectionId = process.env.NEXT_PUBLIC_APPWRITE_JOURNAL_COLLECTION_ID;
+  let posts = fallbackPosts;
+
+  if (collectionId) {
+    try {
+      const documents = await listDocumentsServer<JournalPost>({
+        collectionId,
+        limit: 9,
+      });
+      if (documents.length > 0) {
+        posts = documents;
       }
-    };
-
-    fetchJournal();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
-      </div>
-    );
+    } catch {
+      posts = fallbackPosts;
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-8 text-center">
-          Journal
-        </h1>
-
-        {entries.length === 0 ? (
-          <p className="text-center text-gray-500">
-            No journal entries available yet.
+    <div className="bg-[var(--background)]">
+      <SiteHeader />
+      <main className="section-padding">
+        <div className="mx-auto max-w-6xl px-6">
+          <p className="kicker">Journal</p>
+          <h1 className="mt-5 text-4xl sm:text-5xl">Studio notes and social posts.</h1>
+          <p className="mt-6 max-w-2xl text-lg">
+            A curated archive of design thinking, material studies, and project insights.
           </p>
-        ) : (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {entries.map((entry) => (
-              <div
-                key={entry.$id}
-                className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition-shadow duration-300"
-              >
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                  {entry.title}
-                </h2>
-
-                {/* optional summary/preview if you added that attribute */}
-                {entry.summary && (
-                  <p className="text-gray-600 mb-4">{entry.summary}</p>
-                )}
-
-                <p className="text-sm text-gray-400 mb-4">
-                  {new Date(entry.$createdAt).toLocaleDateString()}
-                </p>
-
-                <Link
-                  href={`/journal/${entry.$id}`}
-                  className="inline-block text-indigo-600 hover:text-indigo-800 font-medium"
-                >
-                  Read More &rarr;
-                </Link>
-              </div>
-            ))}
+          <div className="mt-12">
+            <JournalFeed posts={posts} />
           </div>
-        )}
-      </div>
+        </div>
+      </main>
+      <SiteFooter />
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Journal | Arc 11 Architect",
+  description:
+    "Studio journal featuring architecture notes, design thinking, project insights, and material studies.",
+  keywords: [
+    "architecture journal",
+    "arc 11 architect blog",
+    "design insights",
+    "interior architecture articles",
+    "studio notes",
+  ],
+};

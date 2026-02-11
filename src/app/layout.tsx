@@ -1,111 +1,85 @@
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
-import { Analytics } from "@vercel/analytics/next";
-import "../app/globals.css";
-import SEO from "../components/SEO";
-import FloatingWhatsApp from "../components/FloatingWhatsApp";
+import type { Metadata } from "next";
+import AnalyticsScripts from "@/components/AnalyticsScripts";
+import { Playfair_Display, Roboto } from "next/font/google";
+import SeoJsonLd from "@/components/SeoJsonLd";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
+import "./globals.css";
 
-// ========================================================================
-//                 🔥 FINAL ADVANCED METADATA – ARC 11 ARCHITECT
-// ========================================================================
-export const metadata = {
-  title:
-    "Arc 11 Architect – Modern Architecture, Interior Design, 3D Visualization & Turnkey Construction",
+const bodyFont = Roboto({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
 
+const displayFont = Playfair_Display({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+export const metadata: Metadata = {
+  title: {
+    default: "Arc 11 Architect",
+    template: "%s | Arc 11 Architect",
+  },
   description:
-    "Arc 11 Architect delivers premium architectural design, luxury interiors, 3D visualizations, façade design, space planning, vastu-based layouts, residential & commercial architecture, renovations, and turnkey construction services across Delhi NCR and PAN India.",
-
-keywords: [
-    // BRAND
+    "Arc 11 Architect is an architecture and interior design studio delivering residential, commercial, and institutional projects across Delhi NCR, Pan India, and internationally.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com"),
+  keywords: [
     "Arc 11 Architect",
-    "Arc Eleven Architect",
-    "Arc 11 Architecture Studio",
-
-    // CORE SERVICES (GENERIC)
-    "architecture studio India",
-    "interior design studio Delhi NCR",
-    "architectural design services",
-    "interior design services",
-    "residential architecture",
-    "commercial architecture",
-    "turnkey construction services",
-    "3D architectural visualization",
-    "facade design services",
-    "space planning and design",
-
-    // POSITIONING (SAFE)
-    "architecture and interior design firm",
-    "design and build studio",
-    "architecture consultancy India",
+    "ARC 11 Architect",
+    "architect in Delhi NCR",
+    "interior design studio",
+    "residential architect",
+    "commercial architect",
+    "architecture firm India",
+    "Delhi architecture studio",
   ],
-
-
-  authors: [{ name: "Arc 11 Architect", url: "https://www.arcelevenarchitect.com" }],
-
-  alternates: { canonical: "https://www.arcelevenarchitect.com" },
-
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title:
-      "Arc 11 Architect – Luxury Architecture, Interiors & Construction Services",
+    title: "Arc 11 Architect",
     description:
-      "Modern architecture, luxury interior design, 3D visualization, elevation design, renovation, and turnkey construction services across India.",
-    url: "https://www.arcelevenarchitect.com",
+      "Architecture and interior design studio working across Delhi NCR, Pan India, and international projects.",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com",
     siteName: "Arc 11 Architect",
+    type: "website",
     images: [
       {
-        url: "/og-image.png",
+        url: "/logo.jpeg",
         width: 1200,
         height: 630,
-        alt: "Arc 11 Architect – Architecture & Interior Design Studio",
+        alt: "Arc 11 Architect",
       },
     ],
-    locale: "en_IN",
-    type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
-    title: "Arc 11 Architect – Modern Architecture & Interior Design Studio",
+    title: "Arc 11 Architect",
     description:
-      "Creative architectural design, luxury interiors, commercial spaces, and turnkey construction solutions.",
-    images: ["/og-image.png"],
+      "Architecture and interior design studio working across Delhi NCR, Pan India, and international projects.",
+    images: ["/logo.jpeg"],
   },
-
-  icons: {
-    icon: "/arc-11-architect.svg",
-    shortcut: "/arc-11-architect.svg",
-    apple: "/arc-11-architect.svg",
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-// ========================================================================
-//                              ROOT LAYOUT
-// ========================================================================
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <head>
-        <meta name="application-name" content="Arc 11 Architect" />
-        <meta name="apple-mobile-web-app-title" content="Arc 11 Architect" />
-
-        <link rel="icon" href="/arc-11-architect.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-      </head>
-
-      <body className="bg-amcmep-bg text-amcmep-text antialiased font-sans text-sm">
-        <Navigation />
-
-        <main className="flex-grow p-4">{children}</main>
-
-        <FloatingWhatsApp />
-        <Footer />
-        <SEO />
-        <Analytics />
+      <body className={`${bodyFont.variable} ${displayFont.variable} antialiased`}>
+        <AnalyticsScripts />
+        <SeoJsonLd />
+        {children}
+        <WhatsAppFloat />
       </body>
     </html>
   );

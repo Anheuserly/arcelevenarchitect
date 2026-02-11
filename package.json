@@ -1,33 +1,27 @@
 {
-  "name": "starter-for-nextjs",
+  "name": "arcelevenarchitect-next",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint"
   },
   "dependencies": {
-    "@appwrite.io/pink-icons": "^1.0.0",
-    "@heroicons/react": "^2.2.0",
-    "@tailwindcss/postcss": "^4.1.11",
-    "@vercel/analytics": "^1.5.0",
-    "appwrite": "^18.1.1",
-    "chart.js": "^4.5.0",
-    "lucide-react": "^0.554.0",
-    "next": "15.4.3",
-    "postcss": "^8.5.6",
-    "react": "^19.1.0",
-    "react-chartjs-2": "^5.3.0",
-    "react-dom": "^19.1.0",
-    "tailwindcss": "^4.1.11"
+    "bcryptjs": "^3.0.3",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@types/node": "24.3.1",
-    "@types/react": "19.1.12",
-    "prettier": "3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.14",
-    "typescript": "5.9.2"
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
