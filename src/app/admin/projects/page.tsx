@@ -26,7 +26,6 @@ type ProjectRecord = {
   gallery?: string[];
 };
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Admin Projects",

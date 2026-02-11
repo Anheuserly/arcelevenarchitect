@@ -4,7 +4,6 @@ import AdminRecordCards from "@/components/admin/AdminRecordCards";
 import { getDashboardData, pickValue } from "@/lib/adminData";
 import { requireAdminContext } from "@/lib/adminAccess";
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Admin Applications",

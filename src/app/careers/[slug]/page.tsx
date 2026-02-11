@@ -5,7 +5,6 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { listDocumentsServer } from "@/lib/appwriteServer";
 
-export const runtime = "edge";
 
 type CareerRole = {
   slug: string;

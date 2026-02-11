@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import AdminAuthForm from "@/components/admin/AdminAuthForm";
 import { getAdminSession } from "@/lib/adminSession";
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Admin Auth",

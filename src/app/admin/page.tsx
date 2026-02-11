@@ -4,7 +4,6 @@ import AdminShell from "@/components/admin/AdminShell";
 import { getDashboardData } from "@/lib/adminData";
 import { requireAdminContext } from "@/lib/adminAccess";
 
-export const runtime = "edge";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
