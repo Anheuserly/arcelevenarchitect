@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import type { Metadata } from "next";
 import AdminEstimatorPanel from "@/components/admin/AdminEstimatorPanel";
 import AdminShell from "@/components/admin/AdminShell";

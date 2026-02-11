@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import type { Metadata } from "next";
 import AdminJournalForm from "@/components/admin/AdminJournalForm";
 import AdminShell from "@/components/admin/AdminShell";

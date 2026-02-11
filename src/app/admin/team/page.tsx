@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import type { Metadata } from "next";
 import AdminRecordCards from "@/components/admin/AdminRecordCards";
 import AdminShell from "@/components/admin/AdminShell";
