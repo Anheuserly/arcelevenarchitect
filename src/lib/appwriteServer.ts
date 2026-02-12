@@ -1,8 +1,11 @@
 "use server";
 
-const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
-const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
-const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID;
+const endpoint =
+  process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT || process.env.APPWRITE_ENDPOINT;
+const projectId =
+  process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID || process.env.APPWRITE_PROJECT_ID;
+const databaseId =
+  process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID || process.env.APPWRITE_DATABASE_ID;
 const apiKey = process.env.APPWRITE_API_KEY;
 
 type CreateDocumentParams = {
@@ -23,8 +26,12 @@ type UploadFileParams = {
 };
 
 function assertConfig() {
-  if (!endpoint || !projectId || !databaseId) {
-    throw new Error("Appwrite config missing");
+  const missing: string[] = [];
+  if (!endpoint) missing.push("NEXT_PUBLIC_APPWRITE_ENDPOINT or APPWRITE_ENDPOINT");
+  if (!projectId) missing.push("NEXT_PUBLIC_APPWRITE_PROJECT_ID or APPWRITE_PROJECT_ID");
+  if (!databaseId) missing.push("NEXT_PUBLIC_APPWRITE_DATABASE_ID or APPWRITE_DATABASE_ID");
+  if (missing.length > 0) {
+    throw new Error(`Appwrite config missing: ${missing.join(", ")}`);
   }
 }
 
@@ -267,7 +274,10 @@ export async function uploadFileServer({
   file,
 }: UploadFileParams): Promise<{ $id: string }> {
   if (!endpoint || !projectId) {
-    throw new Error("Appwrite config missing");
+    const missing: string[] = [];
+    if (!endpoint) missing.push("NEXT_PUBLIC_APPWRITE_ENDPOINT or APPWRITE_ENDPOINT");
+    if (!projectId) missing.push("NEXT_PUBLIC_APPWRITE_PROJECT_ID or APPWRITE_PROJECT_ID");
+    throw new Error(`Appwrite config missing: ${missing.join(", ")}`);
   }
 
   const formData = new FormData();
