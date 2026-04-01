@@ -37,8 +37,8 @@ export default function ScrollRevealController() {
         });
       },
       {
-        rootMargin: "0px 0px -12% 0px",
-        threshold: 0.16,
+        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.12,
       }
     );
 
@@ -47,7 +47,7 @@ export default function ScrollRevealController() {
         return;
       }
 
-      element.style.setProperty("--reveal-delay", `${Math.min(index % 6, 5) * 70}ms`);
+      element.style.setProperty("--reveal-delay", `${Math.min(index % 6, 5) * 45}ms`);
       const bounds = element.getBoundingClientRect();
       const isAlreadyVisible =
         bounds.top < window.innerHeight * 0.88 && bounds.bottom > window.innerHeight * 0.08;

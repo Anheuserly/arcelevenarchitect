@@ -3,7 +3,6 @@ import AnalyticsScripts from "@/components/AnalyticsScripts";
 import MediaProtection from "@/components/MediaProtection";
 import PageTransitionOverlay from "@/components/PageTransitionOverlay";
 import ScrollRevealController from "@/components/ScrollRevealController";
-import SmoothScrollController from "@/components/SmoothScrollController";
 import { Playfair_Display, Roboto } from "next/font/google";
 import SeoJsonLd from "@/components/SeoJsonLd";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -91,7 +90,6 @@ export default function RootLayout({
         <MediaProtection />
         <PageTransitionOverlay />
         <ScrollRevealController />
-        <SmoothScrollController />
         <SeoJsonLd />
         {children}
         <WhatsAppFloat />
