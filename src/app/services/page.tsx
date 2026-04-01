@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 
@@ -14,52 +15,65 @@ export const metadata: Metadata = {
   ],
 };
 
-export const services = [
+const services = [
   {
     title: "Architectural Design & Master Planning",
     description:
-      "Comprehensive architectural solutions including site analysis, spatial planning, and built-form strategy for residential, commercial, and mixed-use developments—from concept to completion.",
+      "Comprehensive architectural strategy from site reading and spatial planning to built-form development and phased coordination.",
   },
   {
     title: "Interior Architecture & Design",
     description:
-      "Thoughtfully crafted interior environments featuring curated material palettes, lighting design, custom furniture, and seamless spatial flow that enhance user experience and identity.",
+      "Interior systems, lighting logic, finish palettes, and custom detailing shaped into calm, cohesive environments.",
   },
   {
     title: "Urban Design & Planning",
     description:
-      "Designing cohesive, human-centered, and sustainable urban environments that promote community interaction, accessibility, and long-term resilience.",
+      "Larger frameworks for movement, civic legibility, human use, and long-term environmental response.",
   },
   {
     title: "Landscape Design",
     description:
-      "Functional and aesthetic outdoor spaces integrating greenery, circulation, and environmental sensitivity to complement the built environment.",
+      "Outdoor environments that connect circulation, planting, threshold-making, and climate sensitivity.",
   },
   {
     title: "Structural Engineering",
     description:
-      "Robust engineering solutions ensuring safety, stability, and durability while aligning structural performance with architectural intent.",
+      "Structural coordination that supports architectural intent without compromising clarity or build quality.",
   },
   {
     title: "Computational Design & BIM",
     description:
-      "Advanced digital workflows using computational tools and Building Information Modeling (BIM) for precise visualization, coordination, and efficient project delivery.",
+      "Digital workflows for visualization, documentation accuracy, interdisciplinary coordination, and decision clarity.",
   },
   {
     title: "Project Delivery & Execution",
     description:
-      "Detailed documentation, tender assistance, and on-site execution oversight to ensure quality control, cost efficiency, and predictable timelines.",
+      "Documentation, vendor coordination, site reviews, and execution oversight to protect design intent on the ground.",
   },
   {
     title: "Workspace, Hospitality & Wellness Design",
     description:
-      "Experience-driven environments for offices, boutique hotels, and wellness spaces that balance functionality, comfort, and brand identity.",
+      "Experience-led environments that support brand identity, user comfort, and operational flow.",
   },
   {
     title: "Sustainability & Resilience",
     description:
-      "Environmentally responsible design strategies focused on energy efficiency, resource optimization, climate responsiveness, and long-term sustainability.",
+      "Climate-responsive design thinking focused on material durability, energy performance, and long-term viability.",
   },
+];
+
+const deliverables = [
+  "Detailed drawing sets and interdisciplinary coordination packages",
+  "Material, finish, and fixture specifications",
+  "Lighting, automation, and furniture integration studies",
+  "Site review checkpoints and execution guidance",
+];
+
+const engagementModels = [
+  { label: "Architecture + Interior", value: "End-to-end" },
+  { label: "Interior Design", value: "Concept to detailing" },
+  { label: "Consulting", value: "Retainer or phase-based" },
 ];
 
 export default function ServicesPage() {
@@ -67,51 +81,71 @@ export default function ServicesPage() {
     <div className="bg-[var(--background)]">
       <SiteHeader />
       <main className="section-padding">
-        <div className="mx-auto max-w-6xl px-6">
-          <p className="kicker">Services</p>
-          <h1 className="mt-5 text-4xl sm:text-5xl">A full-spectrum design partner.</h1>
-          <p className="mt-6 max-w-2xl text-lg">
-            We deliver a disciplined, workshop-led process from concept to construction. Every
-            engagement includes clarity on scope, schedule, and design intent.
-          </p>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {services.map((item) => (
-              <div key={item.title} className="card p-8">
-                <h3 className="text-2xl">{item.title}</h3>
-                <p className="mt-3 text-sm">{item.description}</p>
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr]">
+            <div className="card p-8 lg:p-10">
+              <p className="kicker">Services</p>
+              <h1 className="mt-4 max-w-4xl text-4xl sm:text-6xl">
+                A full-spectrum design practice from concept thinking to execution support.
+              </h1>
+              <p className="mt-5 max-w-2xl text-base">
+                We approach each commission as a coordinated design system, aligning planning,
+                atmosphere, detail, and delivery rather than separating them into isolated
+                stages.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/contact" className="button-primary">
+                  Discuss Your Scope
+                </Link>
+                <Link href="/work" className="button-secondary">
+                  Review Related Work
+                </Link>
               </div>
-            ))}
+            </div>
+
+            <div className="grid gap-6">
+              <div className="subtle-card p-8">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                  Deliverables
+                </p>
+                <ul className="mt-5 space-y-3 text-sm">
+                  {deliverables.map((item) => (
+                    <li key={item} className="border-b border-[var(--line)] pb-3 last:border-b-0 last:pb-0">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="subtle-card p-8">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                  Engagement
+                </p>
+                <div className="mt-5 space-y-4 text-sm">
+                  {engagementModels.map((item) => (
+                    <div
+                      key={item.label}
+                      className="flex items-center justify-between border-b border-[var(--line)] pb-3 last:border-b-0 last:pb-0"
+                    >
+                      <span>{item.label}</span>
+                      <span className="text-[var(--foreground)]">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-14 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="subtle-card p-8">
-              <h2 className="text-3xl">Deliverables</h2>
-              <ul className="mt-4 space-y-3 text-sm text-[var(--muted)]">
-                <li>Detailed drawing sets and coordination packages</li>
-                <li>Material and finish specifications</li>
-                <li>Lighting and automation schematics</li>
-                <li>Custom furniture design and sourcing</li>
-                <li>On-site quality reviews and site reports</li>
-              </ul>
-            </div>
-            <div className="card p-8">
-              <h2 className="text-3xl">Engagement Models</h2>
-              <div className="mt-4 space-y-4 text-sm text-[var(--muted)]">
-                <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
-                  <span>Architecture + Interior</span>
-                  <span className="text-[var(--foreground)]">End-to-End</span>
-                </div>
-                <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">
-                  <span>Interior Only</span>
-                  <span className="text-[var(--foreground)]">12-20 weeks</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Consulting</span>
-                  <span className="text-[var(--foreground)]">Retainer</span>
-                </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {services.map((item, index) => (
+              <div key={item.title} className="card p-8">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h2 className="mt-4 text-3xl">{item.title}</h2>
+                <p className="mt-4 text-sm">{item.description}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </main>

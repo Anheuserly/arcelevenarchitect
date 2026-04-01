@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import AnalyticsScripts from "@/components/AnalyticsScripts";
+import MediaProtection from "@/components/MediaProtection";
+import PageTransitionOverlay from "@/components/PageTransitionOverlay";
+import ScrollRevealController from "@/components/ScrollRevealController";
+import SmoothScrollController from "@/components/SmoothScrollController";
 import { Playfair_Display, Roboto } from "next/font/google";
 import SeoJsonLd from "@/components/SeoJsonLd";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/logo.jpeg",
+        url: "/brand/geometry-study.jpeg",
         width: 1200,
         height: 630,
         alt: "Arc 11 Architect",
@@ -60,11 +64,18 @@ export const metadata: Metadata = {
     title: "Arc 11 Architect",
     description:
       "Architecture and interior design studio working across Delhi NCR, Pan India, and international projects.",
-    images: ["/logo.jpeg"],
+    images: ["/brand/geometry-study.jpeg"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
@@ -77,6 +88,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${bodyFont.variable} ${displayFont.variable} antialiased`}>
         <AnalyticsScripts />
+        <MediaProtection />
+        <PageTransitionOverlay />
+        <ScrollRevealController />
+        <SmoothScrollController />
         <SeoJsonLd />
         {children}
         <WhatsAppFloat />

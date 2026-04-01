@@ -1,115 +1,35 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import PortfolioExplorer from "@/components/PortfolioExplorer";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
+import {
+  getPortfolioCategoryBreakdown,
+  getPortfolioInsights,
+  getPortfolioProjects,
+  getPortfolioStats,
+} from "@/lib/portfolio";
 
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Explore selected residential and commercial projects by Arc 11 Architect across Delhi NCR, Pan India, and global locations.",
+    "Explore residential and commercial project galleries by Arc 11 Architect through a more structured visual archive.",
   keywords: [
     "architecture portfolio",
-    "residential projects Delhi",
-    "commercial architecture projects",
-    "interior renovation portfolio",
+    "residential project gallery",
+    "commercial architecture visuals",
+    "interior design portfolio Delhi",
   ],
 };
 
-const projects = [
-  {
-    name: "Private Residence, 8000 Sq. Ft. Built-Up",
-    location: "Signature City, Ghaziabad",
-    summary:
-      "Modern classical villa blending timeless elements with contemporary living.",
-    year: "2021",
-    category: "Residential",
-    status: "On-Going",
-  },
-  {
-    name: "Jorbagh Villa, 4800 Sq. Ft. Built-Up",
-    location: "Near Pari Chowk, Greater Noida",
-    summary: "Minimalist villa interior with clean lines and a neutral palette.",
-    year: "2022",
-    category: "Residential",
-    status: "Completed",
-  },
-  {
-    name: "4 BHK Apartment, Builder Floor, P-37",
-    location: "Gurgaon",
-    summary: "Modern interior design with a unique parametric outlook.",
-    year: "2024",
-    category: "Residential",
-    status: "Completed",
-  },
-  {
-    name: "Micro 2 BHK Apartment",
-    location: "Chhatarpur, South Delhi",
-    summary: "Minimal interior design with a vibrant pop-of-color theme.",
-    year: "2023",
-    category: "Residential",
-    status: "Completed",
-  },
-  {
-    name: "Germany 3 BHK Apartment",
-    location: "Germany",
-    summary: "3D interior design and rendering with a modern minimal dark theme.",
-    year: "2022",
-    category: "Residential",
-    status: "Completed",
-  },
-  {
-    name: "Builder Floor, Mira Bagh",
-    location: "Mira Bagh",
-    summary: "Elegant interiors in a modern classical theme.",
-    year: "2023",
-    category: "Residential",
-    status: "Completed",
-  },
-  {
-    name: "Private Villa, 4500 Sq. Ft.",
-    location: "Raj Nagar Extension",
-    summary: "Turnkey project combining innovative architecture with modern living.",
-    year: "2023",
-    category: "Residential",
-    status: "On-Going",
-  },
-  {
-    name: "Sarita Vihar 3BHK Apartment",
-    location: "Sarita Vihar",
-    summary: "Interior renovation blending comfort and luxury.",
-    year: "2024",
-    category: "Residential",
-    status: "On-Going",
-  },
-  {
-    name: "Mira Bagh Exterior Elevation",
-    location: "Janakpuri",
-    summary:
-      "Exterior elevation designs across modern, classical, and Roman-Persian styles.",
-    year: "2022",
-    category: "Residential",
-    status: "Completed",
-  },
-  {
-    name: "Noida Windsor Court",
-    location: "Noida",
-    summary: "Residential renovation focused on contemporary modern interiors.",
-    year: "2024",
-    category: "Residential",
-    status: "On-Going",
-  },
-  {
-    name: "AIIMS Extension Block",
-    location: "New Delhi",
-    summary: "3D design of interiors and exterior landscape for the extension block.",
-    year: "2019",
-    category: "Commercial",
-    status: "Completed",
-  },
-];
-
 export default function WorkPage() {
+  const projects = getPortfolioProjects();
+  const stats = getPortfolioStats();
+  const insights = getPortfolioInsights();
+  const categoryBreakdown = getPortfolioCategoryBreakdown();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
+
   const workSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -119,12 +39,12 @@ export default function WorkPage() {
       position: index + 1,
       item: {
         "@type": "Project",
-        name: project.name,
-        description: project.summary,
+        name: project.title,
+        description: project.description,
         location: project.location,
         category: project.category,
         status: project.status,
-        url: `${siteUrl}/work`,
+        url: `${siteUrl}${project.href}`,
       },
     })),
   };
@@ -132,74 +52,114 @@ export default function WorkPage() {
   return (
     <div className="bg-[var(--background)]">
       <SiteHeader />
-      <main className="section-padding">
-        <div className="mx-auto max-w-6xl px-6">
-          <p className="kicker">Work</p>
-          <h1 className="mt-5 text-4xl sm:text-5xl">Curated environments in context.</h1>
-          <p className="mt-6 max-w-2xl text-lg">
-            Our portfolio spans private residences, apartments, builder floors, and
-            institutional projects. Each space is guided by a clear narrative and refined
-            material palette.
-          </p>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(workSchema) }}
-          />
+      <main>
+        <section className="section-padding">
+          <div className="mx-auto max-w-7xl px-6">
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(workSchema) }}
+            />
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            {projects.map((project) => (
-              <div key={project.name} className="card p-8">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-2xl">{project.name}</h3>
-                  <span className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
-                    {project.location}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm">{project.summary}</p>
-                <div className="mt-5 flex flex-wrap gap-3 text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
-                  <span>{project.year}</span>
-                  <span>•</span>
-                  <span>{project.category}</span>
-                  <span>•</span>
-                  <span>{project.status}</span>
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="card p-8 lg:p-10">
+                <p className="kicker">Work Archive</p>
+                <h1 className="mt-4 max-w-4xl text-4xl sm:text-6xl">
+                  A visual archive of residential, commercial, and institutional studies.
+                </h1>
+                <p className="mt-5 max-w-2xl text-base">
+                  This archive brings together project imagery, room-by-room studies, and
+                  atmosphere-led compositions into a more navigable portfolio system.
+                </p>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                  <div className="metric-tile">
+                    <span className="metric-label">Projects</span>
+                    <span className="metric-value">{stats.projects}</span>
+                  </div>
+                  <div className="metric-tile">
+                    <span className="metric-label">Visual Frames</span>
+                    <span className="metric-value">{stats.images}</span>
+                  </div>
+                  <div className="metric-tile">
+                    <span className="metric-label">Spatial Tags</span>
+                    <span className="metric-value">{insights.totalSpaces}</span>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
 
-          <div className="mt-14 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="subtle-card p-8">
-              <h2 className="text-3xl">Project Notes</h2>
-              <p className="mt-4 text-sm">
-                We protect client privacy and share curated highlights. For full case studies,
-                request our portfolio deck via the contact page.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <TrackingPdfLink
-                  href="/docs/Port-Folio_Shashank_Saini.pdf"
-                  className="rounded-full bg-[var(--foreground)] px-5 py-2 text-xs uppercase tracking-[0.22em] text-white visited:text-white hover:text-white"
-                  placement="work_notes"
-                >
-                  Portfolio PDF
-                </TrackingPdfLink>
-                <TrackingPdfLink
-                  href="/docs/ARC11ARCHITECT_PROFILE.pdf"
-                  className="rounded-full border border-[var(--line)] bg-white px-5 py-2 text-xs uppercase tracking-[0.22em]"
-                  placement="work_notes"
-                >
-                  Company Profile
-                </TrackingPdfLink>
+              <div className="grid gap-6">
+                <div className="subtle-card p-8">
+                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                    Archive Analysis
+                  </p>
+                  <div className="mt-5 space-y-5">
+                    {categoryBreakdown.map((entry) => (
+                      <div key={entry.category}>
+                        <div className="flex items-end justify-between gap-4">
+                          <div>
+                            <p className="text-lg text-[var(--foreground)]">{entry.category}</p>
+                            <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted-2)]">
+                              {entry.projectCount} case studies
+                            </p>
+                          </div>
+                          <p className="text-2xl text-[var(--foreground)]">{entry.imageCount}</p>
+                        </div>
+                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/70">
+                          <div
+                            className="h-full rounded-full bg-[var(--accent)]"
+                            style={{ width: `${(entry.imageCount / stats.images) * 100}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="subtle-card p-8">
+                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                    Largest Dossier
+                  </p>
+                  <h2 className="mt-4 text-3xl">{insights.largestGalleryProject.title}</h2>
+                  <p className="mt-3 text-sm">
+                    The deepest visual set currently available in the archive, useful for
+                    understanding how the studio develops atmosphere across multiple spaces.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    <span className="tag-pill">
+                      {insights.largestGalleryProject.imageCount} frames
+                    </span>
+                    <span className="tag-pill">{insights.largestGalleryProject.location}</span>
+                    <span className="tag-pill">{insights.leadCategory.category} leads</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="card p-8">
-              <h2 className="text-3xl">How we work</h2>
-              <p className="mt-4 text-sm">
-                Each project is guided by clear documentation, material control, and steady
-                on-site coordination to ensure design intent is delivered.
-              </p>
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              <TrackingPdfLink
+                href="/documents/portfolio-shashank-saini.pdf"
+                className="button-primary visited:text-white hover:text-white"
+                placement="work_notes"
+              >
+                Portfolio PDF
+              </TrackingPdfLink>
+              <TrackingPdfLink
+                href="/documents/company-profile.pdf"
+                className="button-secondary"
+                placement="work_notes"
+              >
+                Company Profile
+              </TrackingPdfLink>
+              <Link href="/contact" className="button-secondary">
+                Request a Presentation
+              </Link>
+            </div>
+
+            <div className="mt-14">
+              <PortfolioExplorer projects={projects} />
             </div>
           </div>
-        </div>
+        </section>
       </main>
       <SiteFooter />
     </div>
