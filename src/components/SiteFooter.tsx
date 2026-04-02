@@ -9,7 +9,7 @@ export default function SiteFooter() {
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="card overflow-hidden p-8 lg:p-10">
             <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="overflow-hidden rounded-[28px] border border-[var(--line)] bg-white">
+              <div className="framed-media overflow-hidden rounded-[28px] border border-[var(--line)] bg-white">
                 <img
                   src="/brand/geometry-study.jpeg"
                   alt="Arc 11 Architect geometry study"
@@ -127,7 +127,7 @@ export default function SiteFooter() {
                     <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted-2)]">
                       Sectors
                     </p>
-                    <p className="mt-1">Residential, commercial, institutional, renovation</p>
+                    <p className="mt-1">Residential, Commercial, Institutional, Renovation</p>
                   </div>
                   <div className="pt-1">
                     <Link href="/privacy">Privacy</Link>

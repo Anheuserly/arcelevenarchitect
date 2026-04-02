@@ -8,7 +8,7 @@ export default function SeoJsonLd() {
   const siteUrl = baseUrl();
   const brand = "Arc 11 Architect";
   const altBrand = "Arc 11 Architect";
-  const logo = `${siteUrl}/brand/geometry-study.jpeg`;
+  const logo = `${siteUrl}/brand/proportion-study.png`;
   const headOfficeMap =
     "https://www.google.com/maps/place/ARC+11+ARCHITECT/@28.5068683,77.1821208,17z/data=!3m1!4b1!4m6!3m5!1s0x8b99e39acef87ea3:0x6f5f84cfaba72863!8m2!3d28.5068683!4d77.1846957!16s%2Fg%2F11x60035f9";
   const branchOfficeMap =

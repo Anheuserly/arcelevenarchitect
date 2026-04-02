@@ -185,7 +185,7 @@ export default function StudioPage() {
               {moodboards.map((image) => (
                 <div
                   key={image.src}
-                  className="overflow-hidden rounded-[26px] border border-[var(--line)] bg-white shadow-[var(--shadow-soft)]"
+                  className="framed-media overflow-hidden rounded-[26px] border border-[var(--line)] bg-white shadow-[var(--shadow-soft)]"
                 >
                   <img src={image.src} alt={image.alt} loading="lazy" className="w-full" />
                 </div>

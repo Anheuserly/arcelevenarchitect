@@ -21,6 +21,8 @@ const displayFont = Playfair_Display({
   display: "swap",
 });
 
+const shareImageVersion = "20260402-social";
+
 export const metadata: Metadata = {
   title: {
     default: "Arc 11 Architect",
@@ -51,19 +53,19 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/brand/geometry-study.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Arc 11 Architect",
+        url: `/brand/proportion-study.png?v=${shareImageVersion}`,
+        width: 512,
+        height: 512,
+        alt: "Arc 11 Architect logo",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Arc 11 Architect",
     description:
       "Architecture and interior design studio working across Delhi NCR, Pan India, and international projects.",
-    images: ["/brand/geometry-study.jpeg"],
+    images: [`/brand/proportion-study.png?v=${shareImageVersion}`],
   },
   robots: {
     index: true,

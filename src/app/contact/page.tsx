@@ -112,7 +112,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="grid gap-6">
-                  <div className="overflow-hidden rounded-[28px] border border-[var(--line)] bg-white shadow-[var(--shadow-soft)]">
+                  <div className="framed-media overflow-hidden rounded-[28px] border border-[var(--line)] bg-white shadow-[var(--shadow-soft)]">
                     <img
                       src="/contact/contact-card.png"
                       alt="Arc 11 Architect contact card"
@@ -131,7 +131,7 @@ export default function ContactPage() {
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-6 overflow-hidden rounded-[22px] border border-[var(--line)] bg-[var(--surface)] p-4">
+                    <div className="framed-media mt-6 overflow-hidden rounded-[22px] border border-[var(--line)] bg-[var(--surface)] p-4">
                       <img
                         src="/contact/qr-code.png"
                         alt="Arc 11 Architect QR code"
