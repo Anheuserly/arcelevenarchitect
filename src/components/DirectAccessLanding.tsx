@@ -6,6 +6,7 @@ import type {
   DirectAccessAction,
   DirectAccessContactPoint,
   DirectAccessProfile,
+  DirectAccessSocialLink,
   DirectAccessShowcase,
 } from "@/lib/directAccessProfiles";
 
@@ -71,6 +72,15 @@ function renderContactPoint(point: DirectAccessContactPoint) {
       <Link href={point.href} className="text-sm text-[var(--foreground)] underline-link">
         {point.value}
       </Link>
+    ) : point.href && point.href.startsWith("http") ? (
+      <a
+        href={point.href}
+        target="_blank"
+        rel="noreferrer"
+        className="text-sm text-[var(--foreground)] underline-link"
+      >
+        {point.value}
+      </a>
     ) : point.href ? (
       <a href={point.href} className="text-sm text-[var(--foreground)] underline-link">
         {point.value}
@@ -86,6 +96,33 @@ function renderContactPoint(point: DirectAccessContactPoint) {
     >
       <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--muted-2)]">
         {point.label}
+      </p>
+      <div className="mt-3">{value}</div>
+    </div>
+  );
+}
+
+function renderSocialLink(link: DirectAccessSocialLink) {
+  const value = link.href ? (
+    <a
+      href={link.href}
+      target="_blank"
+      rel="noreferrer"
+      className="text-sm text-[var(--foreground)] underline-link"
+    >
+      {link.handle}
+    </a>
+  ) : (
+    <p className="text-sm text-[var(--foreground)]">{link.handle}</p>
+  );
+
+  return (
+    <div
+      key={`${link.platform}-${link.handle}`}
+      className="rounded-[22px] border border-[var(--line)] bg-[rgba(255,255,255,0.58)] p-4"
+    >
+      <p className="text-[11px] uppercase tracking-[0.28em] text-[var(--muted-2)]">
+        {link.platform}
       </p>
       <div className="mt-3">{value}</div>
     </div>
@@ -241,6 +278,14 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
                 </p>
                 <p className="mt-4 max-w-xl text-sm leading-6">{profile.contactIntro}</p>
                 <div className="mt-6 grid gap-4">{profile.contactPoints.map(renderContactPoint)}</div>
+              </div>
+
+              <div className="card p-8 lg:p-10">
+                <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                  {profile.socialTitle}
+                </p>
+                <p className="mt-4 text-sm leading-6">{profile.socialIntro}</p>
+                <div className="mt-6 grid gap-4">{profile.socialLinks.map(renderSocialLink)}</div>
               </div>
 
               <div className="card p-8 lg:p-10">

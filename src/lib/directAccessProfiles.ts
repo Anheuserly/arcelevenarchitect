@@ -45,6 +45,12 @@ export type DirectAccessContactPoint = {
   href?: string;
 };
 
+export type DirectAccessSocialLink = {
+  platform: string;
+  handle: string;
+  href?: string;
+};
+
 export type DirectAccessProfile = {
   slug: string;
   name: string;
@@ -67,6 +73,9 @@ export type DirectAccessProfile = {
   contactTitle: string;
   contactIntro: string;
   contactPoints: DirectAccessContactPoint[];
+  socialTitle: string;
+  socialIntro: string;
+  socialLinks: DirectAccessSocialLink[];
   noteTitle: string;
   noteBody: string;
   nextStepTitle: string;
@@ -251,6 +260,26 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
         value: "Chhatarpur, New Delhi",
       },
     ],
+    socialTitle: "Social Profiles",
+    socialIntro:
+      "Public-facing links for studio presence, professional background, and direct profile context.",
+    socialLinks: [
+      {
+        platform: "Instagram",
+        handle: "@shashaankk",
+        href: "https://www.instagram.com/shashaankk/",
+      },
+      {
+        platform: "Facebook",
+        handle: "shashank.saini.161",
+        href: "https://www.facebook.com/shashank.saini.161",
+      },
+      {
+        platform: "LinkedIn",
+        handle: "ar-shashank-saini-a0830b19b",
+        href: "https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/",
+      },
+    ],
     noteTitle: "Direct Route Note",
     noteBody:
       "This page is intended for direct sharing and review. It is not surfaced in the main navigation and is omitted from the public sitemap.",
@@ -429,6 +458,40 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
       {
         label: "Collaboration Mode",
         value: "Works through Arc 11 Architect's digital layer",
+      },
+    ],
+    socialTitle: "Social Profiles",
+    socialIntro:
+      "Public profiles and handles connected to Shubham across personal, studio, and professional presence.",
+    socialLinks: [
+      {
+        platform: "Facebook",
+        handle: "notshubham4u",
+        href: "https://www.facebook.com/notshubham4u",
+      },
+      {
+        platform: "Discord",
+        handle: "anheuserly",
+      },
+      {
+        platform: "Instagram",
+        handle: "@shubham.arc11",
+        href: "https://www.instagram.com/shubham.arc11/",
+      },
+      {
+        platform: "Instagram Alt",
+        handle: "@itznotshubham",
+        href: "https://www.instagram.com/itznotshubham/",
+      },
+      {
+        platform: "Instagram Archive",
+        handle: "@oh.wow.nice",
+        href: "https://www.instagram.com/oh.wow.nice/",
+      },
+      {
+        platform: "LinkedIn",
+        handle: "shubham-kumar-54b4a5145",
+        href: "https://www.linkedin.com/in/shubham-kumar-54b4a5145/",
       },
     ],
     noteTitle: "Digital Perspective",
