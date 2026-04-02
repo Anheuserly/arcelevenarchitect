@@ -306,7 +306,7 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
       {
         label: "Built Here",
         value: "Portfolio, SEO, Intake Flows",
-        detail: "Asset mapping, hidden routes, forms, previews, and metadata.",
+        detail: "Asset mapping, route architecture, forms, previews, and metadata.",
       },
       {
         label: "Best Used For",
@@ -329,7 +329,7 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
       {
         title: "Content Systems",
         description:
-          "Organizes uploads, project structures, hidden routes, and reusable data layers so the site can grow cleanly.",
+          "Organizes uploads, project structures, reusable routes, and data layers so the site can grow cleanly.",
       },
       {
         title: "Search and Sharing",
@@ -364,10 +364,10 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
           "Handled social previews, image discovery tuning, Discord verification, sitemap polish, and structured metadata.",
       },
       {
-        period: "Protected Access",
-        title: "Added Hidden Routes and Media Controls",
+        period: "Control Layer",
+        title: "Added Access Routing and Media Controls",
         description:
-          "Created discreet direct-access pages, image-protection deterrents, and cleaner control over what is publicly surfaced.",
+          "Built direct-access pages, image-protection deterrents, and cleaner control over how portfolio content is surfaced.",
       },
     ],
     showcaseTitle: "Selected Digital Contributions",
@@ -431,9 +431,9 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
         value: "Works through Arc 11 Architect's digital layer",
       },
     ],
-    noteTitle: "Hidden Profile Note",
+    noteTitle: "Digital Perspective",
     noteBody:
-      "This route gives context on the digital side of the studio without turning it into another public section in the main website structure.",
+      "The website layer is treated as part of the studio identity, where structure, presentation, performance, and discoverability need to feel equally considered.",
     nextStepTitle: "Want to review the implementation?",
     nextStepBody:
       "Browse the live website, open the work archive, or use contact if the conversation is about a new digital requirement or a studio-facing web update.",
