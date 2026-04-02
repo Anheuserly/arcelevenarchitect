@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { ReactNode } from "react";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
 import type {
@@ -16,6 +17,35 @@ type DirectAccessLandingProps = {
 
 function actionClassName(action: DirectAccessAction) {
   return action.variant === "primary" ? "button-primary" : "button-secondary";
+}
+
+function renderSmartLink(
+  href: string,
+  label: ReactNode,
+  className: string,
+  key: string,
+) {
+  if (href.startsWith("http")) {
+    return (
+      <a key={key} href={href} target="_blank" rel="noreferrer" className={className}>
+        {label}
+      </a>
+    );
+  }
+
+  if (href.startsWith("mailto:") || href.startsWith("tel:")) {
+    return (
+      <a key={key} href={href} className={className}>
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link key={key} href={href} className={className}>
+      {label}
+    </Link>
+  );
 }
 
 function renderAction(action: DirectAccessAction, profile: DirectAccessProfile) {
@@ -47,20 +77,8 @@ function renderAction(action: DirectAccessAction, profile: DirectAccessProfile) 
     );
   }
 
-  if (action.kind === "email" && action.href) {
-    return (
-      <a key={key} href={action.href} className={className}>
-        {action.label}
-      </a>
-    );
-  }
-
-  if (action.kind === "link" && action.href) {
-    return (
-      <Link key={key} href={action.href} className={className}>
-        {action.label}
-      </Link>
-    );
+  if ((action.kind === "email" || action.kind === "link") && action.href) {
+    return renderSmartLink(action.href, action.label, className, key);
   }
 
   return null;
@@ -142,13 +160,11 @@ function renderShowcaseLink(showcase: DirectAccessShowcase, profileSlug: string)
     );
   }
 
-  return (
-    <Link
-      href={showcase.href}
-      className="inline-flex text-xs uppercase tracking-[0.24em] text-[var(--foreground)]"
-    >
-      {showcase.linkLabel}
-    </Link>
+  return renderSmartLink(
+    showcase.href,
+    showcase.linkLabel,
+    "inline-flex text-xs uppercase tracking-[0.24em] text-[var(--foreground)]",
+    `${profileSlug}-${showcase.title}-link`,
   );
 }
 
@@ -229,25 +245,26 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
                   alt={profile.heroAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 46vw"
-                  className="object-cover"
+                  className="object-cover brightness-[0.9] contrast-[1.05]"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,16,14,0.08),rgba(18,16,14,0.48))]" />
-                <div className="absolute left-6 top-6 rounded-full border border-white/18 bg-[rgba(18,16,14,0.18)] px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-white/86 backdrop-blur-md">
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,16,14,0.24),rgba(18,16,14,0.72))]" />
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,16,14,0.08),rgba(18,16,14,0.12),rgba(18,16,14,0.34))]" />
+                <div className="absolute left-6 top-6 rounded-full border border-white/22 bg-[rgba(18,16,14,0.52)] px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-white shadow-[0_12px_28px_rgba(0,0,0,0.24)] backdrop-blur-md">
                   {profile.role}
                 </div>
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
                   <div className="grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
-                    <div className="rounded-[26px] border border-white/18 bg-[rgba(16,16,16,0.22)] p-5 backdrop-blur-md">
-                      <p className="text-[11px] uppercase tracking-[0.3em] text-white/70">
+                    <div className="rounded-[26px] border border-white/14 bg-[rgba(16,14,12,0.68)] p-5 shadow-[0_18px_34px_rgba(0,0,0,0.28)] backdrop-blur-md">
+                      <p className="text-[11px] uppercase tracking-[0.3em] text-white/76">
                         Profile Lens
                       </p>
-                      <p className="mt-3 text-sm leading-6 text-white/92">{profile.heroCaption}</p>
+                      <p className="mt-3 text-sm leading-6 text-white/96">{profile.heroCaption}</p>
                     </div>
-                    <div className="rounded-[26px] border border-white/18 bg-[rgba(255,255,255,0.12)] p-5 backdrop-blur-md">
-                      <p className="text-[11px] uppercase tracking-[0.3em] text-white/70">
+                    <div className="rounded-[26px] border border-white/14 bg-[rgba(16,14,12,0.62)] p-5 shadow-[0_18px_34px_rgba(0,0,0,0.24)] backdrop-blur-md">
+                      <p className="text-[11px] uppercase tracking-[0.3em] text-white/76">
                         Base
                       </p>
-                      <p className="mt-3 text-sm leading-6 text-white/92">{profile.location}</p>
+                      <p className="mt-3 text-sm leading-6 text-white/96">{profile.location}</p>
                     </div>
                   </div>
                 </div>
@@ -272,7 +289,7 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
 
           <section className="grid gap-6 lg:grid-cols-[0.92fr_1.08fr]">
             <aside className="grid gap-6">
-              <div className="subtle-card p-8 lg:p-10">
+              <div id="profile-connect" className="subtle-card p-8 lg:p-10">
                 <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted-2)]">
                   {profile.contactTitle}
                 </p>
@@ -300,13 +317,13 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
             </aside>
 
             <div className="grid gap-6">
-              <div className="subtle-card p-8 lg:p-10">
+              <div id="profile-principles" className="subtle-card p-8 lg:p-10">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted-2)]">
                       {profile.principlesTitle}
                     </p>
-                    <h2 className="mt-4 text-4xl">How the work is approached.</h2>
+                    <h2 className="mt-4 text-4xl">Core strengths and working outlook.</h2>
                   </div>
                 </div>
 
@@ -323,13 +340,13 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
                 </div>
               </div>
 
-              <div className="card p-8 lg:p-10">
+              <div id="profile-journey" className="card p-8 lg:p-10">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                   <div>
                     <p className="text-[11px] uppercase tracking-[0.3em] text-[var(--muted-2)]">
                       {profile.timelineTitle}
                     </p>
-                    <h2 className="mt-4 text-4xl">Experience through built phases.</h2>
+                    <h2 className="mt-4 text-4xl">Background, training, and progression.</h2>
                   </div>
                 </div>
 
@@ -355,7 +372,7 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
             <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
               <div>
                 <p className="kicker">{profile.showcaseTitle}</p>
-                <h2 className="mt-4 text-4xl sm:text-5xl">A clearer reading of the work.</h2>
+                <h2 className="mt-4 text-4xl sm:text-5xl">Selected highlights.</h2>
               </div>
               <p className="max-w-2xl text-sm leading-6">{profile.showcaseIntro}</p>
             </div>
@@ -405,9 +422,12 @@ export default function DirectAccessLanding({ profile }: DirectAccessLandingProp
               </p>
               <p className="mt-4 max-w-2xl text-sm leading-6">{profile.nextStepBody}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={profile.nextStepHref} className="button-secondary">
-                  {profile.nextStepLabel}
-                </Link>
+                {renderSmartLink(
+                  profile.nextStepHref,
+                  profile.nextStepLabel,
+                  "button-secondary",
+                  `${profile.slug}-next-step`,
+                )}
                 <Link href="/" className="button-secondary">
                   Back to Home
                 </Link>

@@ -93,10 +93,10 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
     summary:
       "B.Arch graduate from Guru Gobind Singh Indraprastha University and current proprietor-director of Arc 11 Architect. His portfolio spans residential and commercial design, interiors, visualization, technical working drawings, and site-linked coordination across Delhi NCR and beyond.",
     location: "New Delhi, India",
-    heroImage: "/portfolio/residential/mr-vikram-residence/gallery/mr-vikram-exterior-01.png",
-    heroAlt: "Arc 11 Architect residential exterior study",
+    heroImage: "/profiles/shashank/shashank-saini-portrait.jpg",
+    heroAlt: "Portrait of Shashank Saini",
     heroCaption:
-      "Residential, commercial, and technical work carried from concept direction into execution-ready detail.",
+      "Founder portrait paired with a practice built through residential, commercial, interior, and technically detailed architectural work.",
     actions: [
       {
         kind: "startProject",
@@ -280,9 +280,9 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
         href: "https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/",
       },
     ],
-    noteTitle: "Direct Route Note",
+    noteTitle: "Studio Perspective",
     noteBody:
-      "This page is intended for direct sharing and review. It is not surfaced in the main navigation and is omitted from the public sitemap.",
+      "Shashank's studio approach combines presentation clarity, working drawings, material understanding, and site-linked follow-through so concepts stay grounded in execution.",
     nextStepTitle: "Ready to discuss a live brief?",
     nextStepBody:
       "Use Start a Project when there is a site, budget, or timeline to review. For a lighter introduction, vendor query, or follow-up, use the contact page instead.",
@@ -292,178 +292,173 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
   shubham: {
     slug: "shubham",
     name: "Shubham Kumar",
-    role: "Website Developer, Arc 11 Architect",
-    headline: "Digital systems, premium UX, and front-end execution for the studio's online presence.",
+    role: "Electrical Engineer and Technical Support Profile",
+    headline:
+      "Electrical systems, service coordination, and communication-led support grounded in practical training and on-site responsibility.",
     summary:
-      "Shubham develops the Arc 11 Architect website and shapes how the studio reads online: interface systems, motion, portfolio structure, lead-capture flows, SEO/share behavior, hidden access pages, and content organization across the site.",
-    location: "Digital build layer for Arc 11 Architect",
+      "The latest resume positions Shubham as an electrical-engineering profile with Diploma Electrical studies, ITI Electrician training, Electrical Design Engineer certification, and current experience at Shree Ganesh Enterprises. The work spans firefighting and plumbing-system execution, fire detection, marketing support, electrical design calculations, and a practical command of tools such as AutoCAD, C#, DIALux, MS Excel, and MS Office.",
+    location: "New Delhi, India",
     heroImage: "/brand/geometry-study.jpeg",
-    heroAlt: "Arc 11 Architect geometry study",
+    heroAlt: "Abstract geometry study for Shubham Kumar profile",
     heroCaption:
-      "A digital portfolio focused on structure, motion, discoverability, and clean implementation rather than generic template work.",
+      "A cleaner technical profile direction focused on training, systems thinking, and communication-led support.",
     actions: [
       {
-        kind: "link",
-        label: "Open Studio Website",
-        href: "/",
+        kind: "email",
+        label: "Send Email",
+        href: "mailto:shubham2808kumar@gmail.com",
         variant: "primary",
       },
       {
-        kind: "link",
-        label: "Browse Work Archive",
-        href: "/work",
+        kind: "document",
+        label: "Open Resume PDF",
+        href: "/documents/shubham-kumar-resume-edd.pdf",
+        placement: "shubham_resume_pdf",
         variant: "secondary",
       },
       {
         kind: "link",
-        label: "Use Contact",
-        href: "/contact",
+        label: "Open LinkedIn",
+        href: "https://www.linkedin.com/in/shubham-kumar-54b4a5145/",
         variant: "secondary",
       },
     ],
     facts: [
       {
-        label: "Role",
-        value: "Website Developer",
-        detail: "Translates studio direction into a working digital product.",
+        label: "Current Experience",
+        value: "Electrical Engineer",
+        detail: "Working at Shree Ganesh Enterprises from June 14, 2024 to present.",
       },
       {
-        label: "Focus",
-        value: "UX, Motion, Structure",
-        detail: "Premium interface systems across desktop and mobile.",
+        label: "Technical Base",
+        value: "Diploma Electrical + ITI Electrician",
+        detail: "Also backed by Electrical Design Engineer and multi-skill technician certifications.",
       },
       {
-        label: "Built Here",
-        value: "Portfolio, SEO, Intake Flows",
-        detail: "Asset mapping, route architecture, forms, previews, and metadata.",
+        label: "Tools",
+        value: "AutoCAD, C#, DIALux",
+        detail: "Also works with MS Excel and MS Office in day-to-day technical documentation.",
       },
       {
-        label: "Best Used For",
-        value: "Brand-Led Web Delivery",
-        detail: "Websites that need both visual polish and technical clarity.",
+        label: "Working Style",
+        value: "Site Coordination and Communication",
+        detail: "Handles services execution, safety systems, teamwork, and marketing-led client support.",
       },
     ],
-    principlesTitle: "Digital Practice",
+    principlesTitle: "Professional Profile",
     principles: [
       {
-        title: "Interface Architecture",
+        title: "Professional Summary",
         description:
-          "Builds screens, components, and hierarchy that feel intentional instead of theme-driven or generic.",
+          "Dedicated electrical-engineering profile with experience in designing and implementing electrical systems, supported by strong problem solving and a passion for technology.",
       },
       {
-        title: "Motion and Page Flow",
+        title: "Current Responsibilities",
         description:
-          "Uses transitions, scroll behavior, and UI feedback to make the site feel smarter and more considered.",
+          "Supervises firefighting and plumbing installations, oversees testing, maintains fire-detection systems, and supports marketing initiatives for client acquisition.",
       },
       {
-        title: "Content Systems",
+        title: "Certifications and Training",
         description:
-          "Organizes uploads, project structures, reusable routes, and data layers so the site can grow cleanly.",
+          "Certified Multi Skill Technician through LG Hope Technical Skill Academy and Certified Electrical Design Engineer through Dhanush MEP Center.",
       },
       {
-        title: "Search and Sharing",
+        title: "Professional Skills",
         description:
-          "Tunes metadata, image previews, sitemap behavior, verification files, and SEO-facing details for better reach.",
+          "Problem-solving, team collaboration, effective communication, time management, and a comfort with technical drawings, schematics, and applied design calculations.",
       },
     ],
-    timelineTitle: "Website Work",
+    timelineTitle: "Experience and Education",
     timeline: [
       {
-        period: "Foundation",
-        title: "Structured the Core Experience",
+        period: "June 14, 2024 - Present",
+        title: "Electrical Engineer, Shree Ganesh Enterprises",
         description:
-          "Turned the site into a responsive Next.js experience with a stronger visual system and architectural presentation language.",
+          "Current role involving firefighting systems, plumbing systems, fire detection, marketing initiatives, and project support at Vadheda Builders, Kutub Hotel, Delhi.",
       },
       {
-        period: "Portfolio Layer",
-        title: "Mapped Real Assets into the Website",
+        period: "2019 - 2021",
+        title: "Diploma Electrical",
         description:
-          "Connected uploaded files to the public portfolio, case-study pages, category grouping, and richer content presentation.",
+          "Anuranchal University of Studies.",
       },
       {
-        period: "Lead Flow",
-        title: "Separated Inquiry and Project Intake",
+        period: "2017 - 2019",
+        title: "ITI Electrician",
         description:
-          "Reworked contact vs start-project logic, added the popup intake flow, and aligned request handling more clearly.",
-      },
-      {
-        period: "Search and Share",
-        title: "Improved Visibility and Preview Behavior",
-        description:
-          "Handled social previews, image discovery tuning, Discord verification, sitemap polish, and structured metadata.",
-      },
-      {
-        period: "Control Layer",
-        title: "Added Access Routing and Media Controls",
-        description:
-          "Built direct-access pages, image-protection deterrents, and cleaner control over how portfolio content is surfaced.",
+          "NCVT.",
       },
     ],
-    showcaseTitle: "Selected Digital Contributions",
+    showcaseTitle: "Resume Highlights",
     showcaseIntro:
-      "Shubham's page works best as a build portfolio, so it highlights the systems and decisions that shaped the live website rather than pretending to be an architectural CV.",
+      "The PDF gives a clearer professional direction, so this page now surfaces current employment, service responsibilities, electrical-design exposure, certifications, and direct-reference material in one place.",
     showcases: [
       {
-        eyebrow: "UI System",
-        title: "Design Language and Homepage Direction",
+        eyebrow: "Current Role",
+        title: "Services, Safety Systems, and Site Support",
         description:
-          "Navigation refinement, material-like surfaces, typographic hierarchy, and an architectural visual tone across the core site.",
-        href: "/",
-        linkLabel: "Open Homepage",
+          "Current responsibilities include firefighting, plumbing, fire detection, testing, compliance-minded support, and client-facing marketing coordination.",
+        href: "#profile-journey",
+        linkLabel: "View Experience",
         imageSrc: "/brand/geometry-study.jpeg",
-        imageAlt: "Arc 11 Architect brand geometry study",
-        tags: ["UI/UX", "Responsive", "Brand Direction"],
+        imageAlt: "Abstract services and technical support visual",
+        tags: ["Electrical Engineer", "Services", "On-Site Support"],
       },
       {
-        eyebrow: "Portfolio System",
-        title: "Asset Mapping and Case Study Structure",
+        eyebrow: "Design Exposure",
+        title: "Electrical Design and Calculation Work",
         description:
-          "Connected uploaded folders to project pages, galleries, hidden routes, and content-driven sections so the work can scale cleanly.",
-        href: "/work",
-        linkLabel: "Open Work Archive",
-        imageSrc: "/portfolio/residential/mr-vikram-residence/gallery/mr-vikram-exterior-02.png",
-        imageAlt: "Arc 11 Architect project archive visual",
-        tags: ["Routing", "Content System", "Case Studies"],
-      },
-      {
-        eyebrow: "SEO and Conversion",
-        title: "Share Previews, Forms, and Discoverability",
-        description:
-          "Handled direct-sharing behavior, verification routes, page metadata, and the split between general inquiry and project-ready intake.",
-        href: "/contact",
-        linkLabel: "Open Contact Flow",
+          "The resume lists hospital and generic building electrical design work, including connected-load calculations, cable sizing, tripping time, voltage drop, short circuit, earth pit, bus bar, cable tray, and lightning-rod requirements.",
+        href: "#profile-principles",
+        linkLabel: "View Skill Focus",
         imageSrc: "/brand/proportion-study.png",
-        imageAlt: "Arc 11 Architect logo asset",
-        tags: ["SEO", "Forms", "Metadata"],
+        imageAlt: "Abstract technical design visual",
+        tags: ["Electrical Design", "Calculations", "AutoCAD"],
+      },
+      {
+        eyebrow: "Reference",
+        title: "Resume PDF and Career Summary",
+        description:
+          "The full PDF remains available for a deeper review of qualifications, certifications, and current work responsibilities.",
+        href: "/documents/shubham-kumar-resume-edd.pdf",
+        linkLabel: "Open Resume PDF",
+        imageSrc: "/brand/geometry-study.jpeg",
+        imageAlt: "Abstract resume reference visual",
+        kind: "document",
+        placement: "shubham_resume_showcase_pdf",
+        tags: ["Resume PDF", "Reference", "Profile"],
       },
     ],
-    contactTitle: "Best Way to Connect",
+    contactTitle: "Professional Snapshot",
     contactIntro:
-      "For digital-facing conversations, website refinement, or broader studio coordination, route through the studio contact page and the live website itself.",
+      "A concise read of current role, active work context, technical focus, and tools without turning the page into a full personal resume sheet.",
     contactPoints: [
       {
-        label: "Inquiry Route",
-        value: "Use the Contact page",
-        href: "/contact",
+        label: "Current Role",
+        value: "Electrical Engineer at Shree Ganesh Enterprises",
       },
       {
-        label: "Live Build",
-        value: "Review the current studio website",
-        href: "/",
+        label: "Active Project",
+        value: "Vadheda Builders, Kutub Hotel, Delhi",
       },
       {
-        label: "Focus Area",
-        value: "Front-end systems, motion, SEO, and content structure",
+        label: "Technical Focus",
+        value: "Firefighting systems, plumbing services, fire detection, and electrical design support",
       },
       {
-        label: "Collaboration Mode",
-        value: "Works through Arc 11 Architect's digital layer",
+        label: "Software and Tools",
+        value: "AutoCAD, DIALux, C#, MS Excel, and MS Office",
       },
     ],
     socialTitle: "Social Profiles",
     socialIntro:
-      "Public profiles and handles connected to Shubham across personal, studio, and professional presence.",
+      "Public profiles and handles tied to Shubham across personal and professional presence.",
     socialLinks: [
+      {
+        platform: "GitHub",
+        handle: "shubhamkumar",
+        href: "https://github.com/shubhamkumar",
+      },
       {
         platform: "Facebook",
         handle: "notshubham4u",
@@ -494,14 +489,14 @@ const directAccessProfiles: Record<string, DirectAccessProfile> = {
         href: "https://www.linkedin.com/in/shubham-kumar-54b4a5145/",
       },
     ],
-    noteTitle: "Digital Perspective",
+    noteTitle: "Profile Perspective",
     noteBody:
-      "The website layer is treated as part of the studio identity, where structure, presentation, performance, and discoverability need to feel equally considered.",
-    nextStepTitle: "Want to review the implementation?",
+      "Beyond technical training, the resume shows interests in coding, software development, technical reading, chess, and travel, alongside a profile shaped by communication, adaptability, and practical learning.",
+    nextStepTitle: "Want the full resume version?",
     nextStepBody:
-      "Browse the live website, open the work archive, or use contact if the conversation is about a new digital requirement or a studio-facing web update.",
-    nextStepHref: "/work",
-    nextStepLabel: "Open Work Archive",
+      "Open the PDF for the full formatted resume, or use the contact and social blocks above for direct reach.",
+    nextStepHref: "/documents/shubham-kumar-resume-edd.pdf",
+    nextStepLabel: "Open Resume PDF",
   },
 };
 
