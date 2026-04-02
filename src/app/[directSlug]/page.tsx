@@ -29,8 +29,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: profile.name,
-    description: profile.description,
+    title: `${profile.name} | Arc 11 Architect`,
+    description: profile.summary,
     robots: {
       index: false,
       follow: false,
@@ -42,6 +42,22 @@ export async function generateMetadata({
         "max-snippet": 0,
         "max-video-preview": 0,
       },
+    },
+    openGraph: {
+      title: `${profile.name} | Arc 11 Architect`,
+      description: profile.summary,
+      images: [
+        {
+          url: profile.heroImage,
+          alt: profile.heroAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${profile.name} | Arc 11 Architect`,
+      description: profile.summary,
+      images: [profile.heroImage],
     },
   };
 }
