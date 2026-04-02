@@ -12,30 +12,50 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+function getRequestSource(record: Record<string, unknown>) {
+  return String(record.page || "").trim().toLowerCase();
+}
+
+function buildRequestCard(record: Record<string, unknown>, index: number) {
+  const source = getRequestSource(record);
+  const isInquiry = source === "contact_inquiry";
+
+  return {
+    id: String(record.$id || `request-${index}`),
+    title: pickValue(record, ["name", "fullName"]),
+    subtitle: isInquiry ? "General Inquiry" : "Project Request",
+    status: pickValue(record, ["status"]),
+    createdAt: pickValue(record, ["createdAt", "$createdAt"]),
+    fields: isInquiry
+      ? [
+          { label: "Email", value: pickValue(record, ["email"]) },
+          { label: "Inquiry Topic", value: pickValue(record, ["projectType", "project_type"]) },
+          { label: "Organization / Location", value: pickValue(record, ["location", "city"]) },
+          { label: "Response Window", value: pickValue(record, ["timeline"]) },
+          { label: "Referral", value: pickValue(record, ["referral"]) },
+          { label: "Message", value: pickValue(record, ["message", "details"]) },
+        ]
+      : [
+          { label: "Email", value: pickValue(record, ["email"]) },
+          { label: "Project Type", value: pickValue(record, ["projectType", "project_type"]) },
+          { label: "Location", value: pickValue(record, ["location", "city"]) },
+          { label: "Budget", value: pickValue(record, ["budgetRange", "budget_range"]) },
+          { label: "Timeline", value: pickValue(record, ["timeline"]) },
+          { label: "Message", value: pickValue(record, ["message", "details"]) },
+        ],
+  };
+}
+
 export default async function AdminRequestsPage() {
   const { session, role } = await requireAdminContext();
   const { requests } = await getDashboardData();
 
-  const cards = requests.slice(0, 50).map((item, index) => ({
-    id: String(item.$id || `request-${index}`),
-    title: pickValue(item, ["name", "fullName"]),
-    subtitle: "Project Request",
-    status: pickValue(item, ["status"]),
-    createdAt: pickValue(item, ["createdAt", "$createdAt"]),
-    fields: [
-      { label: "Email", value: pickValue(item, ["email"]) },
-      { label: "Project Type", value: pickValue(item, ["projectType", "project_type"]) },
-      { label: "Budget", value: pickValue(item, ["budgetRange", "budget_range"]) },
-      { label: "Timeline", value: pickValue(item, ["timeline"]) },
-      { label: "Location", value: pickValue(item, ["location", "city"]) },
-      { label: "Message", value: pickValue(item, ["message", "details"]) },
-    ],
-  }));
+  const cards = requests.slice(0, 50).map((item, index) => buildRequestCard(item, index));
 
   return (
     <AdminShell
-      heading="Project Requests"
-      subheading="Incoming leads from contact and request forms."
+      heading="Requests & Inquiries"
+      subheading="Incoming project briefs and general studio inquiries."
       role={role}
       name={session.name}
       email={session.email}

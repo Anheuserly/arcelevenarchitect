@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useEffectEvent, useState } from "react";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 
 type Slide = {
   category: string;
@@ -116,9 +117,12 @@ export default function WorkSlider({ slides }: { slides: Slide[] }) {
                   <Link href={current.href} className="button-primary">
                     View Case Study
                   </Link>
-                  <Link href="/contact" className="button-secondary-on-dark">
+                  <StartProjectTrigger
+                    className="button-secondary-on-dark"
+                    source="work_slider"
+                  >
                     Start a Project
-                  </Link>
+                  </StartProjectTrigger>
                 </div>
               </div>
 

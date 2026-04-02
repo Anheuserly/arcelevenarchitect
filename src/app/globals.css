@@ -499,6 +499,102 @@ img {
   z-index: 1;
 }
 
+.start-project-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.85rem, 2vw, 1.5rem);
+  background:
+    radial-gradient(circle at top left, rgba(155, 104, 67, 0.15), transparent 28%),
+    rgba(20, 18, 15, 0.32);
+  backdrop-filter: blur(18px);
+  animation: modal-backdrop-in 0.28s ease both;
+}
+
+.start-project-modal {
+  position: relative;
+  width: min(1120px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  border: 1px solid rgba(66, 56, 44, 0.16);
+  border-radius: 36px;
+  background:
+    linear-gradient(180deg, rgba(251, 247, 241, 0.96), rgba(240, 232, 223, 0.92)),
+    rgba(255, 255, 255, 0.94);
+  box-shadow: 0 36px 90px rgba(23, 18, 12, 0.24);
+  padding: clamp(0.95rem, 2vw, 1.15rem);
+  overscroll-behavior: contain;
+  animation: modal-panel-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.start-project-modal::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  pointer-events: none;
+}
+
+.start-project-modal-close {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-left: auto;
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--foreground);
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  padding: 0.88rem 1.05rem;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
+.start-project-modal-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+}
+
+.start-project-modal-sidebar {
+  background:
+    linear-gradient(180deg, rgba(247, 241, 233, 0.94), rgba(236, 227, 216, 0.88)),
+    rgba(255, 255, 255, 0.78);
+}
+
+.start-project-modal .card,
+.start-project-modal .subtle-card {
+  box-shadow: 0 20px 44px rgba(48, 35, 22, 0.08);
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 @media (max-width: 768px) {
   .site-header {
     padding: 0.85rem 0.75rem 0;
@@ -516,6 +612,20 @@ img {
     left: 1.45rem;
     right: 1.45rem;
     bottom: 0.46rem;
+  }
+
+  .start-project-modal {
+    max-height: calc(100vh - 1rem);
+    border-radius: 30px;
+    padding: 0.8rem;
+  }
+
+  .start-project-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .start-project-modal-close {
+    padding: 0.8rem 0.94rem;
   }
 }
 

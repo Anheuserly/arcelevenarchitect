@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -94,9 +95,9 @@ export default function ServicesPage() {
                 stages.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/contact" className="button-primary">
+                <StartProjectTrigger className="button-primary" source="services_cta">
                   Discuss Your Scope
-                </Link>
+                </StartProjectTrigger>
                 <Link href="/work" className="button-secondary">
                   Review Related Work
                 </Link>

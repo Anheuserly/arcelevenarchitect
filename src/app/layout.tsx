@@ -3,6 +3,7 @@ import AnalyticsScripts from "@/components/AnalyticsScripts";
 import MediaProtection from "@/components/MediaProtection";
 import PageTransitionOverlay from "@/components/PageTransitionOverlay";
 import ScrollRevealController from "@/components/ScrollRevealController";
+import { StartProjectModalProvider } from "@/components/StartProjectModalProvider";
 import { Playfair_Display, Roboto } from "next/font/google";
 import SeoJsonLd from "@/components/SeoJsonLd";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -88,13 +89,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${bodyFont.variable} ${displayFont.variable} antialiased`}>
-        <AnalyticsScripts />
-        <MediaProtection />
-        <PageTransitionOverlay />
-        <ScrollRevealController />
-        <SeoJsonLd />
-        {children}
-        <WhatsAppFloat />
+        <StartProjectModalProvider>
+          <AnalyticsScripts />
+          <MediaProtection />
+          <PageTransitionOverlay />
+          <ScrollRevealController />
+          <SeoJsonLd />
+          {children}
+          <WhatsAppFloat />
+        </StartProjectModalProvider>
       </body>
     </html>
   );

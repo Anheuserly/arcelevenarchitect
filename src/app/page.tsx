@@ -6,6 +6,7 @@ import FeedbackForm from "@/components/FeedbackForm";
 import PortfolioProjectCard from "@/components/PortfolioProjectCard";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
 import WorkSlider from "@/components/WorkSlider";
 import {
@@ -348,9 +349,9 @@ export default function Home() {
                     measured next-step plan and consultation path.
                   </p>
                 </div>
-                <Link href="/contact" className="button-primary">
-                  Contact Studio
-                </Link>
+                <StartProjectTrigger className="button-primary" source="home_cta">
+                  Start a Project
+                </StartProjectTrigger>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import Link from "next/link";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 
 export default function SiteFooter() {
   return (
@@ -64,9 +65,9 @@ export default function SiteFooter() {
                   <Link href="/work" className="button-primary">
                     Explore Work
                   </Link>
-                  <Link href="/contact" className="button-secondary">
-                    Contact Studio
-                  </Link>
+                  <StartProjectTrigger className="button-secondary" source="footer_cta">
+                    Start a Project
+                  </StartProjectTrigger>
                 </div>
               </div>
             </div>
@@ -108,6 +109,9 @@ export default function SiteFooter() {
                   <Link href="/studio">Studio</Link>
                   <Link href="/services">Services</Link>
                   <Link href="/work">Work</Link>
+                  <StartProjectTrigger className="text-left" source="footer_quick_links">
+                    Start a Project
+                  </StartProjectTrigger>
                   <Link href="/contact">Contact</Link>
                 </div>
               </div>

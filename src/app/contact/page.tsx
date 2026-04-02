@@ -4,25 +4,26 @@ import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Arc 11 Architect for architecture and interior design projects. Reach our head office and branch office in Delhi.",
+    "Contact Arc 11 Architect for general inquiries, collaborations, vendor introductions, and direct studio communication.",
   keywords: [
     "contact architect Delhi",
     "Arc 11 office address",
-    "architecture consultation",
-    "interior design inquiry",
+    "design studio inquiry",
+    "architect collaboration contact",
   ],
 };
 
-const consultationModes = [
-  "Architecture and interior design consultations",
-  "Residential and builder-floor design inquiries",
-  "Commercial and institutional project discussions",
-  "Portfolio presentations and capability walkthroughs",
+const inquiryTopics = [
+  "General studio questions and service clarifications",
+  "Collaborator, consultant, and vendor introductions",
+  "Press, publication, and profile-sharing requests",
+  "Meeting coordination, office visits, and follow-ups",
 ];
 
 export default function ContactPage() {
@@ -36,28 +37,33 @@ export default function ContactPage() {
               <div className="card p-8 lg:p-10">
                 <p className="kicker">Contact</p>
                 <h1 className="mt-4 max-w-4xl text-4xl sm:text-6xl">
-                  Let’s start with the site, scope, and ambition for your project.
+                  General inquiries, studio correspondence, and collaborations.
                 </h1>
                 <p className="mt-5 max-w-2xl text-base">
-                  Share your timeline, budget range, and required services. We respond with
-                  the right next step, whether that means a consultation, a presentation, or a
-                  project-specific roadmap.
+                  Use this page when you want to ask a question, introduce your practice,
+                  coordinate a meeting, or connect with the studio directly. If you want to
+                  hire Arc 11 for a live commission, use the dedicated project intake flow.
                 </p>
 
                 <div className="mt-8 flex flex-wrap gap-3">
+                  <a
+                    href="mailto:arcelevenarchitect@gmail.com"
+                    className="button-primary visited:text-white hover:text-white"
+                  >
+                    Email Studio
+                  </a>
+                  <StartProjectTrigger
+                    className="button-secondary"
+                    source="contact_hero_secondary"
+                  >
+                    Start a Project
+                  </StartProjectTrigger>
                   <TrackingPdfLink
                     href="/documents/portfolio-shashank-saini.pdf"
-                    className="button-primary visited:text-white hover:text-white"
-                    placement="contact_intro"
-                  >
-                    Portfolio PDF
-                  </TrackingPdfLink>
-                  <TrackingPdfLink
-                    href="/documents/company-profile.pdf"
                     className="button-secondary"
                     placement="contact_intro"
                   >
-                    Company Profile
+                    Portfolio PDF
                   </TrackingPdfLink>
                 </div>
               </div>
@@ -122,10 +128,10 @@ export default function ContactPage() {
 
                   <div className="card p-6">
                     <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
-                      Consultation Modes
+                      Best Use For
                     </p>
                     <ul className="mt-4 space-y-3 text-sm">
-                      {consultationModes.map((item) => (
+                      {inquiryTopics.map((item) => (
                         <li key={item} className="border-b border-[var(--line)] pb-3 last:border-b-0 last:pb-0">
                           {item}
                         </li>
@@ -144,12 +150,28 @@ export default function ContactPage() {
             </div>
 
             <div className="card p-8 lg:p-10">
-              <p className="kicker">Project Inquiry</p>
-              <h2 className="mt-4 text-4xl">Tell us what you’re planning.</h2>
+              <p className="kicker">Quick Inquiry</p>
+              <h2 className="mt-4 text-4xl">Ask a question or introduce yourself.</h2>
               <p className="mt-4 max-w-xl text-sm">
-                The more context you share about site, timeline, deliverables, and level of
-                design support, the more precisely we can guide the next conversation.
+                This form is for general contact, collaborations, vendors, and studio
+                communication. If you are sharing a real project brief, head to the dedicated
+                intake page so we can review it properly.
               </p>
+              <div className="mt-5 rounded-[22px] border border-[var(--line)] bg-[rgba(255,255,255,0.66)] p-4 text-sm">
+                <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted-2)]">
+                  Hiring The Studio?
+                </p>
+                <p className="mt-2">
+                  Use the project intake page for residential, commercial, institutional, and
+                  turnkey work.
+                </p>
+                <StartProjectTrigger
+                  className="mt-4 inline-flex text-xs uppercase tracking-[0.28em] text-[var(--foreground)]"
+                  source="contact_inline_prompt"
+                >
+                  Go to Start a Project
+                </StartProjectTrigger>
+              </div>
               <div className="mt-8">
                 <ContactForm />
               </div>

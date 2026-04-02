@@ -12,11 +12,56 @@ const publicDocumentPermissions = [
   'delete("any")',
 ];
 
-export default function ContactForm() {
+type EstimatePrefill = {
+  projectType: string;
+  budget: string;
+  message: string;
+  hasEstimate: boolean;
+};
+
+function getEstimatePrefill(): EstimatePrefill {
+  if (typeof window === "undefined") {
+    return { projectType: "", budget: "", message: "", hasEstimate: false };
+  }
+
+  try {
+    const raw = localStorage.getItem("projectEstimate");
+    if (!raw) return { projectType: "", budget: "", message: "", hasEstimate: false };
+
+    const parsed = JSON.parse(raw) as {
+      project_type?: string;
+      estimate?: { inr?: number; local?: number; currency?: string };
+    };
+
+    const projectType = String(parsed.project_type || "");
+    const inr = Number(parsed.estimate?.inr || 0);
+    const local = Number(parsed.estimate?.local || 0);
+    const currency = String(parsed.estimate?.currency || "INR");
+    const budget = inr > 0 ? `Estimated ~ ₹${inr.toLocaleString("en-IN")} INR` : "";
+    const message =
+      inr > 0 || local > 0
+        ? `I used your project estimator and would like to discuss the next step.\n` +
+          `Estimated cost: ₹${inr.toLocaleString("en-IN")} INR` +
+          (currency !== "INR" && local > 0 ? ` (${local.toLocaleString()} ${currency})` : "") +
+          `.`
+        : "";
+
+    return { projectType, budget, message, hasEstimate: true };
+  } catch {
+    return { projectType: "", budget: "", message: "", hasEstimate: false };
+  }
+}
+
+export default function ProjectRequestForm() {
+  const [initialPrefill] = useState<EstimatePrefill>(() => getEstimatePrefill());
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle"
   );
   const [error, setError] = useState<string | null>(null);
+  const [projectTypeValue, setProjectTypeValue] = useState(initialPrefill.projectType);
+  const [budgetRangeValue, setBudgetRangeValue] = useState(initialPrefill.budget);
+  const [messageValue, setMessageValue] = useState(initialPrefill.message);
+  const [loadedEstimate] = useState(initialPrefill.hasEstimate);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,13 +79,15 @@ export default function ContactForm() {
     const payload = {
       name: String(formData.get("fullName") || ""),
       email: String(formData.get("email") || ""),
-      projectType: String(formData.get("inquiryType") || ""),
-      location: String(formData.get("organization") || ""),
+      projectType: String(formData.get("projectType") || ""),
+      location: String(formData.get("location") || ""),
+      budgetRange: String(formData.get("budgetRange") || ""),
       timeline: String(formData.get("timeline") || ""),
       message: String(formData.get("message") || ""),
       referral: String(formData.get("referral") || ""),
       status: "new",
-      page: "contact_inquiry",
+      page: "start_project",
+      hasEstimate: loadedEstimate,
       createdAt: new Date().toISOString(),
     };
 
@@ -50,11 +97,15 @@ export default function ContactForm() {
         data: payload,
         permissions: publicDocumentPermissions,
       });
-      trackEvent("contact_inquiry_submit", {
-        source_page: "contact",
+      trackEvent("project_request_submit", {
+        source_page: "start_project",
+        has_estimate: loadedEstimate,
       });
       setStatus("success");
       form.reset();
+      setProjectTypeValue("");
+      setBudgetRangeValue("");
+      setMessageValue("");
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "Submission failed");
@@ -78,6 +129,7 @@ export default function ContactForm() {
           required
         />
       </div>
+
       <div>
         <label
           htmlFor="email"
@@ -94,78 +146,90 @@ export default function ContactForm() {
           required
         />
       </div>
+
       <div>
         <label
-          htmlFor="inquiryType"
+          htmlFor="projectType"
           className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]"
         >
-          Inquiry Topic
-        </label>
-        <select
-          id="inquiryType"
-          name="inquiryType"
-          className="mt-2 w-full rounded-full border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
-          defaultValue=""
-          required
-        >
-          <option value="" disabled>
-            Select inquiry topic
-          </option>
-          <option value="General question">General question</option>
-          <option value="Collaboration">Collaboration</option>
-          <option value="Vendor / consultant">Vendor / consultant</option>
-          <option value="Press / publication">Press / publication</option>
-          <option value="Office visit / meeting">Office visit / meeting</option>
-        </select>
-      </div>
-      <div>
-        <label
-          htmlFor="organization"
-          className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]"
-        >
-          Organization or Location
+          Project Type
         </label>
         <input
-          id="organization"
-          name="organization"
+          id="projectType"
+          name="projectType"
+          value={projectTypeValue}
+          onChange={(event) => setProjectTypeValue(event.target.value)}
           className="mt-2 w-full rounded-full border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
-          placeholder="Studio, company, city, or project address"
+          placeholder="Residence, builder floor, commercial, hospitality"
+          required
         />
       </div>
+
+      <div>
+        <label
+          htmlFor="location"
+          className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]"
+        >
+          Site or Project Location
+        </label>
+        <input
+          id="location"
+          name="location"
+          className="mt-2 w-full rounded-full border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
+          placeholder="City, sector, or full site location"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="budgetRange"
+          className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]"
+        >
+          Budget Range
+        </label>
+        <input
+          id="budgetRange"
+          name="budgetRange"
+          value={budgetRangeValue}
+          onChange={(event) => setBudgetRangeValue(event.target.value)}
+          className="mt-2 w-full rounded-full border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
+          placeholder="₹25–50L, ₹50L–1Cr, ₹1Cr+"
+        />
+      </div>
+
       <div>
         <label
           htmlFor="timeline"
           className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]"
         >
-          Preferred Response Window
+          Timeline
         </label>
-        <select
+        <input
           id="timeline"
           name="timeline"
           className="mt-2 w-full rounded-full border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
-          defaultValue=""
-        >
-          <option value="">No preference</option>
-          <option value="Routine">Routine</option>
-          <option value="This week">This week</option>
-          <option value="Urgent">Urgent</option>
-        </select>
+          placeholder="Start month + expected duration"
+        />
       </div>
+
       <div>
         <label
           htmlFor="message"
           className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]"
         >
-          Message
+          Project Brief
         </label>
         <textarea
           id="message"
           name="message"
-          className="mt-2 min-h-[140px] w-full rounded-3xl border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
-          placeholder="Tell us what you need, who you are, and how we can help."
+          value={messageValue}
+          onChange={(event) => setMessageValue(event.target.value)}
+          className="mt-2 min-h-[160px] w-full rounded-3xl border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
+          placeholder="Tell us about the site, area, design goals, current stage, and what you want from the studio."
           required
         />
       </div>
+
       <div>
         <label
           htmlFor="referral"
@@ -177,24 +241,25 @@ export default function ContactForm() {
           id="referral"
           name="referral"
           className="mt-2 w-full rounded-full border border-[var(--line)] bg-transparent px-4 py-3 text-sm outline-none focus:border-[var(--foreground)]"
-          placeholder="Referral, Instagram, Google, Architect, Other"
+          placeholder="Referral, Instagram, Google, architect, collaborator"
         />
       </div>
+
       <button
         type="submit"
         disabled={status === "submitting"}
         className="w-full rounded-full bg-[var(--foreground)] px-6 py-3 text-xs uppercase tracking-[0.25em] text-white disabled:opacity-60"
       >
-        {status === "submitting" ? "Sending..." : "Send Inquiry"}
+        {status === "submitting" ? "Sending..." : "Send Project Brief"}
       </button>
+
       {status === "success" ? (
         <p className="text-xs text-[var(--muted-2)]">
-          Thank you. We will route your inquiry to the right person and reply soon.
+          Thank you. We will review your brief and come back with the next step.
         </p>
       ) : null}
-      {status === "error" ? (
-        <p className="text-xs text-red-600">{error}</p>
-      ) : null}
+
+      {status === "error" ? <p className="text-xs text-red-600">{error}</p> : null}
     </form>
   );
 }

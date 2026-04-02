@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import PortfolioGallery from "@/components/PortfolioGallery";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 import { getPortfolioProject, getPortfolioProjects } from "@/lib/portfolio";
 
 type WorkDetailPageProps = {
@@ -195,9 +196,9 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
                   </div>
 
                   <div className="mt-8 flex flex-wrap gap-3">
-                    <Link href="/contact" className="button-primary">
+                    <StartProjectTrigger className="button-primary" source="work_case_study">
                       Discuss a Similar Project
-                    </Link>
+                    </StartProjectTrigger>
                     <Link href="/work" className="button-secondary">
                       Browse More Work
                     </Link>

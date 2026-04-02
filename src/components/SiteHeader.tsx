@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import StartProjectTrigger from "@/components/StartProjectTrigger";
 
 const navItems = [
   { label: "Studio", href: "/studio" },
@@ -155,9 +156,12 @@ export default function SiteHeader() {
           >
             Menu
           </button>
-          <Link href="/contact" className="button-secondary hidden md:inline-flex">
+          <StartProjectTrigger
+            className="button-secondary hidden md:inline-flex"
+            source="header_desktop"
+          >
             Start a Project
-          </Link>
+          </StartProjectTrigger>
         </div>
 
         <span
@@ -194,13 +198,13 @@ export default function SiteHeader() {
                   </Link>
                 );
               })}
-              <Link
-                href="/contact"
-                onClick={() => setOpenMenuPath(null)}
+              <StartProjectTrigger
                 className="button-primary mt-2 justify-center"
+                onOpen={() => setOpenMenuPath(null)}
+                source="header_mobile"
               >
                 Start a Project
-              </Link>
+              </StartProjectTrigger>
             </nav>
           </div>
         </div>
