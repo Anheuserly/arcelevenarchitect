@@ -133,22 +133,22 @@ export default function SiteHeader() {
           </div>
         </Link>
 
-        <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 md:hidden">
-          <div className="overflow-hidden rounded-[16px] border border-[var(--line-strong)] bg-white p-2 shadow-[var(--shadow-soft)]">
+        <Link href="/" className="flex min-w-0 max-w-[15rem] flex-1 items-center gap-2.5 md:hidden">
+          <div className="overflow-hidden rounded-[14px] border border-[var(--line-strong)] bg-white p-1.5 shadow-[var(--shadow-soft)]">
             <Image
               src="/brand/proportion-study.png"
               alt="Arc 11 Architect"
-              width={40}
-              height={40}
-              className="h-9 w-9 object-contain"
+              width={36}
+              height={36}
+              className="h-8.5 w-8.5 object-contain"
             />
           </div>
           <div className="min-w-0">
-            <p className="text-[10px] uppercase tracking-[0.34em] text-[var(--muted-2)]">
-              Arc 11
+            <p className="truncate text-[0.58rem] uppercase tracking-[0.28em] text-[var(--muted-2)]">
+              Arc 11 Architect
             </p>
-            <p className="mt-1 text-[0.78rem] uppercase tracking-[0.24em] text-[var(--foreground)]">
-              Architect
+            <p className="mt-1 truncate text-[0.72rem] text-[var(--muted)]">
+              Architecture and interiors
             </p>
           </div>
         </Link>
@@ -202,12 +202,11 @@ export default function SiteHeader() {
               <span />
             </span>
           </button>
-          <StartProjectTrigger
-            className="button-secondary hidden md:inline-flex"
-            source="header_desktop"
-          >
-            Start a Project
-          </StartProjectTrigger>
+          <div className="hidden md:flex">
+            <StartProjectTrigger className="button-secondary" source="header_desktop">
+              Start a Project
+            </StartProjectTrigger>
+          </div>
         </div>
 
         <span
@@ -219,48 +218,50 @@ export default function SiteHeader() {
 
       {menuOpen ? (
         <div className="mx-auto mt-3 max-w-7xl px-2 md:hidden">
-          <div className="site-mobile-panel" id="site-mobile-panel">
-            <div className="site-mobile-panel-header">
-              <p className="site-mobile-panel-kicker">Navigation</p>
-              <p className="site-mobile-panel-caption">
-                Move through the studio, portfolio, tools, and inquiry routes with a cleaner
-                small-screen layout.
-              </p>
-            </div>
-            <div className="site-mobile-panel-actions">
-              <StartProjectTrigger
-                className="button-primary justify-center"
-                onOpen={() => setOpenMenuPath(null)}
-                source="header_mobile"
-              >
-                Start a Project
-              </StartProjectTrigger>
-            </div>
-            <nav className="site-mobile-grid">
-              {navItems.map((item) => {
-                const isActive =
-                  pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+          <div className="site-mobile-panel-shell">
+            <div className="site-mobile-panel" id="site-mobile-panel">
+              <div className="site-mobile-panel-header">
+                <p className="site-mobile-panel-kicker">Menu</p>
+                <p className="site-mobile-panel-caption">
+                  Studio pages, casework, tools, and project intake in one cleaner mobile sheet.
+                </p>
+              </div>
+              <nav className="site-mobile-list">
+                {navItems.map((item) => {
+                  const isActive =
+                    pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
 
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setOpenMenuPath(null)}
-                    aria-current={isActive ? "page" : undefined}
-                    className={`site-mobile-link ${
-                      isActive
-                        ? "site-mobile-link-active"
-                        : "border-[var(--line)] bg-white text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--foreground)]"
-                    }`}
-                  >
-                    <span className="inline-flex flex-col items-start gap-3">
-                      <span className="site-mobile-link-rule" aria-hidden="true" />
-                      <span className="site-mobile-link-label">{item.label}</span>
-                    </span>
-                  </Link>
-                );
-              })}
-            </nav>
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setOpenMenuPath(null)}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`site-mobile-link ${
+                        isActive
+                          ? "site-mobile-link-active"
+                          : "border-[var(--line)] bg-white text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--foreground)]"
+                      }`}
+                    >
+                      <span className="site-mobile-link-inner">
+                        <span className="site-mobile-link-rule" aria-hidden="true" />
+                        <span className="site-mobile-link-label">{item.label}</span>
+                      </span>
+                      <span className="site-mobile-link-mark" aria-hidden="true" />
+                    </Link>
+                  );
+                })}
+              </nav>
+              <div className="site-mobile-panel-actions">
+                <StartProjectTrigger
+                  className="button-primary justify-center"
+                  onOpen={() => setOpenMenuPath(null)}
+                  source="header_mobile"
+                >
+                  Start a Project
+                </StartProjectTrigger>
+              </div>
+            </div>
           </div>
         </div>
       ) : null}
