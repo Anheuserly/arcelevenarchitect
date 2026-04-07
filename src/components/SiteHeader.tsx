@@ -48,6 +48,27 @@ export default function SiteHeader() {
     };
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenMenuPath(null);
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen, pathname]);
+
   useLayoutEffect(() => {
     const updateIndicator = () => {
       const activeLink = linkRefs.current[activeIndex];
@@ -92,7 +113,7 @@ export default function SiteHeader() {
       <div
         className={`site-header-bar mx-auto max-w-7xl ${isScrolled ? "site-header-bar-scrolled" : ""}`}
       >
-        <Link href="/" className="flex items-center gap-4">
+        <Link href="/" className="hidden items-center gap-4 md:flex">
           <div className="overflow-hidden rounded-[18px] border border-[var(--line-strong)] bg-white p-2 shadow-[var(--shadow-soft)]">
             <Image
               src="/brand/proportion-study.png"
@@ -108,6 +129,26 @@ export default function SiteHeader() {
             </p>
             <p className="mt-1 hidden text-sm text-[var(--muted)] sm:block">
               Architecture, interiors, and visual strategy
+            </p>
+          </div>
+        </Link>
+
+        <Link href="/" className="flex min-w-0 flex-1 items-center gap-3 md:hidden">
+          <div className="overflow-hidden rounded-[16px] border border-[var(--line-strong)] bg-white p-2 shadow-[var(--shadow-soft)]">
+            <Image
+              src="/brand/proportion-study.png"
+              alt="Arc 11 Architect"
+              width={40}
+              height={40}
+              className="h-9 w-9 object-contain"
+            />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[10px] uppercase tracking-[0.34em] text-[var(--muted-2)]">
+              Arc 11
+            </p>
+            <p className="mt-1 text-[0.78rem] uppercase tracking-[0.24em] text-[var(--foreground)]">
+              Architect
             </p>
           </div>
         </Link>
@@ -150,11 +191,16 @@ export default function SiteHeader() {
             onClick={() => {
               setOpenMenuPath((current) => (current === pathname ? null : pathname));
             }}
-            className="rounded-full border border-[var(--line)] bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.24em] shadow-[var(--shadow-soft)] md:hidden"
+            className={`site-mobile-utility md:hidden ${menuOpen ? "site-mobile-utility-active" : ""}`}
             aria-expanded={menuOpen}
+            aria-controls="site-mobile-panel"
             aria-label="Toggle menu"
           >
-            Menu
+            <span className="site-mobile-utility-copy">{menuOpen ? "Close" : "Menu"}</span>
+            <span className="site-mobile-utility-glyph" aria-hidden="true">
+              <span />
+              <span />
+            </span>
           </button>
           <StartProjectTrigger
             className="button-secondary hidden md:inline-flex"
@@ -173,8 +219,24 @@ export default function SiteHeader() {
 
       {menuOpen ? (
         <div className="mx-auto mt-3 max-w-7xl px-2 md:hidden">
-          <div className="site-mobile-panel">
-            <nav className="flex flex-col gap-3">
+          <div className="site-mobile-panel" id="site-mobile-panel">
+            <div className="site-mobile-panel-header">
+              <p className="site-mobile-panel-kicker">Navigation</p>
+              <p className="site-mobile-panel-caption">
+                Move through the studio, portfolio, tools, and inquiry routes with a cleaner
+                small-screen layout.
+              </p>
+            </div>
+            <div className="site-mobile-panel-actions">
+              <StartProjectTrigger
+                className="button-primary justify-center"
+                onOpen={() => setOpenMenuPath(null)}
+                source="header_mobile"
+              >
+                Start a Project
+              </StartProjectTrigger>
+            </div>
+            <nav className="site-mobile-grid">
               {navItems.map((item) => {
                 const isActive =
                   pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -191,20 +253,13 @@ export default function SiteHeader() {
                         : "border-[var(--line)] bg-white text-[var(--muted)] hover:border-[var(--line-strong)] hover:text-[var(--foreground)]"
                     }`}
                   >
-                    <span className="inline-flex items-center gap-3">
+                    <span className="inline-flex flex-col items-start gap-3">
                       <span className="site-mobile-link-rule" aria-hidden="true" />
-                      <span>{item.label}</span>
+                      <span className="site-mobile-link-label">{item.label}</span>
                     </span>
                   </Link>
                 );
               })}
-              <StartProjectTrigger
-                className="button-primary mt-2 justify-center"
-                onOpen={() => setOpenMenuPath(null)}
-                source="header_mobile"
-              >
-                Start a Project
-              </StartProjectTrigger>
             </nav>
           </div>
         </div>
