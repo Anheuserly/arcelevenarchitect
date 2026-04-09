@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Link from "next/link";
 import type { Metadata } from "next";
-import FeedbackForm from "@/components/FeedbackForm";
+import HomeFeedbackPopup from "@/components/HomeFeedbackPopup";
+import HomeLoadReset from "@/components/HomeLoadReset";
+import MoodboardImmersion from "@/components/MoodboardImmersion";
 import PortfolioProjectCard from "@/components/PortfolioProjectCard";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -12,7 +12,6 @@ import WorkSlider from "@/components/WorkSlider";
 import {
   getFeaturedProjects,
   getMoodboardImages,
-  getPortfolioCategoryBreakdown,
   getPortfolioInsights,
   getPortfolioStats,
 } from "@/lib/portfolio";
@@ -73,7 +72,6 @@ export default function Home() {
   const featuredProjects = getFeaturedProjects();
   const moodboards = getMoodboardImages().slice(0, 4);
   const stats = getPortfolioStats();
-  const categoryBreakdown = getPortfolioCategoryBreakdown();
   const insights = getPortfolioInsights();
 
   const slides = featuredProjects.map((project) => ({
@@ -89,6 +87,7 @@ export default function Home() {
 
   return (
     <div className="bg-[var(--background)]">
+      <HomeLoadReset />
       <SiteHeader />
       <main>
         <WorkSlider slides={slides} />
@@ -110,7 +109,7 @@ export default function Home() {
                 <div className="mt-8 grid gap-4 sm:grid-cols-3">
                   <div className="metric-tile">
                     <span className="metric-label">Projects</span>
-                    <span className="metric-value">{stats.projects}</span>
+                    <span className="metric-value">250+</span>
                   </div>
                   <div className="metric-tile">
                     <span className="metric-label">Visual Frames</span>
@@ -118,7 +117,7 @@ export default function Home() {
                   </div>
                   <div className="metric-tile">
                     <span className="metric-label">Avg. Gallery</span>
-                    <span className="metric-value">{stats.averageGallerySize}</span>
+                    <span className="metric-value">some of our projects</span>
                   </div>
                 </div>
 
@@ -140,54 +139,25 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid gap-6">
-                <div className="subtle-card p-8">
-                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
-                    Sector Mix
-                  </p>
-                  <div className="mt-6 space-y-5">
-                    {categoryBreakdown.map((entry) => (
-                      <div key={entry.category}>
-                        <div className="flex items-end justify-between gap-3">
-                          <div>
-                            <p className="text-lg text-[var(--foreground)]">{entry.category}</p>
-                            <p className="text-xs uppercase tracking-[0.26em] text-[var(--muted-2)]">
-                              {entry.projectCount} projects
-                            </p>
-                          </div>
-                          <p className="text-xl text-[var(--foreground)]">{entry.imageCount}</p>
-                        </div>
-                        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/70">
-                          <div
-                            className="h-full rounded-full bg-[var(--accent)]"
-                            style={{ width: `${(entry.imageCount / stats.images) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="subtle-card p-8">
-                  <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
-                    Portfolio Insight
-                  </p>
-                  <h3 className="mt-4 text-3xl">
-                    {insights.largestGalleryProject.title}
-                  </h3>
-                  <p className="mt-4 text-sm">
-                    The most extensive visual dossier currently belongs to this project, with{" "}
-                    {insights.largestGalleryProject.imageCount} curated frames across facade,
-                    room, and atmosphere studies.
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    <span className="tag-pill">{insights.leadCategory.category} leads</span>
-                    <span className="tag-pill">{insights.totalSpaces} spatial tags</span>
-                    <span className="tag-pill">Delhi NCR focus</span>
-                  </div>
+              <div className="subtle-card p-8">
+                <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+                  Portfolio Insight
+                </p>
+                <h3 className="mt-4 text-3xl">
+                  {insights.largestGalleryProject.title}
+                </h3>
+                <p className="mt-4 text-sm">
+                  The most extensive visual dossier currently belongs to this project, with{" "}
+                  {insights.largestGalleryProject.imageCount} curated frames across facade,
+                  room, and atmosphere studies.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="tag-pill">{insights.leadCategory.category} leads</span>
+                  <span className="tag-pill">{insights.totalSpaces} spatial tags</span>
+                  <span className="tag-pill">Delhi NCR focus</span>
                 </div>
               </div>
-            </div>
+            </div> {/* closes grid */}
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               {practiceNotes.map((item) => (
@@ -197,7 +167,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> {/* closes mx-auto div */}
         </section>
 
         <section className="section-padding bg-[var(--surface)]">
@@ -264,23 +234,36 @@ export default function Home() {
                   Concept references are used to align clients around tone, detailing, and
                   furniture language before the deeper documentation phase begins.
                 </p>
-
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {moodboards.map((image) => (
-                    <div
-                      key={image.src}
-                      className="framed-media overflow-hidden rounded-[26px] border border-[var(--line)] bg-white shadow-[var(--shadow-soft)]"
-                    >
-                      <img src={image.src} alt={image.alt} loading="lazy" className="w-full" />
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="section-padding bg-[var(--surface)]">
+        <MoodboardImmersion images={moodboards} />
+
+        <section className="section-padding">
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="card p-8 lg:p-12">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p className="kicker">Start a Project</p>
+                  <h2 className="mt-4 text-4xl sm:text-5xl">
+                    Let’s shape your next environment with clarity and intent.
+                  </h2>
+                  <p className="mt-4 max-w-2xl text-base">
+                    Share the site, timeline, and ambition for your project. We respond with a
+                    measured next-step plan and consultation path.
+                  </p>
+                </div>
+                <StartProjectTrigger className="button-primary" source="home_cta">
+                  Start a Project
+                </StartProjectTrigger>
+              </div>
+            </div>
+          </div>
+        </section>
+
+         <section className="section-padding bg-[var(--surface)]">
           <div className="mx-auto max-w-7xl px-6">
             <div className="card p-10 lg:p-12">
               <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
@@ -321,42 +304,11 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="mt-12 grid gap-8 border-t border-[var(--line)] pt-10 lg:grid-cols-[1fr_1.1fr]">
-                <div>
-                  <h3 className="text-3xl">Share your feedback</h3>
-                  <p className="mt-3 max-w-lg text-sm">
-                    Feedback from clients and collaborators helps us improve the process,
-                    documentation, and overall design experience.
-                  </p>
-                </div>
-                <FeedbackForm />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="section-padding">
-          <div className="mx-auto max-w-7xl px-6">
-            <div className="card p-8 lg:p-12">
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-                <div>
-                  <p className="kicker">Start a Project</p>
-                  <h2 className="mt-4 text-4xl sm:text-5xl">
-                    Let’s shape your next environment with clarity and intent.
-                  </h2>
-                  <p className="mt-4 max-w-2xl text-base">
-                    Share the site, timeline, and ambition for your project. We respond with a
-                    measured next-step plan and consultation path.
-                  </p>
-                </div>
-                <StartProjectTrigger className="button-primary" source="home_cta">
-                  Start a Project
-                </StartProjectTrigger>
-              </div>
             </div>
           </div>
         </section>
       </main>
+      <HomeFeedbackPopup />
       <SiteFooter />
     </div>
   );

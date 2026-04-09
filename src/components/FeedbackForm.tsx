@@ -11,7 +11,15 @@ const publicDocumentPermissions = [
   'delete("any")',
 ];
 
-export default function FeedbackForm() {
+type FeedbackFormProps = {
+  onSuccess?: () => void;
+  page?: string;
+};
+
+export default function FeedbackForm({
+  onSuccess,
+  page = "home",
+}: FeedbackFormProps) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle"
   );
@@ -35,7 +43,7 @@ export default function FeedbackForm() {
       email: String(formData.get("feedbackEmail") || ""),
       message: String(formData.get("feedbackMessage") || ""),
       rating: Number(formData.get("feedbackRating") || 0),
-      page: "home",
+      page,
       status: "new",
       createdAt: new Date().toISOString(),
       response: "",
@@ -49,6 +57,7 @@ export default function FeedbackForm() {
       });
       setStatus("success");
       form.reset();
+      onSuccess?.();
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "Submission failed");

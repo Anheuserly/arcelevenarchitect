@@ -153,37 +153,39 @@ export default function SiteHeader() {
           </div>
         </Link>
 
-        <nav ref={navRef} className="site-nav-shell hidden md:flex" aria-label="Primary">
-          <span
-            className="site-nav-indicator"
-            aria-hidden="true"
-            style={{
-              opacity: indicator.opacity,
-              transform: `translate3d(${indicator.left}px, 0, 0)`,
-              width: indicator.width,
-            }}
-          />
-          {navItems.map((item, index) => {
-            const isActive = index === activeIndex;
+        <div className="hidden md:flex">
+          <nav ref={navRef} className="site-nav-shell" aria-label="Primary">
+            <span
+              className="site-nav-indicator"
+              aria-hidden="true"
+              style={{
+                opacity: indicator.opacity,
+                transform: `translate3d(${indicator.left}px, 0, 0)`,
+                width: indicator.width,
+              }}
+            />
+            {navItems.map((item, index) => {
+              const isActive = index === activeIndex;
 
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                ref={(node) => {
-                  linkRefs.current[index] = node;
-                }}
-                aria-current={isActive ? "page" : undefined}
-                data-active={isActive ? "true" : "false"}
-                className="site-nav-link"
-              >
-                <span className="site-nav-link-content">
-                  <span className="site-nav-link-text">{item.label}</span>
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  ref={(node) => {
+                    linkRefs.current[index] = node;
+                  }}
+                  aria-current={isActive ? "page" : undefined}
+                  data-active={isActive ? "true" : "false"}
+                  className="site-nav-link"
+                >
+                  <span className="site-nav-link-content">
+                    <span className="site-nav-link-text">{item.label}</span>
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
 
         <div className="site-header-actions">
           <button

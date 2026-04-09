@@ -1,78 +1,69 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Link from "next/link";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-[var(--line)] bg-[rgba(243,236,227,0.82)]">
+    <footer
+      id="site-footer"
+      className="border-t border-[var(--line)] bg-[rgba(243,236,227,0.82)]"
+    >
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="card overflow-hidden p-8 lg:p-10">
-            <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
-              <div className="framed-media overflow-hidden rounded-[28px] border border-[var(--line)] bg-white">
-                <img
-                  src="/brand/geometry-study.jpeg"
-                  alt="Arc 11 Architect geometry study"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-
-              <div>
-                <p className="kicker">Arc 11 Architect</p>
-                <h3 className="mt-4 max-w-xl text-3xl sm:text-4xl">
-                  Spaces shaped by light, proportion, and lived rhythm.
-                </h3>
-                <p className="mt-4 max-w-xl text-sm">
-                  Architecture, interiors, and project delivery for residences, institutional
-                  environments, and detail-led transformations.
-                </p>
-                <div className="mt-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
-                  <a
-                    href="https://www.instagram.com/arc11architect/"
-                    className="underline-link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Instagram
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/"
-                    className="underline-link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    LinkedIn
-                  </a>
-                  <a
-                    href="https://koloapp.in/delhi/architects/shashank-saini--delhi"
-                    className="underline-link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Kolo
-                  </a>
-                  <a
-                    href="https://www.facebook.com/profile.php?id=61578009358525"
-                    className="underline-link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Facebook
-                  </a>
-                </div>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link href="/work" className="button-primary">
-                    Explore Work
-                  </Link>
-                  <StartProjectTrigger className="button-secondary" source="footer_cta">
-                    Start a Project
-                  </StartProjectTrigger>
-                </div>
-              </div>
+          {/* Left column - brand and description (image removed) */}
+          <div className="card p-8 lg:p-10">
+            <p className="kicker">Arc 11 Architect</p>
+            <h3 className="mt-4 max-w-xl text-3xl sm:text-4xl">
+              Spaces shaped by light, proportion, and lived rhythm.
+            </h3>
+            <p className="mt-4 max-w-xl text-sm">
+              Architecture, interiors, and project delivery for residences, institutional
+              environments, and detail-led transformations.
+            </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
+              <a
+                href="https://www.instagram.com/arc11architect/"
+                className="underline-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Instagram
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/"
+                className="underline-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://koloapp.in/delhi/architects/shashank-saini--delhi"
+                className="underline-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Kolo
+              </a>
+              <a
+                href="https://www.facebook.com/profile.php?id=61578009358525"
+                className="underline-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Facebook
+              </a>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/work" className="button-primary">
+                Explore Work
+              </Link>
+              <StartProjectTrigger className="button-secondary" source="footer_cta">
+                Start a Project
+              </StartProjectTrigger>
             </div>
           </div>
 
+          {/* Right column - contact and links */}
           <div className="grid gap-6">
             <div className="subtle-card p-8">
               <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">

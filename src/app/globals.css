@@ -237,6 +237,9 @@ img {
   top: 0;
   z-index: 50;
   padding: 1rem 1rem 0;
+  transition:
+    opacity 0.32s ease,
+    transform 0.32s ease;
 }
 
 .site-header-bar {
@@ -388,6 +391,19 @@ img {
   transition:
     transform 0.25s ease,
     opacity 0.25s ease;
+}
+
+[data-whatsapp-float="true"] {
+  transition:
+    opacity 0.32s ease,
+    transform 0.32s ease;
+}
+
+body[data-fullscreen-moodboard="true"] .site-header,
+body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(0, -18px, 0);
 }
 
 .site-nav-shell {
@@ -644,6 +660,48 @@ img {
   z-index: 1;
 }
 
+.moodboard-immersive-section {
+  position: relative;
+  height: 100dvh;
+  min-height: 100svh;
+  background: #0f0d0a;
+  scroll-margin-top: 0;
+}
+
+.moodboard-immersive-shell {
+  height: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+}
+
+.moodboard-immersive-shell::-webkit-scrollbar {
+  display: none;
+}
+
+.moodboard-immersive-slide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100dvh;
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: #0f0d0a;
+}
+
+.moodboard-immersive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
 .start-project-modal-backdrop {
   position: fixed;
   inset: 0;
@@ -718,6 +776,60 @@ img {
   box-shadow: 0 20px 44px rgba(48, 35, 22, 0.08);
 }
 
+.feedback-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: clamp(0.85rem, 2vw, 1.5rem);
+  background:
+    radial-gradient(circle at bottom right, rgba(155, 104, 67, 0.18), transparent 28%),
+    rgba(16, 14, 11, 0.24);
+  backdrop-filter: blur(12px);
+  animation: modal-backdrop-in 0.28s ease both;
+}
+
+.feedback-popup {
+  position: relative;
+  display: grid;
+  gap: 0.95rem;
+  width: min(980px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  padding-top: 3.6rem;
+  animation: feedback-popup-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.feedback-popup-panel {
+  background:
+    linear-gradient(180deg, rgba(247, 241, 233, 0.96), rgba(235, 226, 216, 0.9)),
+    rgba(255, 255, 255, 0.82);
+}
+
+.feedback-popup-form {
+  box-shadow: 0 24px 52px rgba(48, 35, 22, 0.12);
+}
+
+.feedback-popup-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: inline-flex;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 9999px;
+  background: rgba(23, 20, 16, 0.82);
+  color: white;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  padding: 0.88rem 1.05rem;
+  text-transform: uppercase;
+  backdrop-filter: blur(12px);
+}
+
 @keyframes modal-backdrop-in {
   from {
     opacity: 0;
@@ -749,6 +861,18 @@ img {
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes feedback-popup-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -819,6 +943,32 @@ img {
 
   .start-project-modal-close {
     padding: 0.8rem 0.94rem;
+  }
+
+  .feedback-popup-backdrop {
+    padding: 0.75rem;
+    align-items: flex-end;
+    justify-content: stretch;
+  }
+
+  .feedback-popup {
+    width: 100%;
+    max-height: calc(100vh - 1rem);
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    padding-top: 3.25rem;
+  }
+
+  .feedback-popup-close {
+    padding: 0.8rem 0.94rem;
+  }
+
+  .moodboard-immersive-slide {
+    min-height: 100svh;
+  }
+
+  .moodboard-immersive-image {
+    object-fit: contain;
   }
 }
 
@@ -1148,6 +1298,8 @@ img {
   .site-mobile-utility,
   .site-mobile-link,
   .site-mobile-panel,
+  .feedback-popup,
+  .feedback-popup-backdrop,
   .site-header-progress {
     animation: none;
     transition: none;
