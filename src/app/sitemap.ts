@@ -87,6 +87,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       images: [shareImage],
     },
     {
+      url: `${SITE_URL}/instagram`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.75,
+      images: [shareImage],
+    },
+    {
       url: `${SITE_URL}/careers`,
       lastModified: now,
       changeFrequency: "weekly",

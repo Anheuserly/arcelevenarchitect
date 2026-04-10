@@ -57,6 +57,9 @@ export default function SiteFooter() {
               <Link href="/work" className="button-primary">
                 Explore Work
               </Link>
+              <Link href="/instagram" className="button-secondary">
+                Instagram Feed
+              </Link>
               <StartProjectTrigger className="button-secondary" source="footer_cta">
                 Start a Project
               </StartProjectTrigger>
@@ -100,6 +103,7 @@ export default function SiteFooter() {
                   <Link href="/studio">Studio</Link>
                   <Link href="/services">Services</Link>
                   <Link href="/work">Work</Link>
+                  <Link href="/instagram">Instagram</Link>
                   <StartProjectTrigger className="text-left" source="footer_quick_links">
                     Start a Project
                   </StartProjectTrigger>

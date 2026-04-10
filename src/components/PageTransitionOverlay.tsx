@@ -12,6 +12,7 @@ const routeLabels: Record<string, string> = {
   "/careers": "Careers",
   "/contact": "Contact",
   "/journal": "Journal",
+  "/instagram": "Instagram",
   "/privacy": "Privacy",
   "/terms": "Terms",
 };

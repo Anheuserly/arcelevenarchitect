@@ -1,3 +1,4 @@
+import Link from "next/link";
 import JournalFeed from "@/components/journal/JournalFeed";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -99,6 +100,11 @@ export default async function JournalPage() {
           <p className="mt-6 max-w-2xl text-lg">
             A curated archive of design thinking, material studies, and project insights.
           </p>
+          <div className="mt-8">
+            <Link href="/instagram" className="button-secondary">
+              View Instagram Feed
+            </Link>
+          </div>
           <div className="mt-12">
             <JournalFeed posts={posts} />
           </div>
