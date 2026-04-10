@@ -1,23 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
 
-import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
+export const metadata = buildPageMetadata({
+  title: "Contact Arc 11 Architect for Inquiries and Collaborations",
   description:
-    "Contact Arc 11 Architect for general inquiries, collaborations, vendor introductions, and direct studio communication.",
-  keywords: [
-    "contact architect Delhi",
-    "Arc 11 office address",
-    "design studio inquiry",
-    "architect collaboration contact",
+    "Contact Arc 11 Architect for studio inquiries, collaborations, vendor introductions, media requests, office visits, and general communication.",
+  path: "/contact",
+  images: [
+    {
+      url: "/contact/contact-card.png",
+      alt: "Arc 11 Architect contact card",
+    },
+    {
+      url: "/contact/qr-code.png",
+      alt: "Arc 11 Architect QR code",
+    },
   ],
-};
+  keywords: [
+    "contact architect Delhi NCR",
+    "architecture studio contact India",
+    "design collaboration inquiry",
+    "Arc 11 Architect office address",
+    "architect meeting request",
+  ],
+});
 
 const inquiryTopics = [
   "General studio questions and service clarifications",

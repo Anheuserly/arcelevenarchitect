@@ -4,6 +4,16 @@ import MediaProtection from "@/components/MediaProtection";
 import PageTransitionOverlay from "@/components/PageTransitionOverlay";
 import ScrollRevealController from "@/components/ScrollRevealController";
 import { StartProjectModalProvider } from "@/components/StartProjectModalProvider";
+import {
+  DEFAULT_INDEX_ROBOTS,
+  SITE_CATEGORY,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
+  SITE_SHARE_IMAGE,
+  SITE_URL,
+  absoluteUrl,
+} from "@/lib/seo";
 import { Playfair_Display, Roboto } from "next/font/google";
 import SeoJsonLd from "@/components/SeoJsonLd";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
@@ -22,62 +32,68 @@ const displayFont = Playfair_Display({
   display: "swap",
 });
 
-const shareImageVersion = "20260402-social";
-
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
+  manifest: "/manifest.webmanifest",
   title: {
-    default: "Arc 11 Architect",
-    template: "%s | Arc 11 Architect",
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Arc 11 Architect is an architecture and interior design studio delivering residential, commercial, and institutional projects across Delhi NCR, Pan India, and internationally.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com"),
-  keywords: [
-    "Arc 11 Architect",
-    "ARC 11 Architect",
-    "architect in Delhi NCR",
-    "interior design studio",
-    "residential architect",
-    "commercial architect",
-    "architecture firm India",
-    "Delhi architecture studio",
+  description: SITE_DESCRIPTION,
+  category: SITE_CATEGORY,
+  keywords: SITE_KEYWORDS,
+  authors: [
+    {
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
   ],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  referrer: "origin-when-cross-origin",
+  icons: {
+    icon: [{ url: "/brand/proportion-study.png", type: "image/png" }],
+    apple: [{ url: "/brand/proportion-study.png", type: "image/png" }],
+    shortcut: ["/brand/proportion-study.png"],
+  },
+  formatDetection: {
+    address: false,
+    email: false,
+    telephone: false,
+  },
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Arc 11 Architect",
-    description:
-      "Architecture and interior design studio working across Delhi NCR, Pan India, and international projects.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com",
-    siteName: "Arc 11 Architect",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_IN",
+    countryName: "India",
     type: "website",
     images: [
       {
-        url: `/brand/proportion-study.png?v=${shareImageVersion}`,
+        url: absoluteUrl(SITE_SHARE_IMAGE),
         width: 512,
         height: 512,
-        alt: "Arc 11 Architect logo",
+        alt: `${SITE_NAME} logo`,
       },
     ],
   },
   twitter: {
-    card: "summary",
-    title: "Arc 11 Architect",
-    description:
-      "Architecture and interior design studio working across Delhi NCR, Pan India, and international projects.",
-    images: [`/brand/proportion-study.png?v=${shareImageVersion}`],
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [absoluteUrl(SITE_SHARE_IMAGE)],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
+  robots: DEFAULT_INDEX_ROBOTS,
+  other: {
+    "geo.region": "IN-DL",
+    "geo.placename": "New Delhi",
+    "geo.position": "28.5068683;77.1846957",
+    ICBM: "28.5068683, 77.1846957",
   },
 };
 

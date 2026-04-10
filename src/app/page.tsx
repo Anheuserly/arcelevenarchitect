@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import HomeFeedbackPopup from "@/components/HomeFeedbackPopup";
 import HomeLoadReset from "@/components/HomeLoadReset";
 import MoodboardImmersion from "@/components/MoodboardImmersion";
@@ -15,18 +14,52 @@ import {
   getPortfolioInsights,
   getPortfolioStats,
 } from "@/lib/portfolio";
+import type { Metadata } from "next";
+import { SITE_NAME, buildPageMetadata } from "@/lib/seo";
+
+const homePreviewImages = [
+  {
+    url: "/brand/proportion-study.png",
+    alt: "Arc 11 Architect brand mark",
+  },
+  ...getFeaturedProjects().slice(0, 2).map((project) => ({
+    url: project.heroImage,
+    alt: project.heroLabel,
+  })),
+];
+
+const homeMetadata = buildPageMetadata({
+  title: "Construction, Architectural and Interiors End-to-End Solutions in Delhi NCR, India",
+  description:
+    "Arc 11 Architect delivers construction, architectural, and interiors end-to-end solutions in Delhi NCR, India, for residential, commercial, institutional, and detail-led design projects across India.",
+  path: "/",
+  images: homePreviewImages,
+  keywords: [
+    "architecture and interior design studio",
+    "Delhi NCR architect",
+    "construction architectural interiors solutions",
+    "end to end architecture and interiors",
+    "best architecture firm Delhi NCR",
+    "residential architect India",
+    "commercial interior design studio",
+    "institutional architect India",
+    "turnkey architecture studio",
+  ],
+});
 
 export const metadata: Metadata = {
-  title: "Home",
-  description:
-    "Arc 11 Architect delivers architecture and interior design projects across residential, commercial, and institutional sectors.",
-  keywords: [
-    "architect Delhi NCR",
-    "architecture firm India",
-    "interior design Delhi",
-    "residential architecture",
-    "commercial interiors",
-  ],
+  ...homeMetadata,
+  title: {
+    absolute: `${SITE_NAME} | Construction, Architectural and Interiors End-to-End Solutions in Delhi NCR, India`,
+  },
+  openGraph: {
+    ...homeMetadata.openGraph,
+    title: `${SITE_NAME} | Construction, Architectural and Interiors End-to-End Solutions in Delhi NCR, India`,
+  },
+  twitter: {
+    ...homeMetadata.twitter,
+    title: `${SITE_NAME} | Construction, Architectural and Interiors End-to-End Solutions in Delhi NCR, India`,
+  },
 };
 
 const practiceNotes = [

@@ -6,6 +6,7 @@ import CareerApplyForm from "@/components/CareerApplyForm";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { listDocumentsServer } from "@/lib/appwriteServer";
+import { SITE_URL, buildPageMetadata } from "@/lib/seo";
 
 
 type CareerRole = {
@@ -76,7 +77,6 @@ export default async function CareerDetailPage({
 }) {
   const { slug } = await params;
   const role = await getRoleBySlug(slug);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
 
   if (!role) {
     return (
@@ -104,11 +104,11 @@ export default async function CareerDetailPage({
     title: role.title,
     description: role.description,
     employmentType: "FULL_TIME",
-    hiringOrganization: {
-      "@type": "Organization",
-      name: "Arc 11 Architect",
-      sameAs: siteUrl,
-    },
+        hiringOrganization: {
+          "@type": "Organization",
+          name: "Arc 11 Architect",
+          sameAs: SITE_URL,
+        },
     jobLocation: {
       "@type": "Place",
       address: {
@@ -120,7 +120,7 @@ export default async function CareerDetailPage({
     qualifications: role.qualification,
     skills: role.skills,
     occupationalCategory: role.department,
-    url: `${siteUrl}/careers/${role.slug}`,
+    url: `${SITE_URL}/careers/${role.slug}`,
   };
 
   return (
@@ -195,21 +195,61 @@ export async function generateMetadata({
   const role = await getRoleBySlug(slug);
 
   if (!role) {
-    return {
-      title: "Career Role Not Found | Arc 11 Architect",
-      description: "This role is no longer available.",
-    };
+    return buildPageMetadata({
+      title: "Career Role Not Found",
+      description: "The requested Arc 11 Architect role is no longer available.",
+      path: `/careers/${slug}`,
+      robots: {
+        index: false,
+        follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+          "max-image-preview": "none",
+          "max-snippet": 0,
+          "max-video-preview": 0,
+        },
+      },
+    });
   }
 
-  return {
-    title: `${role.title} | Careers | Arc 11 Architect`,
-    description: `${role.title} opening at Arc 11 Architect, ${role.location}. ${role.experience}.`,
-    keywords: [
-      "architecture jobs Delhi",
-      "architect careers",
-      role.title,
-      role.department,
-      role.location,
+  const isOpen = role.status.toLowerCase() === "open";
+  const skillKeywords = role.skills
+    .split(",")
+    .map((skill) => skill.trim())
+    .filter(Boolean)
+    .slice(0, 5);
+
+  return buildPageMetadata({
+    title: `${role.title} Careers`,
+    description: `Apply for the ${role.title} role at Arc 11 Architect in ${role.location}. ${role.department} team, ${role.experience}, with focus on ${role.qualification}.`,
+    path: `/careers/${role.slug}`,
+    category: "Careers",
+    images: [
+      {
+        url: "/brand/proportion-study.png",
+        alt: "Arc 11 Architect careers",
+      },
     ],
-  };
+    keywords: [
+      role.title,
+      `${role.department} jobs`,
+      `${role.location} design jobs`,
+      "architecture careers India",
+      ...skillKeywords,
+    ],
+    robots: isOpen
+      ? undefined
+      : {
+          index: false,
+          follow: true,
+          googleBot: {
+            index: false,
+            follow: true,
+            "max-image-preview": "none",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        },
+  });
 }

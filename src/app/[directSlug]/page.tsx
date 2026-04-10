@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import DirectAccessLanding from "@/components/DirectAccessLanding";
 import { getDirectAccessProfile, listDirectAccessSlugs } from "@/lib/directAccessProfiles";
+import { buildPageMetadata } from "@/lib/seo";
 
 type DirectAccessRouteProps = {
   params: Promise<{ directSlug: string }>;
@@ -20,17 +21,29 @@ export async function generateMetadata({
   const profile = getDirectAccessProfile(directSlug);
 
   if (!profile) {
-    return {
+    return buildPageMetadata({
+      title: "Profile Not Found",
+      description: "The requested private profile page could not be found.",
+      path: `/${directSlug}`,
       robots: {
         index: false,
         follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+          noimageindex: true,
+          "max-image-preview": "none",
+          "max-snippet": 0,
+          "max-video-preview": 0,
+        },
       },
-    };
+    });
   }
 
-  return {
-    title: `${profile.name} | Arc 11 Architect`,
+  return buildPageMetadata({
+    title: profile.name,
     description: profile.summary,
+    path: `/${directSlug}`,
     robots: {
       index: false,
       follow: false,
@@ -43,23 +56,13 @@ export async function generateMetadata({
         "max-video-preview": 0,
       },
     },
-    openGraph: {
-      title: `${profile.name} | Arc 11 Architect`,
-      description: profile.summary,
-      images: [
-        {
-          url: profile.heroImage,
-          alt: profile.heroAlt,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${profile.name} | Arc 11 Architect`,
-      description: profile.summary,
-      images: [profile.heroImage],
-    },
-  };
+    images: [
+      {
+        url: profile.heroImage,
+        alt: profile.heroAlt,
+      },
+    ],
+  });
 }
 
 export default async function DirectAccessRoute({ params }: DirectAccessRouteProps) {

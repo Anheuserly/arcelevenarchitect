@@ -1,20 +1,28 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Services",
+export const metadata = buildPageMetadata({
+  title: "Architecture, Interior Design and BIM Services",
   description:
-    "Architecture, interior design, urban design, landscape, BIM, and project delivery services by Arc 11 Architect.",
-  keywords: [
-    "architectural services",
-    "interior design services",
-    "BIM services India",
-    "project delivery architecture",
+    "Architecture, interior design, BIM coordination, visualization, planning, and project delivery services by Arc 11 Architect across Delhi NCR and India.",
+  path: "/services",
+  images: [
+    {
+      url: "/brand/geometry-study.jpeg",
+      alt: "Arc 11 Architect geometry study",
+    },
   ],
-};
+  keywords: [
+    "architectural services Delhi NCR",
+    "interior design services India",
+    "BIM coordination services",
+    "project delivery architecture studio",
+    "visualization and detailing services",
+  ],
+});
 
 const services = [
   {

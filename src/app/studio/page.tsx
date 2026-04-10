@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 
-import type { Metadata } from "next";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import {
@@ -8,18 +7,33 @@ import {
   getPortfolioInsights,
   getPortfolioStats,
 } from "@/lib/portfolio";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Studio",
+const studioPreviewImages = [
+  {
+    url: "/brand/proportion-study.png",
+    alt: "Arc 11 Architect proportion study",
+  },
+  ...getMoodboardImages().slice(0, 2).map((image) => ({
+    url: image.src,
+    alt: image.alt,
+  })),
+];
+
+export const metadata = buildPageMetadata({
+  title: "Studio Profile, Leadership and Design Approach",
   description:
-    "Learn about Arc 11 Architect studio, leadership, capabilities, and our design approach across India and international projects.",
+    "Discover Arc 11 Architect's studio profile, leadership, design philosophy, and working range across residential, commercial, and institutional projects.",
+  path: "/studio",
+  images: studioPreviewImages,
   keywords: [
-    "architecture studio Delhi",
-    "about arc 11 architect",
-    "architecture leadership",
+    "about Arc 11 Architect",
+    "architecture studio Delhi NCR",
+    "principal architect Delhi",
     "interior design studio profile",
+    "architecture leadership India",
   ],
-};
+});
 
 const values = [
   {

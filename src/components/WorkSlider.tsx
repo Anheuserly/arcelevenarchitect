@@ -49,7 +49,7 @@ export default function WorkSlider({ slides }: { slides: Slide[] }) {
               index === active ? "opacity-100" : "opacity-0"
             }`}
             style={{
-              backgroundImage: `linear-gradient(180deg, rgba(8,10,12,0.12), rgba(8,10,12,0.58)), url(${slide.image})`,
+              backgroundImage: `linear-gradient(180deg, rgba(8,10,12,0.18), rgba(8,10,12,0.7)), url(${slide.image})`,
               backgroundPosition: "center",
               backgroundSize: "cover",
             }}
@@ -61,7 +61,7 @@ export default function WorkSlider({ slides }: { slides: Slide[] }) {
         <div className="absolute inset-0 px-6 py-8 sm:px-10 lg:px-12">
           <div className="mx-auto flex h-full max-w-7xl flex-col justify-between">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-              <div className="hero-panel max-w-2xl">
+              <div className="hero-panel max-w-[42rem] border-white/16 bg-[rgba(15,17,20,0.78)] shadow-[0_28px_72px_rgba(0,0,0,0.3)]">
                 <p className="text-[11px] uppercase tracking-[0.36em] text-white/68">
                   Arc 11 Architect Portfolio
                 </p>
@@ -75,7 +75,7 @@ export default function WorkSlider({ slides }: { slides: Slide[] }) {
               </div>
 
               <div className="hidden w-full max-w-sm lg:block">
-                <div className="hero-panel">
+                <div className="hero-panel border-white/12 bg-[rgba(15,17,20,0.62)] shadow-[0_24px_58px_rgba(0,0,0,0.24)]">
                   <p className="text-[11px] uppercase tracking-[0.3em] text-white/65">
                     Project Sequence
                   </p>
@@ -103,7 +103,7 @@ export default function WorkSlider({ slides }: { slides: Slide[] }) {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-              <div className="hero-panel">
+              <div className="hero-panel border-white/16 bg-[rgba(15,17,20,0.8)] shadow-[0_28px_72px_rgba(0,0,0,0.3)]">
                 <div className="flex flex-wrap items-center gap-3 text-[11px] uppercase tracking-[0.3em] text-white/68">
                   <span>{current.location}</span>
                   <span>{current.year}</span>
@@ -127,17 +127,17 @@ export default function WorkSlider({ slides }: { slides: Slide[] }) {
               </div>
 
               <div className="grid gap-4 sm:grid-cols-3">
-                <div className="hero-panel">
+                <div className="hero-panel border-white/10 bg-[rgba(15,17,20,0.6)] shadow-[0_20px_48px_rgba(0,0,0,0.22)]">
                   <span className="metric-label text-white/68">Current Slide</span>
                   <span className="metric-value mt-3 text-white">
                     {String(active + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="hero-panel">
+                <div className="hero-panel border-white/10 bg-[rgba(15,17,20,0.6)] shadow-[0_20px_48px_rgba(0,0,0,0.22)]">
                   <span className="metric-label text-white/68">Project Type</span>
                   <span className="metric-value mt-3 text-white">{current.category}</span>
                 </div>
-                <div className="hero-panel">
+                <div className="hero-panel border-white/10 bg-[rgba(15,17,20,0.6)] shadow-[0_20px_48px_rgba(0,0,0,0.22)]">
                   <span className="metric-label text-white/68">Visual Frames</span>
                   <span className="metric-value mt-3 text-white">{current.imageCount ?? "-"}</span>
                 </div>

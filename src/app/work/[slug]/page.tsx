@@ -8,6 +8,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
 import { getPortfolioProject, getPortfolioProjects } from "@/lib/portfolio";
+import { SITE_URL, absoluteUrl, buildPageMetadata } from "@/lib/seo";
 
 type WorkDetailPageProps = {
   params: Promise<{
@@ -26,39 +27,54 @@ export async function generateMetadata({
 }: WorkDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const project = getPortfolioProject(slug);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
 
   if (!project) {
-    return {
-      title: "Work",
-    };
+    return buildPageMetadata({
+      title: "Project Not Found",
+      description: "The requested Arc 11 Architect case study could not be found.",
+      path: `/work/${slug}`,
+      robots: {
+        index: false,
+        follow: false,
+        googleBot: {
+          index: false,
+          follow: false,
+          "max-image-preview": "none",
+          "max-snippet": 0,
+          "max-video-preview": 0,
+        },
+      },
+    });
   }
 
-  return {
+  const projectDescription = `${project.description} Located in ${project.location}, this ${project.category.toLowerCase()} case study by Arc 11 Architect focuses on ${project.scope.toLowerCase()}.`;
+
+  return buildPageMetadata({
     title: project.title,
-    description: project.description,
-    alternates: {
-      canonical: `/work/${project.slug}`,
-    },
-    openGraph: {
-      title: `${project.title} | Arc 11 Architect`,
-      description: project.description,
-      url: `${siteUrl}${project.href}`,
-      type: "article",
-      images: [
-        {
-          url: project.heroImage,
-          alt: project.heroLabel,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${project.title} | Arc 11 Architect`,
-      description: project.description,
-      images: [project.heroImage],
-    },
-  };
+    description: projectDescription,
+    path: project.href,
+    category: project.category,
+    openGraphType: "article",
+    images: [
+      {
+        url: project.heroImage,
+        alt: project.heroLabel,
+      },
+      ...project.gallery.slice(0, 2).map((image) => ({
+        url: image.src,
+        alt: image.alt,
+      })),
+    ],
+    keywords: [
+      project.title,
+      `${project.location} architecture project`,
+      `${project.category} architecture`,
+      `${project.category} interiors`,
+      project.status,
+      `${project.year} architecture project`,
+      ...project.spaces,
+    ],
+  });
 }
 
 export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
@@ -70,7 +86,6 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
   }
 
   const projects = getPortfolioProjects();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
   const currentIndex = projects.findIndex((entry) => entry.slug === project.slug);
   const previousProject = projects[(currentIndex - 1 + projects.length) % projects.length];
   const nextProject = projects[(currentIndex + 1) % projects.length];
@@ -80,13 +95,26 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
     "@type": "WebPage",
     name: project.title,
     description: project.description,
-    url: `${siteUrl}${project.href}`,
+    url: `${SITE_URL}${project.href}`,
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: `${siteUrl}${project.heroImage}`,
-      contentUrl: `${siteUrl}${project.heroImage}`,
+      url: absoluteUrl(project.heroImage),
+      contentUrl: absoluteUrl(project.heroImage),
       caption: project.heroLabel,
     },
+  };
+
+  const gallerySchema = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    name: `${project.title} Gallery`,
+    url: `${SITE_URL}${project.href}#gallery`,
+    associatedMedia: project.gallery.map((image) => ({
+      "@type": "ImageObject",
+      url: absoluteUrl(image.src),
+      contentUrl: absoluteUrl(image.src),
+      caption: image.alt,
+    })),
   };
 
   const breadcrumbSchema = {
@@ -97,19 +125,19 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: `${siteUrl}/`,
+        item: `${SITE_URL}/`,
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "Work",
-        item: `${siteUrl}/work`,
+        item: `${SITE_URL}/work`,
       },
       {
         "@type": "ListItem",
         position: 3,
         name: project.title,
-        item: `${siteUrl}${project.href}`,
+        item: `${SITE_URL}${project.href}`,
       },
     ],
   };
@@ -125,6 +153,10 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(gallerySchema) }}
         />
 
         <section className="section-padding">
@@ -233,7 +265,7 @@ export default async function WorkDetailPage({ params }: WorkDetailPageProps) {
               </p>
             </div>
 
-            <div className="mt-10">
+            <div id="gallery" className="mt-10">
               <PortfolioGallery images={project.gallery} />
             </div>
           </div>

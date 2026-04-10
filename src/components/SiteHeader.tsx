@@ -124,11 +124,11 @@ export default function SiteHeader() {
             />
           </div>
           <div>
-            <p className="text-[11px] uppercase tracking-[0.4em] text-[var(--muted-2)]">
+            <p className="text-sm uppercase tracking-[0.34em] text-[var(--foreground)]">
               Arc 11 Architect
             </p>
-            <p className="mt-1 hidden text-sm text-[var(--muted)] sm:block">
-              Architecture, interiors, and visual strategy
+            <p className="mt-1 hidden text-xs text-[var(--muted)] sm:block">
+              Construction, architectural & interiors end-to-end solutions
             </p>
           </div>
         </Link>
@@ -144,11 +144,11 @@ export default function SiteHeader() {
             />
           </div>
           <div className="min-w-0">
-            <p className="truncate text-[0.58rem] uppercase tracking-[0.28em] text-[var(--muted-2)]">
+            <p className="truncate text-[0.76rem] uppercase tracking-[0.24em] text-[var(--foreground)]">
               Arc 11 Architect
             </p>
-            <p className="mt-1 truncate text-[0.72rem] text-[var(--muted)]">
-              Architecture and interiors
+            <p className="mt-1 truncate text-[0.62rem] text-[var(--muted)]">
+              End-to-end architecture & interiors
             </p>
           </div>
         </Link>
@@ -188,22 +188,24 @@ export default function SiteHeader() {
         </div>
 
         <div className="site-header-actions">
-          <button
-            type="button"
-            onClick={() => {
-              setOpenMenuPath((current) => (current === pathname ? null : pathname));
-            }}
-            className={`site-mobile-utility md:hidden ${menuOpen ? "site-mobile-utility-active" : ""}`}
-            aria-expanded={menuOpen}
-            aria-controls="site-mobile-panel"
-            aria-label="Toggle menu"
-          >
-            <span className="site-mobile-utility-copy">{menuOpen ? "Close" : "Menu"}</span>
-            <span className="site-mobile-utility-glyph" aria-hidden="true">
-              <span />
-              <span />
-            </span>
-          </button>
+          <div className="md:hidden">
+            <button
+              type="button"
+              onClick={() => {
+                setOpenMenuPath((current) => (current === pathname ? null : pathname));
+              }}
+              className={`site-mobile-utility ${menuOpen ? "site-mobile-utility-active" : ""}`}
+              aria-expanded={menuOpen}
+              aria-controls="site-mobile-panel"
+              aria-label="Toggle menu"
+            >
+              <span className="site-mobile-utility-copy">{menuOpen ? "Close" : "Menu"}</span>
+              <span className="site-mobile-utility-glyph" aria-hidden="true">
+                <span />
+                <span />
+              </span>
+            </button>
+          </div>
           <div className="hidden md:flex">
             <StartProjectTrigger className="button-secondary" source="header_desktop">
               Start a Project

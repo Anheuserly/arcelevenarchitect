@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import JournalFeed from "@/components/journal/JournalFeed";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { listDocumentsServer } from "@/lib/appwriteServer";
+import { buildPageMetadata } from "@/lib/seo";
 
 type JournalPost = {
   title: string;
@@ -51,6 +51,26 @@ const fallbackPosts: JournalPost[] = [
   },
 ];
 
+export const metadata = buildPageMetadata({
+  title: "Studio Journal, Material Studies and Design Notes",
+  description:
+    "Read Arc 11 Architect's studio journal featuring design thinking, material studies, social posts, and project-led architectural insights.",
+  path: "/journal",
+  images: [
+    {
+      url: "/brand/geometry-study.jpeg",
+      alt: "Arc 11 Architect journal cover image",
+    },
+  ],
+  keywords: [
+    "architecture journal India",
+    "design notes architecture studio",
+    "material studies interior design",
+    "Arc 11 Architect journal",
+    "studio insights and posts",
+  ],
+});
+
 export default async function JournalPage() {
   const collectionId = process.env.NEXT_PUBLIC_APPWRITE_JOURNAL_COLLECTION_ID;
   let posts = fallbackPosts;
@@ -88,16 +108,3 @@ export default async function JournalPage() {
     </div>
   );
 }
-
-export const metadata: Metadata = {
-  title: "Journal | Arc 11 Architect",
-  description:
-    "Studio journal featuring architecture notes, design thinking, project insights, and material studies.",
-  keywords: [
-    "architecture journal",
-    "arc 11 architect blog",
-    "design insights",
-    "interior architecture articles",
-    "studio notes",
-  ],
-};

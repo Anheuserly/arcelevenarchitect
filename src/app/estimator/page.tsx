@@ -1,19 +1,27 @@
-import type { Metadata } from "next";
 import EstimatorCalculator from "@/components/EstimatorCalculator";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Estimator",
+export const metadata = buildPageMetadata({
+  title: "Architecture and Interior Cost Estimator",
   description:
-    "Estimate architecture and interior project cost with location-based currency conversion and configurable project inputs.",
+    "Estimate architecture and interior project budgets with Arc 11 Architect's project cost estimator for homes, commercial spaces, and multi-scope design work.",
+  path: "/estimator",
+  images: [
+    {
+      url: "/brand/proportion-study.png",
+      alt: "Arc 11 Architect estimator share image",
+    },
+  ],
   keywords: [
     "architecture cost estimator",
-    "interior design cost calculator",
-    "construction budget estimator",
-    "project cost calculator India",
+    "interior design cost calculator India",
+    "project budget estimator Delhi NCR",
+    "construction cost planning tool",
+    "residential project calculator",
   ],
-};
+});
 
 export default function EstimatorPage() {
   return (

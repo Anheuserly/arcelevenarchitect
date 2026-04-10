@@ -1,21 +1,35 @@
 import type { MetadataRoute } from "next";
-
-function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
-}
+import { listDirectAccessSlugs } from "@/lib/directAccessProfiles";
+import { SITE_URL } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = getBaseUrl();
+  const hiddenRoutes = listDirectAccessSlugs().map((slug) => `/${slug}`);
+  const coreAllows = ["/", "/sitemap.xml", "/manifest.webmanifest", "/.well-known/"];
 
   return {
     rules: [
       {
         userAgent: "*",
-        allow: "/",
-        disallow: ["/admin/", "/api/admin/"],
+        allow: coreAllows,
+        disallow: ["/admin/", "/api/", ...hiddenRoutes],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: coreAllows,
+        disallow: ["/admin/", "/api/", ...hiddenRoutes],
+      },
+      {
+        userAgent: "bingbot",
+        allow: coreAllows,
+        disallow: ["/admin/", "/api/", ...hiddenRoutes],
+      },
+      {
+        userAgent: "Googlebot-Image",
+        allow: ["/portfolio/", "/brand/", "/contact/", "/.well-known/"],
+        disallow: ["/admin/", "/api/", ...hiddenRoutes],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

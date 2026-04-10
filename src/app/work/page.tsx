@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import PortfolioExplorer from "@/components/PortfolioExplorer";
 import SiteFooter from "@/components/SiteFooter";
@@ -10,25 +9,33 @@ import {
   getPortfolioProjects,
   getPortfolioStats,
 } from "@/lib/portfolio";
+import { SITE_URL, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Work",
+const workPreviewImages = getPortfolioProjects().slice(0, 3).map((project) => ({
+  url: project.heroImage,
+  alt: project.heroLabel,
+}));
+
+export const metadata = buildPageMetadata({
+  title: "Residential and Commercial Architecture Portfolio",
   description:
-    "Explore residential and commercial project galleries by Arc 11 Architect through a more structured visual archive.",
+    "Explore Arc 11 Architect's portfolio of residential, commercial, and institutional case studies through curated architecture and interior image galleries.",
+  path: "/work",
+  images: workPreviewImages,
   keywords: [
-    "architecture portfolio",
-    "residential project gallery",
-    "commercial architecture visuals",
-    "interior design portfolio Delhi",
+    "architecture portfolio India",
+    "residential architecture case studies",
+    "commercial interior portfolio Delhi NCR",
+    "architectural visualization gallery",
+    "institutional architecture projects",
   ],
-};
+});
 
 export default function WorkPage() {
   const projects = getPortfolioProjects();
   const stats = getPortfolioStats();
   const insights = getPortfolioInsights();
   const categoryBreakdown = getPortfolioCategoryBreakdown();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
 
   const workSchema = {
     "@context": "https://schema.org",
@@ -44,7 +51,7 @@ export default function WorkPage() {
         location: project.location,
         category: project.category,
         status: project.status,
-        url: `${siteUrl}${project.href}`,
+        url: `${SITE_URL}${project.href}`,
       },
     })),
   };

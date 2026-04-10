@@ -1,21 +1,29 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import ProjectRequestForm from "@/components/ProjectRequestForm";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Start a Project",
+export const metadata = buildPageMetadata({
+  title: "Start an Architecture or Interior Design Project",
   description:
-    "Start a project with Arc 11 Architect. Share your project type, site, budget range, and timeline to begin a design engagement.",
-  keywords: [
-    "start architecture project",
-    "hire architect Delhi NCR",
-    "project intake architecture studio",
-    "interior design project brief",
+    "Share your project brief, location, budget, and timeline to start an architecture or interior design engagement with Arc 11 Architect.",
+  path: "/start-project",
+  images: [
+    {
+      url: "/brand/geometry-study.jpeg",
+      alt: "Arc 11 Architect design detail",
+    },
   ],
-};
+  keywords: [
+    "start architecture project Delhi NCR",
+    "hire architect India",
+    "interior design project brief",
+    "architecture studio intake form",
+    "design consultation request",
+  ],
+});
 
 const projectFitNotes = [
   "Residential commissions, builder floors, villas, and renovations",

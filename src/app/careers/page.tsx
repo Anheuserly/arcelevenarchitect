@@ -1,20 +1,28 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { listDocumentsServer } from "@/lib/appwriteServer";
+import { SITE_URL, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Careers",
+export const metadata = buildPageMetadata({
+  title: "Architecture, Interiors and BIM Careers",
   description:
-    "Explore current openings at Arc 11 Architect across architecture, interiors, BIM, and design leadership roles.",
-  keywords: [
-    "architecture jobs Delhi",
-    "interior designer jobs",
-    "BIM jobs India",
-    "careers at architecture firm",
+    "Explore open roles at Arc 11 Architect across architecture, interiors, BIM, computational design, and studio operations.",
+  path: "/careers",
+  images: [
+    {
+      url: "/brand/proportion-study.png",
+      alt: "Arc 11 Architect careers share image",
+    },
   ],
-};
+  keywords: [
+    "architecture jobs Delhi NCR",
+    "interior designer jobs India",
+    "BIM careers architecture studio",
+    "design studio hiring",
+    "computational design jobs India",
+  ],
+});
 
 type CareerCard = {
   id: string;
@@ -133,7 +141,6 @@ const fallbackRoles: CareerCard[] = [
 ];
 
 export default async function CareersPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
   const collectionId = process.env.NEXT_PUBLIC_APPWRITE_CAREERS_COLLECTION_ID;
   let roles = fallbackRoles;
 
@@ -170,7 +177,7 @@ export default async function CareersPage() {
         hiringOrganization: {
           "@type": "Organization",
           name: "Arc 11 Architect",
-          sameAs: siteUrl,
+          sameAs: SITE_URL,
         },
         jobLocation: {
           "@type": "Place",
@@ -180,7 +187,7 @@ export default async function CareersPage() {
             addressCountry: "IN",
           },
         },
-        url: `${siteUrl}/careers/${role.slug}`,
+        url: `${SITE_URL}/careers/${role.slug}`,
       },
     })),
   };

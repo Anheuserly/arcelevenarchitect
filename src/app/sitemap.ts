@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { listDocumentsServer } from "@/lib/appwriteServer";
+import { SITE_SHARE_IMAGE, SITE_URL, absoluteUrl } from "@/lib/seo";
 import {
   getFeaturedProjects,
   getMoodboardImages,
@@ -9,14 +10,6 @@ import {
 type CareerRole = { slug?: string; status?: string };
 
 const fallbackCareerSlugs = ["international-design-associate", "architect"];
-
-function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://arcelevenarchitect.com";
-}
-
-function absoluteUrl(baseUrl: string, pathname: string) {
-  return `${baseUrl}${pathname}`;
-}
 
 async function getCareerSlugs(): Promise<string[]> {
   const collectionId = process.env.NEXT_PUBLIC_APPWRITE_CAREERS_COLLECTION_ID;
@@ -34,58 +27,99 @@ async function getCareerSlugs(): Promise<string[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = getBaseUrl();
   const now = new Date();
   const featuredProjects = getFeaturedProjects();
   const workProjects = getPortfolioProjects();
   const moodboards = getMoodboardImages().slice(0, 6);
+  const shareImage = absoluteUrl(SITE_SHARE_IMAGE);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${baseUrl}/`,
+      url: `${SITE_URL}/`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 1,
-      images: featuredProjects.map((project) => absoluteUrl(baseUrl, project.heroImage)),
+      images: [
+        ...featuredProjects.map((project) => absoluteUrl(project.heroImage)),
+        ...moodboards.map((image) => absoluteUrl(image.src)),
+      ],
     },
     {
-      url: `${baseUrl}/studio`,
+      url: `${SITE_URL}/studio`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.8,
-      images: moodboards.map((image) => absoluteUrl(baseUrl, image.src)),
+      images: [shareImage, ...moodboards.map((image) => absoluteUrl(image.src))],
     },
-    { url: `${baseUrl}/services`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
     {
-      url: `${baseUrl}/work`,
+      url: `${SITE_URL}/services`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      images: [shareImage],
+    },
+    {
+      url: `${SITE_URL}/work`,
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
-      images: workProjects.map((project) => absoluteUrl(baseUrl, project.heroImage)),
+      images: workProjects.map((project) => absoluteUrl(project.heroImage)),
     },
-    { url: `${baseUrl}/estimator`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${baseUrl}/start-project`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${baseUrl}/journal`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${baseUrl}/careers`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${baseUrl}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${baseUrl}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
-    { url: `${baseUrl}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
+    {
+      url: `${SITE_URL}/estimator`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+      images: [shareImage],
+    },
+    {
+      url: `${SITE_URL}/start-project`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+      images: [shareImage],
+    },
+    {
+      url: `${SITE_URL}/journal`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+      images: [shareImage],
+    },
+    {
+      url: `${SITE_URL}/careers`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+      images: [shareImage],
+    },
+    {
+      url: `${SITE_URL}/contact`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+      images: [
+        absoluteUrl("/contact/contact-card.png"),
+        absoluteUrl("/contact/qr-code.png"),
+      ],
+    },
   ];
 
   const workRoutes: MetadataRoute.Sitemap = workProjects.map((project) => ({
-    url: `${baseUrl}${project.href}`,
+    url: `${SITE_URL}${project.href}`,
     lastModified: now,
     changeFrequency: "weekly",
     priority: 0.85,
-    images: project.gallery.map((image) => absoluteUrl(baseUrl, image.src)),
+    images: project.gallery.map((image) => absoluteUrl(image.src)),
   }));
 
   const careerSlugs = await getCareerSlugs();
   const careerRoutes: MetadataRoute.Sitemap = careerSlugs.map((slug) => ({
-    url: `${baseUrl}/careers/${slug}`,
+    url: `${SITE_URL}/careers/${slug}`,
     lastModified: now,
     changeFrequency: "weekly",
     priority: 0.7,
+    images: [shareImage],
   }));
 
   return [...staticRoutes, ...workRoutes, ...careerRoutes];

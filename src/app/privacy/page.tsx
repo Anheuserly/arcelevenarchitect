@@ -1,17 +1,29 @@
-import type { Metadata } from "next";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
   title: "Privacy Policy",
   description:
-    "Privacy policy for Arc 11 Architect covering data submitted through contact, feedback, and career forms.",
+    "Read how Arc 11 Architect handles contact, project, career, and feedback data submitted through the website.",
+  path: "/privacy",
+  robots: {
+    index: false,
+    follow: true,
+    googleBot: {
+      index: false,
+      follow: true,
+      "max-image-preview": "none",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   keywords: [
     "privacy policy architecture website",
-    "arc 11 architect privacy",
-    "data policy contact forms",
+    "Arc 11 Architect privacy",
+    "website inquiry data policy",
   ],
-};
+});
 
 export default function PrivacyPage() {
   return (
