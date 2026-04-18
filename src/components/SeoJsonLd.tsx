@@ -1,4 +1,21 @@
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
+import {
+  BRANCH_OFFICE_ADDRESS,
+  BRANCH_OFFICE_GEO,
+  BRANCH_OFFICE_MAP_URL,
+  BUSINESS_EMAIL,
+  BUSINESS_OPENING_HOURS,
+  BUSINESS_PHONE_PRIMARY,
+  BUSINESS_PHONE_SECONDARY,
+  BUSINESS_SAME_AS,
+  HEAD_OFFICE_ADDRESS,
+  HEAD_OFFICE_GEO,
+  HEAD_OFFICE_MAP_URL,
+  SERVICE_AREAS,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_URL,
+  absoluteUrl,
+} from "@/lib/seo";
 
 type JsonLd = Record<string, unknown>;
 
@@ -7,17 +24,40 @@ export default function SeoJsonLd() {
   const brand = SITE_NAME;
   const altBrand = "ARC 11 ARCHITECT";
   const logo = absoluteUrl("/brand/proportion-study.png");
-  const headOfficeMap =
-    "https://www.google.com/maps/search/?api=1&query=Plot+No.+535%2C+Second+Floor%2C+Left+Side%2C+Khasra+No.+60%2C+128-D21%2C+Chattarpur+Pahadi%2C+New+Delhi+110074";
-  const branchOfficeMap =
-    "https://www.google.com/maps/place/Arc+11+Architect/@28.537786,77.1305869,17z/data=!3m1!4b1!4m6!3m5!1s0x390d1d9dea5dc7e9:0x4595ec7be90d05d7!8m2!3d28.537786!4d77.1331618!16s%2Fg%2F11yxg50dsz";
-
-  const sameAs = [
-    "https://www.instagram.com/arc11architect/",
-    "https://www.linkedin.com/in/ar-shashank-saini-a0830b19b/",
-    "https://www.facebook.com/profile.php?id=61578009358525",
-    "https://koloapp.in/delhi/architects/shashank-saini--delhi",
-  ];
+  const countryAreas = new Set([
+    "United States",
+    "Canada",
+    "United Kingdom",
+    "Germany",
+    "France",
+    "Italy",
+    "Spain",
+    "Netherlands",
+    "Switzerland",
+    "Qatar",
+    "United Arab Emirates",
+    "Saudi Arabia",
+    "Bahrain",
+    "Oman",
+    "Kuwait",
+    "Singapore",
+    "Malaysia",
+    "Thailand",
+    "Indonesia",
+    "Australia",
+    "New Zealand",
+    "South Africa",
+  ]);
+  const openingHoursSpecification = BUSINESS_OPENING_HOURS.map((slot) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: `https://schema.org/${slot.dayOfWeek}`,
+    opens: slot.opens,
+    closes: slot.closes,
+  }));
+  const serviceArea = SERVICE_AREAS.map((area) => ({
+    "@type": countryAreas.has(area) ? "Country" : "Place",
+    name: area,
+  }));
 
   const websiteSchema: JsonLd = {
     "@context": "https://schema.org",
@@ -28,6 +68,11 @@ export default function SeoJsonLd() {
     url: siteUrl,
     description: SITE_DESCRIPTION,
     inLanguage: "en-IN",
+    potentialAction: {
+      "@type": "ViewAction",
+      target: `${siteUrl}/work`,
+      name: "Explore Arc 11 Architect projects",
+    },
     publisher: {
       "@id": `${siteUrl}/#organization`,
     },
@@ -41,26 +86,70 @@ export default function SeoJsonLd() {
     alternateName: [altBrand, "ARC 11 ARCHITECT"],
     url: siteUrl,
     description: SITE_DESCRIPTION,
-    email: "arcelevenarchitect@gmail.com",
-    telephone: "+91-85273-78555",
+    email: BUSINESS_EMAIL,
+    telephone: BUSINESS_PHONE_PRIMARY,
     logo: {
       "@type": "ImageObject",
       url: logo,
     },
     image: logo,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Plot No. 535, Second Floor, Left Side, Khasra No. 60, 128-D21, Chattarpur Pahadi",
-      addressLocality: "New Delhi",
-      postalCode: "110074",
-      addressCountry: "IN",
-    },
-    areaServed: [
-      { "@type": "Country", name: "India" },
-      { "@type": "Place", name: "Delhi NCR" },
-      { "@type": "Place", name: "Pan India" },
+    address: { "@type": "PostalAddress", ...HEAD_OFFICE_ADDRESS },
+    areaServed: serviceArea,
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: BUSINESS_PHONE_PRIMARY,
+        email: BUSINESS_EMAIL,
+        contactType: "customer support",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: BUSINESS_PHONE_SECONDARY,
+        email: BUSINESS_EMAIL,
+        contactType: "sales",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi"],
+      },
     ],
-    sameAs,
+    knowsAbout: [
+      "Architectural design",
+      "Interior design",
+      "Construction coordination",
+      "Turnkey execution",
+      "Residential architecture",
+      "Commercial interiors",
+      "Institutional design",
+      "3D visualization",
+    ],
+    sameAs: BUSINESS_SAME_AS,
+  };
+
+  const localBusinessSchema: JsonLd = {
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "LocalBusiness", "ArchitecturalService"],
+    "@id": `${siteUrl}/#local-business`,
+    name: brand,
+    image: logo,
+    logo,
+    url: siteUrl,
+    description:
+      "Arc 11 Architect is a Delhi NCR architecture, interiors, and end-to-end project delivery practice serving residential, commercial, and institutional clients.",
+    email: BUSINESS_EMAIL,
+    telephone: BUSINESS_PHONE_PRIMARY,
+    address: { "@type": "PostalAddress", ...HEAD_OFFICE_ADDRESS },
+    geo: {
+      "@type": "GeoCoordinates",
+      ...HEAD_OFFICE_GEO,
+    },
+    hasMap: HEAD_OFFICE_MAP_URL,
+    openingHoursSpecification,
+    areaServed: serviceArea,
+    availableLanguage: ["English", "Hindi"],
+    currenciesAccepted: "INR",
+    serviceArea,
+    sameAs: BUSINESS_SAME_AS,
   };
 
   const headOfficeSchema: JsonLd = {
@@ -72,27 +161,21 @@ export default function SeoJsonLd() {
     url: siteUrl,
     image: logo,
     logo,
-    hasMap: headOfficeMap,
-    telephone: "+91-85273-78555",
-    email: "arcelevenarchitect@gmail.com",
+    hasMap: HEAD_OFFICE_MAP_URL,
+    telephone: BUSINESS_PHONE_PRIMARY,
+    email: BUSINESS_EMAIL,
     description:
       "Head office of Arc 11 Architect, serving residential, commercial, institutional, and interior architecture projects.",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Plot No. 535, Second Floor, Left Side, Khasra No. 60, 128-D21, Chattarpur Pahadi",
-      addressLocality: "New Delhi",
-      postalCode: "110074",
-      addressCountry: "IN",
+    parentOrganization: {
+      "@id": `${siteUrl}/#organization`,
     },
+    address: { "@type": "PostalAddress", ...HEAD_OFFICE_ADDRESS },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 28.5068683,
-      longitude: 77.1846957,
+      ...HEAD_OFFICE_GEO,
     },
-    areaServed: [
-      { "@type": "Country", name: "India" },
-      { "@type": "Place", name: "Delhi NCR" },
-    ],
+    openingHoursSpecification,
+    areaServed: serviceArea,
     founder: {
       "@type": "Person",
       name: "Shashank Saini",
@@ -107,20 +190,20 @@ export default function SeoJsonLd() {
     contactPoint: [
       {
         "@type": "ContactPoint",
-        telephone: "+91-85273-78555",
+        telephone: BUSINESS_PHONE_PRIMARY,
         contactType: "customer support",
         areaServed: "IN",
         availableLanguage: ["English", "Hindi"],
       },
       {
         "@type": "ContactPoint",
-        telephone: "+91-96500-58444",
+        telephone: BUSINESS_PHONE_SECONDARY,
         contactType: "sales",
         areaServed: "IN",
         availableLanguage: ["English", "Hindi"],
       },
     ],
-    sameAs,
+    sameAs: BUSINESS_SAME_AS,
   };
 
   const branchOfficeSchema: JsonLd = {
@@ -135,24 +218,18 @@ export default function SeoJsonLd() {
     url: siteUrl,
     image: logo,
     logo,
-    hasMap: branchOfficeMap,
-    telephone: "+91-85273-78555",
-    email: "arcelevenarchitect@gmail.com",
+    hasMap: BRANCH_OFFICE_MAP_URL,
+    telephone: BUSINESS_PHONE_PRIMARY,
+    email: BUSINESS_EMAIL,
     description: "Branch office supporting site coordination and studio engagement in New Delhi.",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "E1, DDA Flats, A2/04, Rangpuri Pahari, Vasant Kunj",
-      addressLocality: "New Delhi",
-      postalCode: "110070",
-      addressCountry: "IN",
-    },
+    address: { "@type": "PostalAddress", ...BRANCH_OFFICE_ADDRESS },
     geo: {
       "@type": "GeoCoordinates",
-      latitude: 28.537786,
-      longitude: 77.1331618,
+      ...BRANCH_OFFICE_GEO,
     },
-    areaServed: [{ "@type": "Country", name: "India" }],
-    sameAs,
+    openingHoursSpecification,
+    areaServed: serviceArea,
+    sameAs: BUSINESS_SAME_AS,
   };
 
   const serviceSchema: JsonLd = {
@@ -170,6 +247,7 @@ export default function SeoJsonLd() {
       "@type": "Country",
       name: "India",
     },
+    serviceOutput: "Pan India and selected international architecture and interiors delivery",
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Studio Services",
@@ -218,6 +296,7 @@ export default function SeoJsonLd() {
   const schemas = [
     websiteSchema,
     organizationSchema,
+    localBusinessSchema,
     headOfficeSchema,
     branchOfficeSchema,
     serviceSchema,

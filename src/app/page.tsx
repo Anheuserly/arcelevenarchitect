@@ -31,7 +31,7 @@ const homePreviewImages = [
 const homeMetadata = buildPageMetadata({
   title: "Construction, Architectural and Interiors End-to-End Solutions in Delhi NCR, India",
   description:
-    "Arc 11 Architect delivers construction, architectural, and interiors end-to-end solutions in Delhi NCR, India, for residential, commercial, institutional, and detail-led design projects across India.",
+    "Arc 11 Architect delivers construction, architectural, and interiors end-to-end solutions in Delhi NCR, India, for residential, commercial, institutional, and detail-led design projects across Pan India and selected international work.",
   path: "/",
   images: homePreviewImages,
   keywords: [
@@ -44,6 +44,8 @@ const homeMetadata = buildPageMetadata({
     "commercial interior design studio",
     "institutional architect India",
     "turnkey architecture studio",
+    "pan India architecture firm",
+    "international architecture studio India",
   ],
 });
 

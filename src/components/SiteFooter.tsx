@@ -1,5 +1,6 @@
 import Link from "next/link";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
+import { JUSTDIAL_URL } from "@/lib/seo";
 
 export default function SiteFooter() {
   return (
@@ -51,6 +52,14 @@ export default function SiteFooter() {
                 rel="noreferrer"
               >
                 Facebook
+              </a>
+              <a
+                href={JUSTDIAL_URL}
+                className="underline-link"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Justdial
               </a>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -104,6 +113,7 @@ export default function SiteFooter() {
                   <Link href="/studio">Studio</Link>
                   <Link href="/services">Services</Link>
                   <Link href="/work">Work</Link>
+                  <Link href="/international">International</Link>
                   <Link href="/instagram">Instagram</Link>
                   <StartProjectTrigger className="text-left" source="footer_quick_links">
                     Start a Project

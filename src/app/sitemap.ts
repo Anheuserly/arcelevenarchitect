@@ -94,6 +94,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       images: [shareImage],
     },
     {
+      url: `${SITE_URL}/international`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.78,
+      images: [shareImage],
+    },
+    {
       url: `${SITE_URL}/careers`,
       lastModified: now,
       changeFrequency: "weekly",

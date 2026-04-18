@@ -5,7 +5,18 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
-import { buildPageMetadata } from "@/lib/seo";
+import {
+  BRANCH_OFFICE_ADDRESS,
+  BRANCH_OFFICE_MAP_URL,
+  BUSINESS_EMAIL,
+  BUSINESS_PHONE_PRIMARY,
+  BUSINESS_PHONE_SECONDARY,
+  BUSINESS_SAME_AS,
+  HEAD_OFFICE_ADDRESS,
+  HEAD_OFFICE_MAP_URL,
+  SITE_URL,
+  buildPageMetadata,
+} from "@/lib/seo";
 
 export const metadata = buildPageMetadata({
   title: "Contact Arc 11 Architect for Inquiries and Collaborations",
@@ -28,6 +39,8 @@ export const metadata = buildPageMetadata({
     "design collaboration inquiry",
     "Arc 11 Architect office address",
     "architect meeting request",
+    "architecture office Chattarpur",
+    "architect Vasant Kunj Delhi",
   ],
 });
 
@@ -39,10 +52,75 @@ const inquiryTopics = [
 ];
 
 export default function ContactPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Contact",
+        item: `${SITE_URL}/contact`,
+      },
+    ],
+  };
+
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${SITE_URL}/contact#page`,
+    name: "Contact Arc 11 Architect",
+    description:
+      "Contact page for Arc 11 Architect, covering studio inquiries, collaborations, office visits, and project introductions.",
+    url: `${SITE_URL}/contact`,
+    mainEntity: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Arc 11 Architect",
+      email: BUSINESS_EMAIL,
+      telephone: [BUSINESS_PHONE_PRIMARY, BUSINESS_PHONE_SECONDARY],
+      sameAs: BUSINESS_SAME_AS,
+      location: [
+        {
+          "@type": "Place",
+          name: "Arc 11 Architect Head Office",
+          address: {
+            "@type": "PostalAddress",
+            ...HEAD_OFFICE_ADDRESS,
+          },
+          hasMap: HEAD_OFFICE_MAP_URL,
+        },
+        {
+          "@type": "Place",
+          name: "Arc 11 Architect Branch Office",
+          address: {
+            "@type": "PostalAddress",
+            ...BRANCH_OFFICE_ADDRESS,
+          },
+          hasMap: BRANCH_OFFICE_MAP_URL,
+        },
+      ],
+    },
+  };
+
   return (
     <div className="bg-[var(--background)]">
       <SiteHeader />
       <main className="section-padding">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+        />
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr]">
             <div className="grid gap-6">
