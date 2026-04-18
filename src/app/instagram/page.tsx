@@ -9,6 +9,7 @@ import {
 } from "@/lib/instagram";
 import { SITE_URL, buildPageMetadata } from "@/lib/seo";
 
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 export const metadata = buildPageMetadata({

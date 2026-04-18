@@ -90,11 +90,12 @@ export default function ContactPage() {
                       <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted-2)]">
                         Head Office
                       </p>
-                      <p className="mt-2">D-21, Chhatarpur Hills, II Floor</p>
-                      <p>Ambedkar Colony, New Delhi-74</p>
+                      <p className="mt-2">Plot No. 535, Second Floor, Left Side</p>
+                      <p>Khasra No. 60, 128-D21, Chattarpur Pahadi</p>
+                      <p>New Delhi 110074</p>
                       <a
                         className="mt-3 inline-block text-xs uppercase tracking-[0.28em] text-[var(--foreground)]"
-                        href="https://www.google.com/maps/place/ARC+11+ARCHITECT/@28.5068683,77.1821208,17z/data=!3m1!4b1!4m6!3m5!1s0x8b99e39acef87ea3:0x6f5f84cfaba72863!8m2!3d28.5068683!4d77.1846957!16s%2Fg%2F11x60035f9?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D"
+                        href="https://www.google.com/maps/search/?api=1&query=Plot+No.+535%2C+Second+Floor%2C+Left+Side%2C+Khasra+No.+60%2C+128-D21%2C+Chattarpur+Pahadi%2C+New+Delhi+110074"
                         rel="noreferrer"
                         target="_blank"
                       >

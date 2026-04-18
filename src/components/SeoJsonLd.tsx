@@ -8,7 +8,7 @@ export default function SeoJsonLd() {
   const altBrand = "ARC 11 ARCHITECT";
   const logo = absoluteUrl("/brand/proportion-study.png");
   const headOfficeMap =
-    "https://www.google.com/maps/place/ARC+11+ARCHITECT/@28.5068683,77.1821208,17z/data=!3m1!4b1!4m6!3m5!1s0x8b99e39acef87ea3:0x6f5f84cfaba72863!8m2!3d28.5068683!4d77.1846957!16s%2Fg%2F11x60035f9";
+    "https://www.google.com/maps/search/?api=1&query=Plot+No.+535%2C+Second+Floor%2C+Left+Side%2C+Khasra+No.+60%2C+128-D21%2C+Chattarpur+Pahadi%2C+New+Delhi+110074";
   const branchOfficeMap =
     "https://www.google.com/maps/place/Arc+11+Architect/@28.537786,77.1305869,17z/data=!3m1!4b1!4m6!3m5!1s0x390d1d9dea5dc7e9:0x4595ec7be90d05d7!8m2!3d28.537786!4d77.1331618!16s%2Fg%2F11yxg50dsz";
 
@@ -50,7 +50,7 @@ export default function SeoJsonLd() {
     image: logo,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "D-21, Chhatarpur Hills, II Floor, Ambedkar Colony",
+      streetAddress: "Plot No. 535, Second Floor, Left Side, Khasra No. 60, 128-D21, Chattarpur Pahadi",
       addressLocality: "New Delhi",
       postalCode: "110074",
       addressCountry: "IN",
@@ -79,7 +79,7 @@ export default function SeoJsonLd() {
       "Head office of Arc 11 Architect, serving residential, commercial, institutional, and interior architecture projects.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "D-21, Chhatarpur Hills, II Floor, Ambedkar Colony",
+      streetAddress: "Plot No. 535, Second Floor, Left Side, Khasra No. 60, 128-D21, Chattarpur Pahadi",
       addressLocality: "New Delhi",
       postalCode: "110074",
       addressCountry: "IN",

@@ -81,8 +81,9 @@ export default function SiteFooter() {
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
                   Head Office
                 </p>
-                <p className="mt-2">D-21, Chhatarpur Hills, II Floor</p>
-                <p>Ambedkar Colony, New Delhi-74</p>
+                <p className="mt-2">Plot No. 535, Second Floor, Left Side</p>
+                <p>Khasra No. 60, 128-D21, Chattarpur Pahadi</p>
+                <p>New Delhi 110074</p>
               </div>
               <div className="mt-6 border-t border-[var(--line)] pt-5 text-sm">
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
