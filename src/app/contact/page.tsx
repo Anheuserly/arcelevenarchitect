@@ -185,7 +185,7 @@ export default function ContactPage() {
                       <p className="text-xs uppercase tracking-[0.28em] text-[var(--muted-2)]">
                         Branch Office
                       </p>
-                      <p className="mt-2">E1, DDA Flats, A2/04, Rangpuri Pahari, Vasant Kunj</p>
+                      <p className="mt-2">E1, DDA Flats, A2/04, Vasant Kunj</p>
                       <p>New Delhi, Delhi 110070</p>
                       <a
                         className="mt-3 inline-block text-xs uppercase tracking-[0.28em] text-[var(--foreground)]"

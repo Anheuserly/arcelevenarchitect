@@ -1,0 +1,63 @@
+@page { size: A4 landscape; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #101010; color: #1d1a15; font-family: Arial, Helvetica, sans-serif; }
+body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.deck { width: 100%; }
+.page { position: relative; width: 297mm; height: 210mm; padding: 18mm 20mm; margin: 0 auto; overflow: hidden; background: #f6efe3; page-break-after: always; break-after: page; }
+.page::before { content: ""; position: absolute; inset: 8mm; border: 1px solid rgba(80,55,25,.22); pointer-events: none; }
+.cover { background: radial-gradient(circle at 78% 25%, rgba(212,155,63,.28), transparent 32%), linear-gradient(135deg, #1d1812 0%, #332519 50%, #efe0c8 50%, #f8f0e4 100%); color: #fff; }
+.cover::before { border-color: rgba(255,255,255,.22); }
+.brand-logo { position: absolute; top: 20mm; right: 22mm; width: 34mm; height: 34mm; object-fit: contain; filter: drop-shadow(0 8px 18px rgba(0,0,0,.25)); z-index: 3; }
+.corner-logo { position: absolute; top: 14mm; right: 18mm; width: 22mm; height: 22mm; object-fit: contain; z-index: 3; }
+.watermark { position: absolute; right: 28mm; bottom: 13mm; width: 88mm; height: 88mm; background: url('geometry-study.jpeg') center/contain no-repeat; opacity: .08; filter: grayscale(1); }
+.watermark.soft { opacity: .055; right: 18mm; bottom: 9mm; width: 100mm; height: 100mm; }
+.cover-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.35fr .65fr; gap: 24mm; height: 100%; align-items: center; }
+.eyebrow { margin: 0 0 8mm; text-transform: uppercase; letter-spacing: 3px; font-size: 11px; font-weight: 700; color: #b98943; }
+.cover .eyebrow { color: #e7b362; }
+h1 { margin: 0; font-size: 56px; line-height: .95; letter-spacing: -2px; }
+h1 span { color: #e9b96d; font-weight: 400; }
+h2 { margin: 0 0 12mm; font-size: 34px; line-height: 1; letter-spacing: -1px; color: #231c13; }
+h3 { margin: 0 0 8mm; font-size: 22px; }
+.lead { max-width: 155mm; font-size: 18px; line-height: 1.55; color: rgba(255,255,255,.82); }
+.hero-card { align-self: end; background: rgba(255,255,255,.93); color: #231c13; border-radius: 24px; padding: 14mm; box-shadow: 0 25px 70px rgba(0,0,0,.28); }
+.hero-card p, .hero-card small, .hero-card span { display: block; margin: 0; color: #6f6252; }
+.hero-card strong { display: block; margin: 3mm 0; font-size: 38px; line-height: 1; }
+.hero-card small { margin-top: 12mm; }
+.page-footer { position: absolute; left: 20mm; bottom: 14mm; font-size: 12px; color: rgba(255,255,255,.7); }
+.cards { position: relative; z-index: 2; display: grid; gap: 7mm; }
+.cards.three { grid-template-columns: repeat(3, 1fr); }
+.card, .list-card, .price-box, .timeline div, .terms-grid p { background: rgba(255,255,255,.65); border: 1px solid rgba(80,55,25,.15); border-radius: 18px; padding: 8mm; box-shadow: 0 8px 25px rgba(70,48,18,.06); }
+.card b { display: block; margin-bottom: 4mm; font-size: 18px; }
+.card p, .timeline p, .terms-grid p, .price-box p { margin: 0; color: #6c5f4e; line-height: 1.45; }
+.pricing-wrap { display: grid; grid-template-columns: .85fr 1.2fr .85fr; gap: 7mm; align-items: stretch; }
+.price-box { text-align: center; min-height: 58mm; display: flex; flex-direction: column; justify-content: center; }
+.price-box span { text-transform: uppercase; letter-spacing: 2px; color: #8b6a39; font-size: 11px; font-weight: 700; }
+.price-box del { margin: 5mm 0; font-size: 34px; color: #766755; }
+.price-box strong { margin: 5mm 0; font-size: 44px; line-height: 1; color: #231c13; }
+.price-box.offer { background: linear-gradient(135deg, #251b11, #4a321a); color: #fff; transform: scale(1.04); }
+.price-box.offer strong, .price-box.offer p { color: #fff; }
+.price-box.offer span { color: #e8b86e; }
+.savings { position: relative; z-index: 2; margin-top: 9mm; padding: 5mm 8mm; display: inline-block; background: #e8b86e; color: #1f1710; border-radius: 50px; font-weight: 800; }
+.include-line { position: relative; z-index: 2; margin-top: 10mm; display: flex; gap: 4mm; flex-wrap: wrap; }
+.include-line span { padding: 4mm 6mm; border-radius: 50px; border: 1px solid rgba(80,55,25,.18); background: rgba(255,255,255,.48); font-weight: 700; color: #514536; }
+.split { display: grid; grid-template-columns: 1fr .8fr; gap: 14mm; align-items: center; }
+ul { margin: 0; padding-left: 20px; columns: 2; column-gap: 12mm; }
+li { margin-bottom: 4mm; line-height: 1.4; }
+.visual-block { display: flex; justify-content: center; }
+.phone-frame { width: 70mm; height: 122mm; border-radius: 28px; background: linear-gradient(160deg, #1b1510, #5b3a1c 58%, #d9a25b); border: 8px solid #19140f; box-shadow: 0 28px 60px rgba(0,0,0,.22); padding: 12mm 8mm; color: white; display: flex; flex-direction: column; justify-content: flex-end; }
+.screen-line.top { position: absolute; }
+.screen-title { font-size: 22px; font-weight: 900; letter-spacing: 1px; }
+.screen-text { margin: 3mm 0 8mm; opacity: .8; }
+.screen-bar, .screen-bar.short { height: 4mm; border-radius: 20px; background: rgba(255,255,255,.7); margin-top: 3mm; }
+.screen-bar.short { width: 60%; }
+.timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6mm; }
+.timeline span { display: inline-flex; width: 14mm; height: 14mm; border-radius: 50%; background: #231c13; color: #e8b86e; align-items: center; justify-content: center; font-weight: 900; margin-bottom: 7mm; }
+.timeline b { display: block; margin-bottom: 4mm; font-size: 18px; }
+.terms-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5mm; }
+.terms-grid p { padding: 5mm 6mm; }
+.signature-row { position: absolute; left: 20mm; right: 20mm; bottom: 18mm; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12mm; }
+.signature-row div { border-top: 1px solid rgba(35,28,19,.35); padding-top: 4mm; }
+.signature-row span { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #8b6a39; }
+.signature-row b { display: block; margin-top: 2mm; }
+@media print { html, body { background: #fff; } .page { margin: 0; box-shadow: none; } }
+@media screen { .page { margin: 20px auto; box-shadow: 0 15px 50px rgba(0,0,0,.35); } }

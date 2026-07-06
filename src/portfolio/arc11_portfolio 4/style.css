@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap');
+
+:root{
+  --paper:#f4efe6;
+  --ink:#191817;
+  --muted:#6f6a62;
+  --line:#ded5c8;
+  --gold:#b58a42;
+  --dark:#20201f;
+  --white:#fffaf1;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#ddd;color:var(--ink);font-family:Inter,Arial,sans-serif}
+.deck{width:297mm;margin:0 auto;background:#ddd}
+.page{position:relative;width:297mm;height:210mm;overflow:hidden;background:var(--paper);padding:20mm 24mm;page-break-after:always;border:0;display:block}
+.page:before{content:"";position:absolute;inset:7mm;border:1px solid rgba(25,24,23,.12);pointer-events:none;z-index:2}
+.page:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(181,138,66,.08),transparent 45%,rgba(255,255,255,.2));pointer-events:none}
+.dark{background:var(--dark);color:var(--white)}
+.dark:before{border-color:rgba(255,255,255,.14)}
+.mark{position:absolute;right:17mm;top:14mm;width:62mm;opacity:.08;mix-blend-mode:multiply;z-index:0}
+.dark .mark{opacity:.09;filter:invert(1);mix-blend-mode:screen}
+.mark-lg{width:140mm;right:4mm;top:-6mm;opacity:.07}
+.mark-center{width:155mm;left:50%;top:50%;transform:translate(-50%,-50%);opacity:.08}
+.topline{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:8mm;position:relative;z-index:3}
+h1,h2{font-family:'Playfair Display',Georgia,serif;margin:0;letter-spacing:-.055em;line-height:.86;position:relative;z-index:3}
+h1{font-size:64px;max-width:120mm}
+h2{font-size:46px;max-width:150mm;margin-bottom:10mm}.dark h2{color:var(--white)}
+h3{font-size:17px;line-height:1.05;margin:0 0 5mm;font-weight:800}.num{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.12em;position:relative;z-index:3}.lead{font-size:18px;line-height:1.25;max-width:112mm;margin:8mm 0;color:#403d38;position:relative;z-index:3}.body-text{font-size:18px;line-height:1.45;color:var(--muted);max-width:120mm}.dark .body-text{color:#d3cabd}.cover-grid{display:grid;grid-template-columns:1fr 70mm;gap:18mm;align-items:end;height:142mm;position:relative;z-index:3}.pills{display:flex;flex-wrap:wrap;gap:4mm;max-width:135mm}.pills span{padding:3mm 5mm;background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:99px;font-size:12px;font-weight:800}.price-hero{background:#242424;color:white;border-radius:9mm;padding:11mm;box-shadow:0 10mm 24mm rgba(0,0,0,.16)}.price-hero span{display:block;color:var(--gold);font-size:9px;text-transform:uppercase;letter-spacing:.22em;font-weight:900}.price-hero strong{display:block;font-size:42px;margin:5mm 0 2mm;letter-spacing:-.05em}.price-hero small{font-weight:800}.price-hero p{color:#cfc7ba;line-height:1.4;font-size:12px}footer{position:absolute;left:24mm;bottom:15mm;font-weight:800;color:var(--muted);z-index:3}.split{display:grid;grid-template-columns:1fr 1.05fr;gap:18mm;align-items:center;height:100%;position:relative;z-index:3}.cards{display:grid;gap:5mm}.two-col{grid-template-columns:1fr 1fr}.cards article,.mood,.rate-cards article{background:rgba(255,255,255,.68);border:1px solid var(--line);border-radius:7mm;padding:9mm}.cards p,.mood p,.rate-cards p{color:var(--muted);line-height:1.35;margin:0}.deliverables{display:grid;grid-template-columns:repeat(4,1fr);gap:7mm;margin:12mm 0;position:relative;z-index:3}.deliverables div{border:1px solid rgba(255,255,255,.16);border-radius:8mm;padding:10mm;background:rgba(255,255,255,.05)}.deliverables b{display:block;font-size:40px;letter-spacing:-.05em}.deliverables span{color:#d2c8b9;font-weight:700}.list-grid{display:grid;grid-template-columns:1fr 1fr;gap:12mm;position:relative;z-index:3}.list-grid ul{margin:0;padding-left:6mm;color:#e8dfd2;line-height:1.95;font-size:16px}.mood-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm;margin:12mm 0 10mm;position:relative;z-index:3}.mood span{display:block;color:var(--gold);font-weight:900;margin-bottom:12mm}.wide-note{font-family:'Playfair Display',Georgia,serif;font-size:34px;line-height:1.05;max-width:220mm;margin-top:12mm;letter-spacing:-.04em;position:relative;z-index:3}.quote h2{margin-bottom:8mm}.pricing-box{background:#242424;color:#fff;border-radius:10mm;padding:11mm;margin:4mm 0 8mm;position:relative;z-index:3}.price-line{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.13);padding:5mm 0}.price-line span{text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:900;color:#d7c3a2}.price-line b{font-size:42px;letter-spacing:-.05em}.price-line.muted b{text-decoration:line-through;color:#9e9a91}.saving{display:inline-block;margin-top:6mm;background:var(--gold);color:#fff;padding:3mm 5mm;border-radius:99px;font-weight:900}.rate-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6mm;position:relative;z-index:3}.rate-cards strong{display:block;font-size:30px;letter-spacing:-.04em;margin-bottom:3mm}.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:18mm;position:relative;z-index:3}.timeline div{border-top:2px solid var(--gold);padding-top:8mm}.timeline span{display:inline-grid;place-items:center;width:12mm;height:12mm;background:var(--gold);border-radius:50%;font-weight:900;color:white;margin-bottom:8mm}.timeline p{color:#d6cec1;line-height:1.45}.terms{position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;gap:6mm 12mm;margin-top:5mm}.terms p{font-size:16px;line-height:1.5;background:rgba(255,255,255,.62);border:1px solid var(--line);border-radius:5mm;padding:6mm;margin:0;color:#3d3a35}.closing{display:grid;place-items:center;text-align:center}.center{position:relative;z-index:3}.center h2{font-size:56px;max-width:220mm;margin:0 auto 8mm}.center .body-text{margin:0 auto 12mm}.signature{font-family:'Playfair Display',Georgia,serif;font-size:36px;color:var(--gold);font-weight:900}
+@page{size:A4 landscape;margin:0}
+@media print{
+  html,body{width:297mm;height:210mm;background:white;margin:0!important;padding:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .deck{width:297mm;margin:0!important;background:white}
+  .page{width:297mm;height:210mm;margin:0!important;padding:20mm 24mm;break-after:page;page-break-after:always;box-shadow:none;border:none}
+  .page:last-child{page-break-after:auto;break-after:auto}
+}
+@media screen{.page{margin:0 auto 12px;box-shadow:0 8px 30px rgba(0,0,0,.12)}}

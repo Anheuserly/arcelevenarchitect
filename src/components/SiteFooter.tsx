@@ -98,7 +98,7 @@ export default function SiteFooter() {
                 <p className="text-xs uppercase tracking-[0.3em] text-[var(--muted-2)]">
                   Branch Office
                 </p>
-                <p className="mt-2">E1, DDA Flats, A2/04, Rangpuri Pahari</p>
+                <p className="mt-2">E1, DDA Flats, A2/04</p>
                 <p>Vasant Kunj, New Delhi 110070</p>
               </div>
             </div>
