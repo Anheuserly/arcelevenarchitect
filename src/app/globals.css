@@ -726,20 +726,18 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
 }
 
 .moodboard-immersive-shell {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.moodboard-immersive-track {
   display: flex;
   height: 100%;
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  touch-action: auto;
-}
-
-.moodboard-immersive-shell::-webkit-scrollbar {
-  display: none;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
 .moodboard-immersive-slide {
@@ -796,6 +794,12 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
   border-color: rgba(255, 255, 255, 0.78);
   background: rgba(15, 13, 10, 0.86);
   transform: translateY(-1px);
+}
+
+.moodboard-immersive-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+  transform: none;
 }
 
 .moodboard-immersive-control:focus-visible {
