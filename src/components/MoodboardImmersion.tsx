@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 type MoodboardImage = {
   alt: string;
@@ -9,82 +9,27 @@ type MoodboardImage = {
 };
 
 export default function MoodboardImmersion({ images }: { images: MoodboardImage[] }) {
-  const sectionRef = useRef<HTMLElement | null>(null);
   const shellRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section || typeof IntersectionObserver === "undefined") {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.55) {
-          document.body.dataset.fullscreenMoodboard = "true";
-          return;
-        }
-
-        delete document.body.dataset.fullscreenMoodboard;
-      },
-      {
-        threshold: [0, 0.35, 0.55, 0.8],
-      }
-    );
-
-    observer.observe(section);
-
-    return () => {
-      observer.disconnect();
-      delete document.body.dataset.fullscreenMoodboard;
-    };
-  }, []);
-
-  useEffect(() => {
+  const scrollSlide = (direction: -1 | 1) => {
     const shell = shellRef.current;
 
     if (!shell) {
       return;
     }
 
-    const edgePadding = 2;
+    const nextSlide = Math.round(shell.scrollLeft / shell.clientWidth) + direction;
+    const maxSlide = Math.max(0, images.length - 1);
+    const clampedSlide = Math.min(maxSlide, Math.max(0, nextSlide));
 
-    const onWheel = (event: WheelEvent) => {
-      const primaryDelta =
-        Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-
-      if (primaryDelta === 0) {
-        return;
-      }
-
-      const maxScrollLeft = shell.scrollWidth - shell.clientWidth;
-      const isAtStart = shell.scrollLeft <= edgePadding;
-      const isAtEnd = shell.scrollLeft >= maxScrollLeft - edgePadding;
-      const wantsPrevious = primaryDelta < 0;
-      const wantsNext = primaryDelta > 0;
-
-      if ((wantsPrevious && isAtStart) || (wantsNext && isAtEnd)) {
-        return;
-      }
-
-      event.preventDefault();
-      shell.scrollBy({
-        left: primaryDelta,
-        behavior: "smooth",
-      });
-    };
-
-    shell.addEventListener("wheel", onWheel, { passive: false });
-
-    return () => {
-      shell.removeEventListener("wheel", onWheel);
-    };
-  }, []);
+    shell.scrollTo({
+      left: shell.clientWidth * clampedSlide,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section
-      ref={sectionRef}
       className="moodboard-immersive-section"
       aria-label="Fullscreen moodboards"
     >
@@ -106,6 +51,26 @@ export default function MoodboardImmersion({ images }: { images: MoodboardImage[
           </div>
         ))}
       </div>
+      {images.length > 1 ? (
+        <div className="moodboard-immersive-controls">
+          <button
+            type="button"
+            className="moodboard-immersive-control"
+            aria-label="Previous moodboard"
+            onClick={() => scrollSlide(-1)}
+          >
+            &lt;
+          </button>
+          <button
+            type="button"
+            className="moodboard-immersive-control"
+            aria-label="Next moodboard"
+            onClick={() => scrollSlide(1)}
+          >
+            &gt;
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -719,9 +719,9 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
 
 .moodboard-immersive-section {
   position: relative;
-  height: 100dvh;
-  min-height: 100svh;
+  height: clamp(420px, 72svh, 760px);
   background: #0f0d0a;
+  isolation: isolate;
   scroll-margin-top: 0;
 }
 
@@ -735,7 +735,7 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
-  touch-action: pan-x pan-y;
+  touch-action: auto;
 }
 
 .moodboard-immersive-shell::-webkit-scrollbar {
@@ -749,8 +749,7 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100dvh;
-  min-height: 100svh;
+  height: 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   background: #0f0d0a;
@@ -762,6 +761,46 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
   object-fit: contain;
   object-position: center;
   display: block;
+}
+
+.moodboard-immersive-controls {
+  position: absolute;
+  right: clamp(1rem, 2vw, 1.5rem);
+  bottom: clamp(1rem, 2vw, 1.5rem);
+  z-index: 2;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.moodboard-immersive-control {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(15, 13, 10, 0.68);
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(14px);
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.moodboard-immersive-control:hover {
+  border-color: rgba(255, 255, 255, 0.78);
+  background: rgba(15, 13, 10, 0.86);
+  transform: translateY(-1px);
+}
+
+.moodboard-immersive-control:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.72);
+  outline-offset: 3px;
 }
 
 .start-project-modal-backdrop {
@@ -1025,12 +1064,18 @@ body[data-fullscreen-moodboard="true"] [data-whatsapp-float="true"] {
     padding: 0.8rem 0.94rem;
   }
 
-  .moodboard-immersive-slide {
-    min-height: 100svh;
+  .moodboard-immersive-section {
+    height: clamp(340px, 64svh, 620px);
   }
 
   .moodboard-immersive-image {
     object-fit: contain;
+  }
+
+  .moodboard-immersive-control {
+    width: 2.35rem;
+    height: 2.35rem;
+    font-size: 1.1rem;
   }
 }
 
