@@ -10,6 +10,7 @@ type MoodboardImage = {
 
 export default function MoodboardImmersion({ images }: { images: MoodboardImage[] }) {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const shellRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -40,13 +41,54 @@ export default function MoodboardImmersion({ images }: { images: MoodboardImage[
     };
   }, []);
 
+  useEffect(() => {
+    const shell = shellRef.current;
+
+    if (!shell) {
+      return;
+    }
+
+    const edgePadding = 2;
+
+    const onWheel = (event: WheelEvent) => {
+      const primaryDelta =
+        Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+
+      if (primaryDelta === 0) {
+        return;
+      }
+
+      const maxScrollLeft = shell.scrollWidth - shell.clientWidth;
+      const isAtStart = shell.scrollLeft <= edgePadding;
+      const isAtEnd = shell.scrollLeft >= maxScrollLeft - edgePadding;
+      const wantsPrevious = primaryDelta < 0;
+      const wantsNext = primaryDelta > 0;
+
+      if ((wantsPrevious && isAtStart) || (wantsNext && isAtEnd)) {
+        return;
+      }
+
+      event.preventDefault();
+      shell.scrollBy({
+        left: primaryDelta,
+        behavior: "smooth",
+      });
+    };
+
+    shell.addEventListener("wheel", onWheel, { passive: false });
+
+    return () => {
+      shell.removeEventListener("wheel", onWheel);
+    };
+  }, []);
+
   return (
     <section
       ref={sectionRef}
       className="moodboard-immersive-section"
       aria-label="Fullscreen moodboards"
     >
-      <div className="moodboard-immersive-shell">
+      <div ref={shellRef} className="moodboard-immersive-shell">
         {images.map((image, index) => (
           <div
             key={image.src}
