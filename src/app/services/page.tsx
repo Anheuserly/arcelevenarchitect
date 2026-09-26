@@ -28,9 +28,10 @@ export const metadata = buildPageMetadata({
 });
 
 async function getArchitecturalPackages() {
-  const businessId = process.env.NEXT_PUBLIC_BUSINESS_ID || "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687";
+  const dataHubUrl = process.env.NEXT_PUBLIC_DATA_HUB_API_URL || "https://storage.amcmep.in/v1";
+  const businessId = process.env.NEXT_PUBLIC_BUSINESS_ID || "3bc9edf1-68df-4dcf-98be-fc3295651c28";
   try {
-    const res = await fetch("https://storage.amcmep.in/v1/listings", {
+    const res = await fetch(`${dataHubUrl}/listings`, {
       next: { revalidate: 60 },
     });
     if (!res.ok) return [];
@@ -38,6 +39,9 @@ async function getArchitecturalPackages() {
     const rows = data.rows || [];
     return rows.filter((r: any) =>
       r.business_id === businessId ||
+      r.business_id === "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687" ||
+      r.business_id === "3bc9edf1-68df-4dcf-98be-fc3295651c28" ||
+      r.business_id === "hlvogd5aqa_t59a8tmwaql9wtme" ||
       r.business_name?.toLowerCase().includes("arc")
     );
   } catch (error) {

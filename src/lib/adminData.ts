@@ -26,7 +26,7 @@ export async function getDashboardData(): Promise<DashboardData> {
                 requester_email as email, requester_phone as phone, status,
                 created_at as "createdAt"
          FROM work_requests 
-         WHERE assigned_business_id = $1 
+         WHERE assigned_business_id = $1 OR assigned_business_id = '6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687' OR business_name = 'ARC 11 ARCHITECT'
          ORDER BY created_at DESC LIMIT 50`,
         [BUSINESS_ID]
       ).catch(() => []),
@@ -36,7 +36,7 @@ export async function getDashboardData(): Promise<DashboardData> {
                 customer_phone as phone, rating, message, page_url, status,
                 created_at as "createdAt"
          FROM feedback 
-         WHERE business_id = $1 
+         WHERE business_id = $1 OR business_id = '6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687' OR business_name = 'ARC 11 ARCHITECT'
          ORDER BY created_at DESC LIMIT 50`,
         [BUSINESS_ID]
       ).catch(() => []),
@@ -45,7 +45,7 @@ export async function getDashboardData(): Promise<DashboardData> {
         `SELECT id as "$id", id, applicant_name as name, email, phone, position,
                 experience, location, status, created_at as "createdAt"
          FROM career_applications 
-         WHERE business_id = $1 
+         WHERE business_id = $1 OR business_id = '6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687' OR business_name = 'ARC 11 ARCHITECT'
          ORDER BY created_at DESC LIMIT 50`,
         [BUSINESS_ID]
       ).catch(() => []),
@@ -54,7 +54,7 @@ export async function getDashboardData(): Promise<DashboardData> {
         `SELECT id as "$id", id, title, category, price, currency,
                 availability as status, created_at as "createdAt"
          FROM listings 
-         WHERE business_id = $1 
+         WHERE business_id = $1 OR business_id = '6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687'
          ORDER BY created_at DESC LIMIT 50`,
         [BUSINESS_ID]
       ).catch(() => []),

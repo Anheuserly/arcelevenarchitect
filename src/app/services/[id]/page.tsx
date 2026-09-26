@@ -9,8 +9,9 @@ import { createArchitecturalJsonLd } from "@/lib/architectural-schema";
 import type { Metadata } from "next";
 
 async function getListing(id: string) {
+  const dataHubUrl = process.env.NEXT_PUBLIC_DATA_HUB_API_URL || "https://storage.amcmep.in/v1";
   try {
-    const res = await fetch("https://storage.amcmep.in/v1/listings", {
+    const res = await fetch(`${dataHubUrl}/listings`, {
       next: { revalidate: 60 },
     });
     if (!res.ok) return null;
