@@ -214,13 +214,19 @@ export default async function ServicesPage() {
                         </div>
                       </div>
 
-                      {/* Action Link */}
-                      <div className="mt-6 pt-2">
+                      {/* Action Links */}
+                      <div className="mt-6 pt-4 border-t border-[var(--line)] flex items-center justify-between gap-2">
                         <Link
                           href={`/services/${pkg.id}`}
-                          className="flex items-center justify-between text-xs uppercase tracking-[0.2em] font-semibold text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors"
+                          className="text-[11px] uppercase tracking-[0.15em] font-semibold text-[var(--muted-2)] hover:text-[var(--foreground)] transition-colors"
                         >
-                          <span>Explore Architectural Dossier</span>
+                          View Details
+                        </Link>
+                        <Link
+                          href={`/services/${pkg.id}#commission-request-form`}
+                          className="rounded-full bg-[var(--foreground)] text-white px-3.5 py-1.5 text-[11px] uppercase tracking-[0.15em] font-semibold hover:bg-[var(--accent)] transition-colors inline-flex items-center gap-1.5"
+                        >
+                          <span>Create Request</span>
                           <span>&rarr;</span>
                         </Link>
                       </div>

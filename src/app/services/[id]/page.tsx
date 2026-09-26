@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
+import ServiceWorkRequestForm from "@/components/ServiceWorkRequestForm";
 import { createArchitecturalJsonLd } from "@/lib/architectural-schema";
 import type { Metadata } from "next";
 
@@ -156,11 +157,14 @@ export default async function ServicePackagePage({ params }: { params: { id: str
                 </div>
 
                 <div className="mt-8 flex flex-wrap gap-4 items-center">
-                  <StartProjectTrigger className="button-primary" source={`service_${listing.id}`}>
-                    Discuss Commission Scope
-                  </StartProjectTrigger>
-                  <Link href="/services" className="button-secondary">
-                    Review All Services
+                  <a href="#commission-request-form" className="button-primary">
+                    Create Work Request
+                  </a>
+                  <a href="tel:+919871936847" className="button-secondary">
+                    Direct Architect Line (+91 98719 36847)
+                  </a>
+                  <Link href="/services" className="text-xs uppercase tracking-[0.2em] text-[var(--muted-2)] hover:text-[var(--foreground)] transition-colors ml-2">
+                    &larr; All Services
                   </Link>
                 </div>
               </div>
@@ -350,6 +354,12 @@ export default async function ServicePackagePage({ params }: { params: { id: str
             </div>
 
           </div>
+
+          {/* Interactive Work Request / Atelier Commission Desk */}
+          <div className="mt-16">
+            <ServiceWorkRequestForm listing={listing} />
+          </div>
+
         </div>
       </main>
 
