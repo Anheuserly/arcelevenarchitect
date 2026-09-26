@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createDocument } from "@/lib/appwriteClient";
 import { trackEvent } from "@/lib/analytics";
-
-const requestsCollectionId =
-  process.env.NEXT_PUBLIC_APPWRITE_SERVICE_REQUESTS_COLLECTION_ID || "requests";
-const publicDocumentPermissions = [
-  'read("any")',
-  'update("any")',
-  'delete("any")',
-];
 
 type EstimatePrefill = {
   projectType: string;
@@ -67,36 +58,32 @@ export default function ProjectRequestForm() {
     event.preventDefault();
     const form = event.currentTarget;
     setStatus("submitting");
-    setError(null);
-
-    if (!requestsCollectionId) {
-      setStatus("error");
-      setError("Service requests collection is not configured.");
-      return;
-    }
-
     const formData = new FormData(form);
     const payload = {
       name: String(formData.get("fullName") || ""),
       email: String(formData.get("email") || ""),
       projectType: String(formData.get("projectType") || ""),
       location: String(formData.get("location") || ""),
-      budgetRange: String(formData.get("budgetRange") || ""),
+      budget: String(formData.get("budgetRange") || ""),
       timeline: String(formData.get("timeline") || ""),
       message: String(formData.get("message") || ""),
       referral: String(formData.get("referral") || ""),
-      status: "new",
-      page: "start_project",
+      source: "arcelevenarchitect.com/start-project",
       hasEstimate: loadedEstimate,
-      createdAt: new Date().toISOString(),
     };
 
     try {
-      await createDocument({
-        collectionId: requestsCollectionId,
-        data: payload,
-        permissions: publicDocumentPermissions,
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message || "Failed to submit project request.");
+      }
+
       trackEvent("project_request_submit", {
         source_page: "start_project",
         has_estimate: loadedEstimate,

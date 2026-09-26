@@ -1,7 +1,8 @@
-import { listDocumentsServer } from "@/lib/appwriteServer";
+import { query } from "@/lib/db";
 
 export type AdminRecord = Record<string, unknown> & {
   $id?: string;
+  id?: string;
   $createdAt?: string;
   createdAt?: string;
   status?: string;
@@ -15,43 +16,67 @@ type DashboardData = {
   team: AdminRecord[];
 };
 
-function byNewest(a: AdminRecord, b: AdminRecord): number {
-  const aDate = String(a.createdAt || a.$createdAt || "");
-  const bDate = String(b.createdAt || b.$createdAt || "");
-  return bDate.localeCompare(aDate);
-}
-
-async function safeList(collectionId: string | undefined, limit: number) {
-  if (!collectionId) return [] as AdminRecord[];
-  try {
-    const items = await listDocumentsServer<AdminRecord>({ collectionId, limit });
-    return items.sort(byNewest);
-  } catch {
-    return [] as AdminRecord[];
-  }
-}
+const BUSINESS_ID = process.env.NEXT_PUBLIC_BUSINESS_ID || "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687";
 
 export async function getDashboardData(): Promise<DashboardData> {
-  const requestCollectionId =
-    process.env.NEXT_PUBLIC_APPWRITE_SERVICE_REQUESTS_COLLECTION_ID || "requests";
-  const feedbackCollectionId =
-    process.env.NEXT_PUBLIC_APPWRITE_FEEDBACK_COLLECTION_ID || "feedback";
-  const applicationsCollectionId =
-    process.env.NEXT_PUBLIC_APPWRITE_CAREER_APPLICATIONS_COLLECTION_ID ||
-    "career_applications";
-  const projectsCollectionId =
-    process.env.NEXT_PUBLIC_APPWRITE_PROJECTS_COLLECTION_ID || "projects";
-  const teamCollectionId = process.env.NEXT_PUBLIC_APPWRITE_TEAM_COLLECTION_ID || "team";
+  try {
+    const [requestsRows, feedbackRows, appRows, listingRows] = await Promise.all([
+      query(
+        `SELECT id as "$id", id, title, description, requester_name as name,
+                requester_email as email, requester_phone as phone, status,
+                created_at as "createdAt"
+         FROM work_requests 
+         WHERE assigned_business_id = $1 
+         ORDER BY created_at DESC LIMIT 50`,
+        [BUSINESS_ID]
+      ).catch(() => []),
 
-  const [requests, feedback, applications, projects, team] = await Promise.all([
-    safeList(requestCollectionId, 25),
-    safeList(feedbackCollectionId, 25),
-    safeList(applicationsCollectionId, 25),
-    safeList(projectsCollectionId, 25),
-    safeList(teamCollectionId, 25),
-  ]);
+      query(
+        `SELECT id as "$id", id, customer_name as name, customer_email as email,
+                customer_phone as phone, rating, message, page_url, status,
+                created_at as "createdAt"
+         FROM feedback 
+         WHERE business_id = $1 
+         ORDER BY created_at DESC LIMIT 50`,
+        [BUSINESS_ID]
+      ).catch(() => []),
 
-  return { requests, feedback, applications, projects, team };
+      query(
+        `SELECT id as "$id", id, applicant_name as name, email, phone, position,
+                experience, location, status, created_at as "createdAt"
+         FROM career_applications 
+         WHERE business_id = $1 
+         ORDER BY created_at DESC LIMIT 50`,
+        [BUSINESS_ID]
+      ).catch(() => []),
+
+      query(
+        `SELECT id as "$id", id, title, category, price, currency,
+                availability as status, created_at as "createdAt"
+         FROM listings 
+         WHERE business_id = $1 
+         ORDER BY created_at DESC LIMIT 50`,
+        [BUSINESS_ID]
+      ).catch(() => []),
+    ]);
+
+    return {
+      requests: requestsRows as AdminRecord[],
+      feedback: feedbackRows as AdminRecord[],
+      applications: appRows as AdminRecord[],
+      projects: listingRows as AdminRecord[],
+      team: [] as AdminRecord[],
+    };
+  } catch (error) {
+    console.error("Error fetching dashboard data:", error);
+    return {
+      requests: [],
+      feedback: [],
+      applications: [],
+      projects: [],
+      team: [],
+    };
+  }
 }
 
 export function pickValue(record: AdminRecord, keys: string[]): string {
@@ -60,16 +85,15 @@ export function pickValue(record: AdminRecord, keys: string[]): string {
     if (typeof value === "string" && value.trim()) return value;
     if (typeof value === "number") return String(value);
   }
-  return "-";
+  return "";
 }
 
-export function buildFileViewUrl(fileId: string): string | null {
-  const endpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT;
-  const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID;
-  const bucketId =
-    process.env.NEXT_PUBLIC_APPWRITE_CAREER_UPLOADS_BUCKET_ID ||
-    process.env.NEXT_PUBLIC_APPWRITE_ESTIMATOR_ATTACHMENTS_BUCKET_ID;
-
-  if (!endpoint || !projectId || !bucketId || !fileId) return null;
-  return `${endpoint}/storage/buckets/${bucketId}/files/${fileId}/view?project=${projectId}`;
+export function formatDateTime(value: unknown): string {
+  if (!value) return "";
+  const date = new Date(String(value));
+  if (Number.isNaN(date.getTime())) return String(value);
+  return date.toLocaleString("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 }

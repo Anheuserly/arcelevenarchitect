@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createDocument } from "@/lib/appwriteClient";
 import { trackEvent } from "@/lib/analytics";
-
-const requestsCollectionId =
-  process.env.NEXT_PUBLIC_APPWRITE_SERVICE_REQUESTS_COLLECTION_ID || "requests";
-const publicDocumentPermissions = [
-  'read("any")',
-  'update("any")',
-  'delete("any")',
-];
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
@@ -24,12 +15,6 @@ export default function ContactForm() {
     setStatus("submitting");
     setError(null);
 
-    if (!requestsCollectionId) {
-      setStatus("error");
-      setError("Service requests collection is not configured.");
-      return;
-    }
-
     const formData = new FormData(form);
     const payload = {
       name: String(formData.get("fullName") || ""),
@@ -39,17 +24,21 @@ export default function ContactForm() {
       timeline: String(formData.get("timeline") || ""),
       message: String(formData.get("message") || ""),
       referral: String(formData.get("referral") || ""),
-      status: "new",
-      page: "contact_inquiry",
-      createdAt: new Date().toISOString(),
+      source: "arcelevenarchitect.com/contact",
     };
 
     try {
-      await createDocument({
-        collectionId: requestsCollectionId,
-        data: payload,
-        permissions: publicDocumentPermissions,
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message || "Submission failed");
+      }
+
       trackEvent("contact_inquiry_submit", {
         source_page: "contact",
       });

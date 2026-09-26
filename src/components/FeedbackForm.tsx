@@ -1,15 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { createDocument } from "@/lib/appwriteClient";
-
-const feedbackCollectionId =
-  process.env.NEXT_PUBLIC_APPWRITE_FEEDBACK_COLLECTION_ID || "feedback";
-const publicDocumentPermissions = [
-  'read("any")',
-  'update("any")',
-  'delete("any")',
-];
 
 type FeedbackFormProps = {
   onSuccess?: () => void;
@@ -31,30 +22,28 @@ export default function FeedbackForm({
     setStatus("submitting");
     setError(null);
 
-    if (!feedbackCollectionId) {
-      setStatus("error");
-      setError("Feedback collection is not configured.");
-      return;
-    }
-
     const formData = new FormData(form);
     const payload = {
       name: String(formData.get("feedbackName") || ""),
       email: String(formData.get("feedbackEmail") || ""),
       message: String(formData.get("feedbackMessage") || ""),
-      rating: Number(formData.get("feedbackRating") || 0),
+      rating: Number(formData.get("feedbackRating") || 5),
       page,
-      status: "new",
-      createdAt: new Date().toISOString(),
-      response: "",
+      source: "arcelevenarchitect.com",
     };
 
     try {
-      await createDocument({
-        collectionId: feedbackCollectionId,
-        data: payload,
-        permissions: publicDocumentPermissions,
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message || "Failed to submit feedback.");
+      }
+
       setStatus("success");
       form.reset();
       onSuccess?.();

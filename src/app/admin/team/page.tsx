@@ -1,4 +1,4 @@
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 import type { Metadata } from "next";
 import AdminRecordCards from "@/components/admin/AdminRecordCards";

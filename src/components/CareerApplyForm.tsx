@@ -1,20 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createDocument, uploadFile } from "@/lib/appwriteClient";
 import { trackEvent } from "@/lib/analytics";
-
-const applicationsCollectionId =
-  process.env.NEXT_PUBLIC_APPWRITE_CAREER_APPLICATIONS_COLLECTION_ID ||
-  "career_applications";
-const uploadsBucketId =
-  process.env.NEXT_PUBLIC_APPWRITE_CAREER_UPLOADS_BUCKET_ID ||
-  process.env.NEXT_PUBLIC_APPWRITE_ESTIMATOR_ATTACHMENTS_BUCKET_ID;
-const publicDocumentPermissions = [
-  'read("any")',
-  'update("any")',
-  'delete("any")',
-];
 
 type CareerApplyFormProps = {
   jobTitle: string;
@@ -35,55 +22,31 @@ export default function CareerApplyForm({
     const form = event.currentTarget;
     setStatus("submitting");
     setError(null);
-
-    if (!applicationsCollectionId) {
-      setStatus("error");
-      setError("Career applications collection is not configured.");
-      return;
-    }
-
     const formData = new FormData(form);
-    const resumeFile = formData.get("resume") as File | null;
-    const portfolioFile = formData.get("portfolio") as File | null;
-
-    let resumeFileId = "";
-    let portfolioFileId = "";
 
     try {
-      if (uploadsBucketId && resumeFile && resumeFile.size > 0) {
-        const uploaded = await uploadFile({ bucketId: uploadsBucketId, file: resumeFile });
-        resumeFileId = uploaded.$id;
-      }
-
-      if (uploadsBucketId && portfolioFile && portfolioFile.size > 0) {
-        const uploaded = await uploadFile({
-          bucketId: uploadsBucketId,
-          file: portfolioFile,
-        });
-        portfolioFileId = uploaded.$id;
-      }
-
       const payload = {
-        jobTitle,
+        position: jobTitle,
         jobSlug,
         name: String(formData.get("name") || ""),
         email: String(formData.get("email") || ""),
         phone: String(formData.get("phone") || ""),
         experience: String(formData.get("experience") || ""),
-        portfolioLink: String(formData.get("portfolioLink") || ""),
-        resumeLink: String(formData.get("resumeLink") || ""),
+        portfolioLink: String(formData.get("portfolioLink") || formData.get("resumeLink") || ""),
         message: String(formData.get("message") || ""),
-        resumeFileId,
-        portfolioFileId,
-        status: "new",
-        createdAt: new Date().toISOString(),
       };
 
-      await createDocument({
-        collectionId: applicationsCollectionId,
-        data: payload,
-        permissions: publicDocumentPermissions,
+      const res = await fetch("/api/career", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
+
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message || "Failed to submit application.");
+      }
+
       trackEvent("career_apply", {
         job_slug: jobSlug,
         job_title: jobTitle,

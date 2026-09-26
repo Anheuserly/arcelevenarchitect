@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createDocument } from "@/lib/appwriteClient";
 import { trackEvent } from "@/lib/analytics";
 import { COUNTRIES, CURRENCIES, DEFAULT_EXCHANGE_RATES, type CurrencyCode } from "@/lib/currencyConfig";
 
@@ -21,10 +20,6 @@ type Estimate = {
   currency: CurrencyCode;
   breakdown: Breakdown;
 };
-
-const estimatorCollectionId =
-  process.env.NEXT_PUBLIC_APPWRITE_ESTIMATOR_SUBMISSIONS_COLLECTION_ID || "estimator_submissions";
-const publicDocumentPermissions = ['read("any")', 'update("any")', 'delete("any")'];
 
 const constructionRates = {
   economy: { residential: 1500, commercial: 1800, industrial: 2000, institutional: 2200 },
@@ -246,32 +241,22 @@ export default function EstimatorCalculator() {
       );
 
       try {
-        await createDocument({
-          collectionId: estimatorCollectionId,
-          permissions: publicDocumentPermissions,
-          data: {
-            project_type: formData.project_type,
-            property_type: formData.property_type,
-            project_size: Number.parseFloat(formData.project_size) || 0,
-            project_size_unit: formData.project_size_unit,
-            number_of_floors: Number.parseInt(formData.number_of_floors, 10) || 1,
-            number_of_rooms: Number.parseInt(formData.number_of_rooms, 10) || 0,
-            number_of_bathrooms: Number.parseInt(formData.number_of_bathrooms, 10) || 0,
-            quality_level: formData.quality_level,
-            construction_type: formData.construction_type,
-            timeline_months: Number.parseInt(formData.timeline_months, 10) || 6,
-            site_conditions: formData.site_conditions,
-            special_features: formData.special_features,
-            design_services_required: formData.design_services_required,
-            selected_country: formData.selected_country,
-            selected_currency: selectedCurrency.code,
-            estimated_cost_inr: totalInr,
-            estimated_cost_local: totalLocal,
-            conversion_rate: exchangeRate,
-            status: "calculated",
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          },
+        await fetch("/api/estimator", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            clientName: "Website Visitor",
+            projectType: formData.project_type,
+            totalArea: `${formData.project_size} ${formData.project_size_unit}`,
+            estimatedBudget: totalInr,
+            currency: selectedCurrency.code,
+            configuration: {
+              ...formData,
+              estimated_cost_inr: totalInr,
+              estimated_cost_local: totalLocal,
+              conversion_rate: exchangeRate,
+            },
+          }),
         });
       } catch {
         // Keep UI functional even when storage write fails.
