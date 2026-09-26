@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense / Reimbursement Form | ARC 11 ARCHITECT</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="toolbar no-print">
+    <div>
+      <strong>ARC 11 ARCHITECT</strong>
+      <span>Expense / Reimbursement Form</span>
+    </div>
+    <div class="toolbar-actions">
+      <button type="button" class="btn btn-light" id="addRowBtn">+ Add Expense</button>
+      <button type="button" class="btn btn-light" id="resetBtn">Reset</button>
+      <button type="button" class="btn btn-dark" id="printBtn">Print / Save PDF</button>
+    </div>
+  </div>
+
+  <main class="sheet" id="formSheet">
+    <img src="arc11-mark.jpg" class="geometry geometry-top" alt="" aria-hidden="true" />
+    <img src="arc11-mark.jpg" class="geometry geometry-bottom" alt="" aria-hidden="true" />
+
+    <header class="letterhead">
+      <div class="brand-lockup">
+        <img src="arc11-mark.jpg" class="brand-mark" alt="ARC 11 Architect logo" />
+        <div class="brand-copy">
+          <h1>ARC 11 ARCHITECT</h1>
+          <p>Architecture · Interior Design · Master Planning · Project Management</p>
+          <small>Designing thoughtful, functional and enduring spaces.</small>
+        </div>
+      </div>
+      <div class="company-meta">
+        <strong>HEAD OFFICE</strong>
+        <span>Plot No. 535, Second Floor, Left Side</span>
+        <span>Khasra No. 60, 128-D21, Chattarpur Pahadi</span>
+        <span>New Delhi — 110074</span>
+        <span>+91 85273 78555 · +91 96500 58444</span>
+        <span>arcelevenarchitect.com</span>
+      </div>
+    </header>
+
+    <section class="title-row">
+      <div>
+        <p class="eyebrow">FINANCE & ADMINISTRATION</p>
+        <h2>Expense / Reimbursement Form</h2>
+        <p class="subtitle">For approved official expenses, project/site travel, client meetings, purchases and reimbursable business costs.</p>
+      </div>
+      <div class="document-meta">
+        <label>Form No.
+          <input id="formNo" type="text" value="ARC11/EXP/2026/001" />
+        </label>
+        <label>Date
+          <input id="formDate" type="date" />
+        </label>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>1. Employee / Claimant Details</h3>
+      <div class="form-grid four">
+        <label>Employee Name<input type="text" placeholder="Full name" /></label>
+        <label>Employee ID<input type="text" placeholder="ARC11-EMP-___" /></label>
+        <label>Designation<input type="text" placeholder="Designation" /></label>
+        <label>Department<input type="text" placeholder="Architecture / Interior / MEP / Admin" /></label>
+        <label>Project / Client<input type="text" placeholder="Project / client name" /></label>
+        <label>Project Code<input type="text" placeholder="Optional" /></label>
+        <label>Expense Period From<input type="date" /></label>
+        <label>Expense Period To<input type="date" /></label>
+      </div>
+    </section>
+
+    <section class="section-card expenses-section">
+      <div class="section-head">
+        <div>
+          <h3>2. Expense Details</h3>
+          <p>Add each reimbursable expense separately and attach supporting bills/receipts where applicable.</p>
+        </div>
+        <button type="button" class="mini-btn no-print" id="addRowInline">+ Add Row</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="expense-table">
+          <thead>
+            <tr>
+              <th class="col-sno">#</th>
+              <th class="col-date">Date</th>
+              <th>Description / Purpose</th>
+              <th class="col-category">Category</th>
+              <th class="col-mode">Payment Mode</th>
+              <th class="col-bill">Bill / Ref.</th>
+              <th class="col-amount">Amount (₹)</th>
+              <th class="col-action no-print"></th>
+            </tr>
+          </thead>
+          <tbody id="expenseRows"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6" class="total-label">TOTAL CLAIM AMOUNT</td>
+              <td class="total-amount">₹ <span id="totalAmount">0.00</span></td>
+              <td class="no-print"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>3. Payment / Reimbursement Details</h3>
+      <div class="form-grid three">
+        <label>Preferred Reimbursement Mode
+          <select>
+            <option>Bank Transfer</option>
+            <option>Cash</option>
+            <option>UPI</option>
+            <option>Adjust with Advance</option>
+          </select>
+        </label>
+        <label>Bank / UPI Reference<input type="text" placeholder="Optional" /></label>
+        <label>Advance Received (₹)<input type="number" min="0" step="0.01" id="advanceAmount" value="0" /></label>
+      </div>
+      <div class="settlement-box">
+        <div><span>Total Claim</span><strong>₹ <span id="summaryClaim">0.00</span></strong></div>
+        <div><span>Less: Advance</span><strong>₹ <span id="summaryAdvance">0.00</span></strong></div>
+        <div class="net"><span>Net Payable / Recoverable</span><strong>₹ <span id="netAmount">0.00</span></strong></div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>4. Declaration & Approval</h3>
+      <p class="declaration">I certify that the above expenses were incurred wholly for official ARC 11 ARCHITECT work, are accurate to the best of my knowledge, and are supported by valid receipts/bills wherever available. I understand that incomplete or unsupported claims may be returned for clarification.</p>
+      <div class="signature-grid">
+        <div class="signature-box"><span class="sign-line"></span><strong>Claimant Signature</strong><small>Date: __________________</small></div>
+        <div class="signature-box"><span class="sign-line"></span><strong>Project / Reporting Manager</strong><small>Approved / Not Approved</small></div>
+        <div class="signature-box"><span class="sign-line"></span><strong>Accounts Verification</strong><small>Checked & Processed</small></div>
+        <div class="signature-box"><span class="sign-line"></span><strong>Authorized Signatory</strong><small>ARC 11 ARCHITECT</small></div>
+      </div>
+    </section>
+
+    <section class="notes-row">
+      <label>Remarks / Accounts Notes<textarea rows="3" placeholder="Payment reference, deductions, missing bills, comments, etc."></textarea></label>
+    </section>
+
+    <footer>
+      <span>ARC 11 ARCHITECT</span>
+      <span class="dot">•</span>
+      <span>Internal Finance & Administration Document</span>
+      <span class="footer-right">EXPENSE / REIMBURSEMENT</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

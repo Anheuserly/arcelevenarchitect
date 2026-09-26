@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARC 11 ARCHITECT | Daily Task Report</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="sheet">
+    <header class="topbar">
+      <div class="brand">
+        <img src="arc11-mark.jpg" alt="ARC 11 Architect" />
+        <div><h1>ARC 11 ARCHITECT</h1><p>Architecture · Interiors · Planning · Project Management</p></div>
+      </div>
+      <div class="doc-title"><span>REPORT</span><strong>Daily Task Report</strong></div>
+    </header>
+
+    <section class="grid meta-grid">
+      <label>Employee Name<input id="employeeName" type="text" placeholder="Enter employee name" /></label>
+      <label>Employee ID<input id="employeeId" type="text" placeholder="ARC11-EMP-___" /></label>
+      <label>Designation<input id="designation" type="text" placeholder="Designation" /></label>
+      <label>Date<input id="reportDate" type="date" /></label>
+      <label>Project / Department<input id="project" type="text" placeholder="Project / Department" /></label>
+      <label>Reporting Manager<input id="manager" type="text" placeholder="Manager name" /></label>
+    </section>
+
+    <section class="summary-strip">
+      <div><span>Total Tasks</span><strong id="totalTasks">0</strong></div>
+      <div><span>Completed</span><strong id="completedTasks">0</strong></div>
+      <div><span>Pending</span><strong id="pendingTasks">0</strong></div>
+      <div><span>Average Completion</span><strong id="avgCompletion">0%</strong></div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><span>01</span><h2>Task Details</h2></div><button id="addTask" type="button">+ Add Task</button></div>
+      <div class="table-wrap">
+        <table id="taskTable">
+          <thead><tr><th>#</th><th>Task Description</th><th>Priority</th><th>Assigned By</th><th>Start</th><th>End</th><th>Status</th><th>%</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid two-col text-sections">
+      <label>Key Achievements<textarea id="achievements" rows="4" placeholder="Major work completed today..."></textarea></label>
+      <label>Blockers / Issues<textarea id="blockers" rows="4" placeholder="Any dependency, delay, issue or support required..."></textarea></label>
+      <label>Remarks<textarea id="remarks" rows="4" placeholder="General remarks..."></textarea></label>
+      <label>Plan for Next Working Day<textarea id="nextPlan" rows="4" placeholder="Planned tasks for next day..."></textarea></label>
+    </section>
+
+    <section class="signatures">
+      <div><span class="sig-line"></span><strong>Employee Signature</strong><small>Name / Date</small></div>
+      <div><span class="sig-line"></span><strong>Reviewed By</strong><small>Manager / Team Lead</small></div>
+      <div><span class="sig-line"></span><strong>Approved By</strong><small>Authorized Signatory</small></div>
+    </section>
+
+    <footer><span>ARC 11 ARCHITECT</span><span>Daily Task Report</span><span>arcelevenarchitect.com</span></footer>
+  </main>
+
+  <div class="actions no-print">
+    <button type="button" id="resetBtn" class="secondary">Reset</button>
+    <button type="button" id="printBtn">Print / Save PDF</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

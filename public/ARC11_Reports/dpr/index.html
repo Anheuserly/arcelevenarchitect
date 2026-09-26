@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARC 11 ARCHITECT | Daily Progress Report</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="sheet">
+    <header class="topbar">
+      <div class="brand"><img src="arc11-mark.jpg" alt="ARC 11 Architect"/><div><h1>ARC 11 ARCHITECT</h1><p>Architecture · Interiors · Planning · Project Management</p></div></div>
+      <div class="doc-title"><span>SITE / PROJECT</span><strong>Daily Progress Report</strong><small>DPR</small></div>
+    </header>
+
+    <section class="grid meta-grid">
+      <label>Project Name<input id="projectName" type="text" placeholder="Project name"/></label>
+      <label>Client<input type="text" placeholder="Client name"/></label>
+      <label>Report Date<input id="reportDate" type="date"/></label>
+      <label>Site Location<input type="text" placeholder="Site location"/></label>
+      <label>Weather<select><option>Clear</option><option>Cloudy</option><option>Rain</option><option>Hot</option><option>Other</option></select></label>
+      <label>Contractor / Agency<input type="text" placeholder="Contractor / Subcontractor"/></label>
+    </section>
+
+    <section class="summary-strip">
+      <div><span>Total Manpower</span><strong id="manpowerTotal">0</strong></div>
+      <div><span>Activities</span><strong id="activityCount">0</strong></div>
+      <div><span>Avg. Progress</span><strong id="progressAvg">0%</strong></div>
+      <div><span>Site Status</span><strong id="siteStatus">In Progress</strong></div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><span>01</span><h2>Manpower Deployment</h2></div><button type="button" id="addManpower">+ Add Manpower</button></div>
+      <div class="table-wrap"><table id="manpowerTable"><thead><tr><th>#</th><th>Trade / Category</th><th>Agency</th><th>Skilled</th><th>Unskilled</th><th>Total</th><th>Remarks</th><th></th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section>
+      <div class="section-head"><div><span>02</span><h2>Work Progress</h2></div><button type="button" id="addActivity">+ Add Activity</button></div>
+      <div class="table-wrap"><table id="activityTable"><thead><tr><th>#</th><th>Activity / Location</th><th>Unit</th><th>Planned Qty</th><th>Achieved Qty</th><th>Progress</th><th>Remarks</th><th></th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="grid two-col compact-grid">
+      <label>Materials Received / Used<textarea rows="4" placeholder="Material, quantity, challan/reference..."></textarea></label>
+      <label>Plant / Equipment Deployed<textarea rows="4" placeholder="Equipment deployed at site..."></textarea></label>
+      <label>Issues / Delays / Constraints<textarea rows="4" placeholder="Delay reason, dependency, coordination issue..."></textarea></label>
+      <label>Safety / Quality Observations<textarea rows="4" placeholder="Safety observations, NCR, quality checks..."></textarea></label>
+      <label>Instructions Received<textarea rows="4" placeholder="Client / consultant / architect instructions..."></textarea></label>
+      <label>Next Day Target<textarea rows="4" placeholder="Planned activities for next day..."></textarea></label>
+    </section>
+
+    <section class="photo-ref">
+      <div class="section-head"><div><span>03</span><h2>Photo / Drawing / Reference Log</h2></div><button type="button" id="addRef">+ Add Reference</button></div>
+      <div class="table-wrap"><table id="refTable"><thead><tr><th>#</th><th>Reference Type</th><th>Reference No. / File</th><th>Description</th><th></th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="signatures">
+      <div><span class="sig-line"></span><strong>Prepared By</strong><small>Site Engineer / Team Member</small></div>
+      <div><span class="sig-line"></span><strong>Checked By</strong><small>Project Manager</small></div>
+      <div><span class="sig-line"></span><strong>Approved By</strong><small>Authorized Signatory</small></div>
+    </section>
+
+    <footer><span>ARC 11 ARCHITECT</span><span>Daily Progress Report (DPR)</span><span>arcelevenarchitect.com</span></footer>
+  </main>
+  <div class="actions no-print"><button type="button" id="resetBtn" class="secondary">Reset</button><button type="button" id="printBtn">Print / Save PDF</button></div>
+  <script src="script.js"></script>
+</body>
+</html>

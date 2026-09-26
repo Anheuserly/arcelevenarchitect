@@ -1,0 +1,17 @@
+const mBody=document.querySelector('#manpowerTable tbody');
+const aBody=document.querySelector('#activityTable tbody');
+const rBody=document.querySelector('#refTable tbody');
+const manpowerTotal=document.getElementById('manpowerTotal');
+const activityCount=document.getElementById('activityCount');
+const progressAvg=document.getElementById('progressAvg');
+
+function mRow(i){return `<tr><td class="num">${i}</td><td><input placeholder="Electrician / Carpenter / Helper..."/></td><td><input placeholder="Agency"/></td><td><input class="sk" type="number" min="0" value="0"/></td><td><input class="un" type="number" min="0" value="0"/></td><td><strong class="mt">0</strong></td><td><input placeholder="Remarks"/></td><td><button type="button" class="remove">×</button></td></tr>`}
+function aRow(i){return `<tr><td class="num">${i}</td><td><input placeholder="Activity / area / floor"/></td><td><input placeholder="Nos / m / sqm"/></td><td><input class="plan" type="number" min="0" step="0.01" value="0"/></td><td><input class="done" type="number" min="0" step="0.01" value="0"/></td><td><strong class="prog">0%</strong></td><td><input placeholder="Remarks"/></td><td><button type="button" class="remove">×</button></td></tr>`}
+function rRow(i){return `<tr><td class="num">${i}</td><td><select><option>Site Photo</option><option>Drawing</option><option>RFI</option><option>Inspection</option><option>Challan</option><option>Other</option></select></td><td><input placeholder="Ref. no. / filename"/></td><td><input placeholder="Description"/></td><td><button type="button" class="remove">×</button></td></tr>`}
+function renum(body){[...body.rows].forEach((r,i)=>r.querySelector('.num').textContent=i+1)}
+function recalc(){let mt=0;mBody.querySelectorAll('tr').forEach(r=>{const v=(Number(r.querySelector('.sk').value)||0)+(Number(r.querySelector('.un').value)||0);r.querySelector('.mt').textContent=v;mt+=v});manpowerTotal.textContent=mt;const rows=[...aBody.rows];activityCount.textContent=rows.length;let sum=0;rows.forEach(r=>{const p=Number(r.querySelector('.plan').value)||0,d=Number(r.querySelector('.done').value)||0;const pct=p>0?Math.min(100,(d/p)*100):(d>0?100:0);r.querySelector('.prog').textContent=`${Math.round(pct)}%`;sum+=pct});progressAvg.textContent=rows.length?`${Math.round(sum/rows.length)}%`:'0%';document.getElementById('siteStatus').textContent=rows.length&&sum/rows.length>=99?'Completed':'In Progress'}
+function addM(){mBody.insertAdjacentHTML('beforeend',mRow(mBody.rows.length+1));recalc()}function addA(){aBody.insertAdjacentHTML('beforeend',aRow(aBody.rows.length+1));recalc()}function addR(){rBody.insertAdjacentHTML('beforeend',rRow(rBody.rows.length+1))}
+document.getElementById('addManpower').onclick=addM;document.getElementById('addActivity').onclick=addA;document.getElementById('addRef').onclick=addR;
+[mBody,aBody,rBody].forEach(body=>{body.addEventListener('click',e=>{if(e.target.classList.contains('remove')){e.target.closest('tr').remove();renum(body);recalc()}});body.addEventListener('input',recalc);body.addEventListener('change',recalc)});
+document.getElementById('printBtn').onclick=()=>window.print();document.getElementById('resetBtn').onclick=()=>{if(confirm('Reset this DPR?')){document.querySelectorAll('input,textarea').forEach(el=>el.value='');mBody.innerHTML='';aBody.innerHTML='';rBody.innerHTML='';addM();addA();addR();document.getElementById('reportDate').valueAsDate=new Date()}};
+document.getElementById('reportDate').valueAsDate=new Date();addM();addM();addA();addA();addR();recalc();

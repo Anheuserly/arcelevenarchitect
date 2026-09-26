@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Site Visit / Duty Assignment Form | ARC 11 ARCHITECT</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="toolbar no-print">
+    <div>
+      <strong>ARC 11 ARCHITECT</strong>
+      <span>Site Visit / Duty Assignment Form</span>
+    </div>
+    <div class="toolbar-actions">
+      <button class="btn btn-light" type="button" id="addMemberBtn">+ Add Team Member</button>
+      <button class="btn btn-light" type="button" id="resetBtn">Reset</button>
+      <button class="btn btn-dark" type="button" id="printBtn">Print / Save PDF</button>
+    </div>
+  </div>
+
+  <main class="sheet" id="formSheet">
+    <img src="arc11-mark.jpg" class="geometry geometry-top" alt="" aria-hidden="true" />
+    <img src="arc11-mark.jpg" class="geometry geometry-bottom" alt="" aria-hidden="true" />
+
+    <header class="letterhead">
+      <div class="brand-lockup">
+        <img src="arc11-mark.jpg" class="brand-mark" alt="ARC 11 Architect logo" />
+        <div class="brand-copy">
+          <h1>ARC 11 ARCHITECT</h1>
+          <p>Architecture · Interior Design · Master Planning · Project Management</p>
+          <small>Designing thoughtful, functional and enduring spaces.</small>
+        </div>
+      </div>
+      <div class="company-meta">
+        <strong>HEAD OFFICE</strong>
+        <span>Plot No. 535, Second Floor, Left Side</span>
+        <span>Khasra No. 60, 128-D21, Chattarpur Pahadi</span>
+        <span>New Delhi — 110074</span>
+        <span>+91 85273 78555 · +91 96500 58444</span>
+        <span>arcelevenarchitect.com</span>
+      </div>
+    </header>
+
+    <section class="title-row">
+      <div>
+        <p class="eyebrow">PROJECT OPERATIONS</p>
+        <h2>Site Visit / Duty Assignment Form</h2>
+        <p class="subtitle">Official assignment record for project visits, site inspections, surveys, client/vendor meetings, supervision, coordination and other field duties.</p>
+      </div>
+      <div class="document-meta">
+        <label>Assignment No.<input id="assignmentNo" type="text" value="ARC11/SITE/2026/001" /></label>
+        <label>Issue Date<input id="issueDate" type="date" /></label>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>1. Project / Site Details</h3>
+      <div class="form-grid four">
+        <label>Project / Client Name<input type="text" placeholder="Project / client" /></label>
+        <label>Project Code<input type="text" placeholder="Optional" /></label>
+        <label>Site Contact Person<input type="text" placeholder="Name" /></label>
+        <label>Site Contact No.<input type="tel" placeholder="Phone" /></label>
+        <label class="span-2">Site Address<input type="text" placeholder="Complete site address" /></label>
+        <label>Visit Date<input type="date" id="visitDate" /></label>
+        <label>Priority
+          <select><option>Normal</option><option>High</option><option>Urgent</option></select>
+        </label>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>2. Duty / Visit Schedule</h3>
+      <div class="form-grid four">
+        <label>Reporting Time<input type="time" /></label>
+        <label>Expected Completion<input type="time" /></label>
+        <label>Reporting Location<input type="text" placeholder="Office / site / direct" /></label>
+        <label>Travel Mode<select><option>Self</option><option>Company Vehicle</option><option>Cab / Taxi</option><option>Public Transport</option><option>Other</option></select></label>
+      </div>
+      <div class="purpose-grid">
+        <label><input type="checkbox" /> Site Inspection</label>
+        <label><input type="checkbox" /> Measurement / Survey</label>
+        <label><input type="checkbox" /> Client Meeting</label>
+        <label><input type="checkbox" /> Vendor Coordination</label>
+        <label><input type="checkbox" /> Design Coordination</label>
+        <label><input type="checkbox" /> Quality Check</label>
+        <label><input type="checkbox" /> Material Verification</label>
+        <label><input type="checkbox" /> Work Supervision</label>
+        <label><input type="checkbox" /> Handover / Snagging</label>
+        <label><input type="checkbox" /> Other</label>
+      </div>
+    </section>
+
+    <section class="section-card team-section">
+      <div class="section-head">
+        <div>
+          <h3>3. Assigned Team Members</h3>
+          <p>List all employees authorized for this visit / duty assignment.</p>
+        </div>
+        <button class="mini-btn no-print" id="addMemberInline" type="button">+ Add Member</button>
+      </div>
+      <table class="team-table">
+        <thead><tr><th>#</th><th>Employee Name</th><th>Employee ID</th><th>Designation</th><th>Responsibility / Task</th><th class="no-print"></th></tr></thead>
+        <tbody id="teamRows"></tbody>
+      </table>
+    </section>
+
+    <section class="section-card">
+      <h3>4. Scope of Visit / Instructions</h3>
+      <div class="form-grid two">
+        <label>Primary Objective<textarea rows="4" placeholder="Clearly describe the purpose and expected outcome of the visit..."></textarea></label>
+        <label>Specific Instructions / Deliverables<textarea rows="4" placeholder="Measurements, photographs, drawings, coordination points, approvals, report requirements, etc."></textarea></label>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h3>5. Expense / Travel Authorization</h3>
+      <div class="form-grid four">
+        <label>Travel Advance Approved<select><option>No</option><option>Yes</option></select></label>
+        <label>Advance Amount (₹)<input type="number" min="0" step="0.01" placeholder="0.00" /></label>
+        <label>Local Conveyance<select><option>Reimbursable as per bills</option><option>Not Reimbursable</option><option>Fixed Amount</option></select></label>
+        <label>Other Approved Expense<input type="text" placeholder="If applicable" /></label>
+      </div>
+    </section>
+
+    <section class="section-card completion-block">
+      <h3>6. Post-Visit Completion Record</h3>
+      <div class="form-grid four">
+        <label>Actual Arrival Time<input type="time" /></label>
+        <label>Actual Departure Time<input type="time" /></label>
+        <label>Visit Status<select><option>Completed</option><option>Partially Completed</option><option>Rescheduled</option><option>Cancelled</option></select></label>
+        <label>Next Action Date<input type="date" /></label>
+      </div>
+      <label class="full-label">Visit Summary / Key Observations<textarea rows="4" placeholder="Major observations, client comments, site progress, issues found, actions required and follow-up items..."></textarea></label>
+    </section>
+
+    <section class="approval-row">
+      <div class="signature-box"><span class="sign-line"></span><strong>Assigned Employee / Team Lead</strong><small>Date: __________________</small></div>
+      <div class="signature-box"><span class="sign-line"></span><strong>Project / Reporting Manager</strong><small>Assignment Approved</small></div>
+      <div class="signature-box"><span class="sign-line"></span><strong>Authorized Signatory</strong><small>ARC 11 ARCHITECT</small></div>
+    </section>
+
+    <footer>
+      <span>ARC 11 ARCHITECT</span><span class="dot">•</span><span>Internal Project Operations Document</span><span class="footer-right">SITE VISIT / DUTY ASSIGNMENT</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

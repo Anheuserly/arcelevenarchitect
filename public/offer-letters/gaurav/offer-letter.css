@@ -1,0 +1,975 @@
+:root {
+  --ink: #222220;
+  --ink-soft: #4b4a46;
+  --muted: #77736b;
+  --line: #d9d5cd;
+  --paper: #fdfcf9;
+  --panel: #f3f0e9;
+  --accent: #8a8173;
+  --accent-dark: #5b554c;
+}
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #d8d6d1;
+  color: var(--ink);
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  padding: 18px 0;
+}
+
+
+/* =========================================================
+   A4 SHEET
+========================================================= */
+
+.sheet {
+  width: 210mm;
+  min-height: 297mm;
+
+  margin: 0 auto 12mm;
+
+  /* Safe A4 inner margins */
+  padding: 11mm 14mm 9mm 16mm;
+
+  background: var(--paper);
+
+  position: relative;
+  overflow: hidden;
+
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.14);
+}
+
+
+/* LEFT ARCHITECTURAL STRIP */
+
+.sheet::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 5mm;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--ink) 0%,
+      var(--ink) 56%,
+      var(--accent) 56%,
+      var(--accent) 100%
+    );
+}
+
+
+/* =========================================================
+   BACKGROUND GEOMETRY
+========================================================= */
+
+.geometry {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+
+  filter: grayscale(1);
+  opacity: 0.026;
+}
+
+.geometry--top {
+  width: 95mm;
+  top: -22mm;
+  right: -17mm;
+  transform: rotate(8deg);
+}
+
+.geometry--bottom {
+  width: 112mm;
+  bottom: -45mm;
+  left: -30mm;
+  transform: rotate(180deg);
+  opacity: 0.017;
+}
+
+
+/* =========================================================
+   KEEP CONTENT ABOVE BACKGROUND
+========================================================= */
+
+.letterhead,
+.doc-title-row,
+.recipient,
+.subject-line,
+.letter-body,
+.signatures,
+footer {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   LETTERHEAD
+   FIXED — WILL NOT GO OUTSIDE A4
+========================================================= */
+
+.letterhead {
+  width: 100%;
+
+  display: grid;
+
+  /*
+    IMPORTANT:
+    left section gets remaining space
+    right office section always remains inside A4
+  */
+  grid-template-columns: minmax(0, 1fr) 52mm;
+
+  gap: 7mm;
+
+  align-items: center;
+
+  padding-bottom: 4.5mm;
+
+  border-bottom: 1px solid var(--line);
+}
+
+
+/* =========================================================
+   BRAND / LOGO
+========================================================= */
+
+.brand-lockup {
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: 22mm minmax(0, 1fr);
+
+  align-items: center;
+
+  column-gap: 4.5mm;
+}
+
+
+/* LOGO HOLDER */
+
+.brand-mark {
+  width: 22mm;
+  height: 22mm;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  overflow: hidden;
+
+  border: none;
+  background: transparent;
+
+  flex-shrink: 0;
+}
+
+
+/* LOGO IMAGE */
+
+.brand-mark img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: left center;
+
+  margin: 0;
+}
+
+
+/* BRAND TEXT AREA */
+
+.brand-copy {
+  min-width: 0;
+  width: 100%;
+}
+
+
+/* ARC 11 ARCHITECT */
+
+.brand-name {
+  margin: 0;
+
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  font-size: 15pt;
+  line-height: 1.05;
+
+  letter-spacing: 0.65px;
+
+  font-weight: 750;
+
+  color: var(--ink);
+
+  text-transform: uppercase;
+
+  /*
+    Name stays in one line
+    but cannot push office information outside page
+  */
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   COMPANY DESCRIPTION BELOW ARC 11 ARCHITECT
+========================================================= */
+
+.brand-tagline {
+  margin-top: 2mm;
+
+  max-width: 100%;
+
+  font-size: 6.15pt;
+  line-height: 1.45;
+
+  font-weight: 500;
+
+  color: var(--muted);
+
+  letter-spacing: 0.55px;
+
+  text-transform: uppercase;
+
+  /*
+    VERY IMPORTANT:
+    previous nowrap was causing header overflow
+  */
+  white-space: normal;
+
+  overflow-wrap: break-word;
+}
+
+
+/*
+ Optional additional company-description element.
+
+ If you later put:
+
+ <div class="brand-description">
+   Creating thoughtful architecture...
+ </div>
+
+ it will automatically match the design.
+*/
+
+.brand-description {
+  margin-top: 1.4mm;
+
+  max-width: 88mm;
+
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  font-size: 5.8pt;
+  line-height: 1.45;
+
+  font-weight: 400;
+
+  color: #77736b;
+
+  letter-spacing: 0.12px;
+
+  text-transform: none;
+
+  white-space: normal;
+}
+
+
+/* =========================================================
+   HEAD OFFICE — FIXED RIGHT SIDE
+========================================================= */
+
+.company-meta {
+  width: 100%;
+  max-width: 52mm;
+
+  min-width: 0;
+
+  padding-left: 4mm;
+
+  border-left: 1px solid var(--line);
+
+  text-align: right;
+
+  font-size: 6.25pt;
+  line-height: 1.52;
+
+  color: var(--muted);
+
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.company-meta strong {
+  display: block;
+
+  margin: 0 0 1.2mm;
+
+  color: var(--ink);
+
+  font-size: 6.4pt;
+  line-height: 1.2;
+
+  font-weight: 750;
+
+  letter-spacing: 1.15px;
+
+  text-transform: uppercase;
+}
+
+.company-meta span {
+  display: block;
+
+  max-width: 100%;
+
+  margin: 0;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   TITLE AREA
+========================================================= */
+
+.doc-title-row {
+  width: 100%;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 10mm;
+
+  margin: 6mm 0 4mm;
+}
+
+.doc-title-row > * {
+  min-width: 0;
+}
+
+
+.eyebrow {
+  margin: 0 0 1.5mm;
+
+  font-size: 6.5pt;
+
+  letter-spacing: 2.4px;
+
+  font-weight: 700;
+
+  color: var(--accent-dark);
+}
+
+
+h1 {
+  margin: 0;
+
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  font-size: 25pt;
+
+  line-height: 1;
+
+  font-weight: 500;
+
+  letter-spacing: -0.6px;
+}
+
+
+/* =========================================================
+   DOCUMENT META
+========================================================= */
+
+.doc-meta {
+  width: 56mm;
+  min-width: 56mm;
+
+  display: grid;
+
+  gap: 1.6mm;
+
+  font-size: 7pt;
+}
+
+
+.doc-meta div {
+  display: grid;
+
+  grid-template-columns: 13mm minmax(0, 1fr);
+
+  gap: 2mm;
+
+  align-items: baseline;
+}
+
+
+.doc-meta span {
+  color: var(--muted);
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.7px;
+}
+
+
+.doc-meta strong {
+  min-width: 0;
+
+  font-size: 7.1pt;
+
+  font-weight: 650;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RECIPIENT
+========================================================= */
+
+.recipient {
+  margin-bottom: 3mm;
+}
+
+
+.recipient p {
+  margin: 0 0 0.7mm;
+
+  font-size: 8.2pt;
+
+  color: var(--muted);
+}
+
+
+.recipient h2 {
+  margin: 0 0 0.8mm;
+
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  font-size: 13.5pt;
+
+  line-height: 1.15;
+
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   SUBJECT
+========================================================= */
+
+.subject-line {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: 20mm minmax(0, 1fr);
+
+  gap: 3mm;
+
+  align-items: center;
+
+  padding: 3mm 4mm;
+
+  margin-bottom: 3mm;
+
+  border-left: 2px solid var(--accent);
+
+  background: var(--panel);
+
+  font-size: 8pt;
+}
+
+
+.subject-line span {
+  color: var(--muted);
+
+  font-size: 6.5pt;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.2px;
+}
+
+
+.subject-line strong {
+  min-width: 0;
+
+  font-weight: 650;
+
+  overflow-wrap: break-word;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.letter-body {
+  width: 100%;
+
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  font-size: 7.5pt;
+
+  line-height: 1.42;
+
+  color: var(--ink-soft);
+}
+
+
+.letter-body p {
+  margin: 0 0 2.2mm;
+}
+
+
+.letter-body strong {
+  color: var(--ink);
+}
+
+
+/* =========================================================
+   OFFER INFORMATION GRID
+========================================================= */
+
+.offer-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(0, 0.85fr)
+    minmax(0, 0.85fr);
+
+  border: 1px solid var(--line);
+
+  margin: 3mm 0 3.5mm;
+
+  background: rgba(255, 255, 255, 0.72);
+}
+
+
+.offer-card {
+  min-width: 0;
+
+  min-height: 14mm;
+
+  padding: 2.4mm;
+
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+.offer-card:nth-child(3),
+.offer-card:nth-child(5) {
+  border-right: 0;
+}
+
+
+.offer-card:nth-child(4),
+.offer-card:nth-child(5) {
+  border-bottom: 0;
+}
+
+
+.offer-card:nth-child(4) {
+  grid-column: span 2;
+}
+
+
+.offer-card span {
+  font-family: Inter, Arial, sans-serif;
+
+  font-size: 5.5pt;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  letter-spacing: 0.75px;
+
+  color: var(--accent-dark);
+
+  overflow-wrap: break-word;
+}
+
+
+.offer-card strong {
+  margin-top: 1.15mm;
+
+  font-size: 8.4pt;
+
+  line-height: 1.25;
+
+  font-weight: 700;
+
+  overflow-wrap: break-word;
+}
+
+
+.offer-card small {
+  margin-top: 0.6mm;
+
+  font-family: Inter, Arial, sans-serif;
+
+  font-size: 5.8pt;
+
+  line-height: 1.3;
+
+  color: var(--muted);
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
+
+h3 {
+  margin: 0 0 2mm;
+
+  font-family: Inter, Arial, sans-serif;
+
+  font-size: 7pt;
+
+  line-height: 1.2;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.2px;
+
+  color: var(--ink);
+}
+
+
+/* =========================================================
+   TERMS
+========================================================= */
+
+.terms {
+  margin: 0 0 2.6mm 5mm;
+
+  padding: 0;
+
+  list-style-type: disc;
+}
+
+
+.terms li {
+  margin: 0 0 1.15mm 2mm;
+
+  padding-left: 0;
+
+  line-height: 1.42;
+}
+
+
+.terms--continued {
+  margin-top: -1mm;
+}
+
+
+/* =========================================================
+   CLOSING
+========================================================= */
+
+.closing-copy {
+  margin-top: 2mm !important;
+}
+
+
+.signoff {
+  margin-top: 2mm !important;
+
+  margin-bottom: 0 !important;
+}
+
+
+/* =========================================================
+   SIGNATURE SECTION
+========================================================= */
+
+.signatures {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1.25fr);
+
+  gap: 7mm;
+
+  margin-top: 3.5mm;
+
+  padding-top: 3mm;
+
+  border-top: 1px solid var(--line);
+}
+
+
+.signature-box {
+  min-width: 0;
+
+  min-height: 24mm;
+
+  font-size: 6.8pt;
+
+  color: var(--muted);
+}
+
+
+.signature-box strong,
+.signature-box span {
+  display: block;
+}
+
+
+.signature-box strong {
+  margin-bottom: 0.8mm;
+
+  color: var(--ink);
+
+  font-size: 7.2pt;
+
+  font-weight: 650;
+}
+
+
+.signature-space {
+  height: 8mm;
+
+  margin-bottom: 1.5mm;
+
+  border-bottom: 1px solid #bcb7ad;
+}
+
+
+.signature-box--candidate {
+  padding-left: 5mm;
+
+  border-left: 1px solid var(--line);
+}
+
+
+.acceptance {
+  margin: 0;
+
+  color: var(--ink-soft);
+
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+
+  font-size: 6.7pt;
+
+  line-height: 1.4;
+}
+
+
+.signature-box--candidate .signature-space {
+  height: 5.5mm;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+  width: 100%;
+
+  margin-top: 3.5mm;
+
+  padding-top: 2mm;
+
+  border-top: 1px solid var(--line);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 2mm;
+
+  font-size: 5.9pt;
+
+  letter-spacing: 0.35px;
+
+  color: var(--muted);
+}
+
+
+footer > span:first-child {
+  color: var(--ink);
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+
+.footer-dot {
+  color: var(--accent);
+}
+
+
+.footer-page {
+  margin-left: auto;
+
+  font-weight: 700;
+
+  color: var(--ink);
+}
+
+
+/* =========================================================
+   PAGE 2 COMPACT HEADER
+========================================================= */
+
+.letterhead--compact {
+  padding-bottom: 3mm;
+
+  margin-bottom: 4mm;
+}
+
+
+.letterhead--compact .brand-mark {
+  width: 18mm;
+  height: 18mm;
+}
+
+
+.letterhead--compact .brand-lockup {
+  grid-template-columns: 18mm minmax(0, 1fr);
+}
+
+
+.letterhead--compact .brand-name {
+  font-size: 13pt;
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+  html,
+  body {
+    width: 210mm;
+
+    margin: 0;
+
+    padding: 0;
+
+    background: #fff;
+  }
+
+
+  body {
+    padding: 0;
+  }
+
+
+  .sheet {
+    width: 210mm;
+
+    height: 297mm;
+    min-height: 297mm;
+
+    margin: 0;
+
+    padding: 11mm 14mm 9mm 16mm;
+
+    box-shadow: none;
+
+    page-break-after: always;
+
+    break-after: page;
+  }
+
+
+  .sheet:last-child {
+    page-break-after: auto;
+
+    break-after: auto;
+  }
+
+
+  .letterhead,
+  .offer-grid,
+  .signatures,
+  footer {
+    break-inside: avoid;
+
+    page-break-inside: avoid;
+  }
+}
+
+
+/* =========================================================
+   SMALL SCREEN PREVIEW
+========================================================= */
+
+@media screen and (max-width: 850px) {
+
+  body {
+    padding: 10px 0;
+
+    overflow-x: auto;
+  }
+
+
+  .sheet {
+    width: 210mm;
+
+    min-width: 210mm;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    transform-origin: top center;
+  }
+}
