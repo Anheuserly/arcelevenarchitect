@@ -16,6 +16,7 @@ const assetHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   async headers() {
     return [
       {

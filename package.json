@@ -4,28 +4,37 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "build:cf": "npx @opennextjs/cloudflare@latest build",
-    "build:cf:pages": "npm run build:cf && cp .open-next/worker.js .open-next/assets/_worker.js",
+    "next:build": "next build --webpack",
+    "build": "npm run next:build && opennextjs-cloudflare build --skipNextBuild",
+    "build:pages": "npm run build && cp .open-next/worker.js .open-next/assets/_worker.js",
+    "build:cf:pages": "npm run build:pages",
+    "pages:build": "npm run build:pages",
+    "postinstall": "node ./scripts/cloudflare-shim.js",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "@types/pg": "^8.23.1",
     "bcryptjs": "^3.0.3",
-    "next": "16.1.6",
+    "next": "^16.3.6",
     "pg": "^8.23.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "esbuild": "^0.25.4",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "^16.3.6",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.132.0"
+  },
+  "overrides": {
+    "esbuild": "^0.25.4"
   }
 }

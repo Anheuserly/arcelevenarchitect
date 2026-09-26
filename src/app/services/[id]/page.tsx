@@ -22,8 +22,9 @@ async function getListing(id: string) {
   }
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const listing = await getListing(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const listing = await getListing(id);
   if (!listing) return { title: "Package Not Found | Arc 11 Architect" };
 
   return {
@@ -32,8 +33,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default async function ServicePackagePage({ params }: { params: { id: string } }) {
-  const listing = await getListing(params.id);
+export default async function ServicePackagePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const listing = await getListing(id);
 
   if (!listing) {
     notFound();
