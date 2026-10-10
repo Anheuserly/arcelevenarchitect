@@ -41,4 +41,11 @@ try {
   console.warn('⚠️ Warning syncing to .vercel/output/static:', e.message);
 }
 
+// 4. Run worker patch to eliminate loadManifest crashes
+try {
+  require('./patch-worker.js');
+} catch (pErr) {
+  console.warn('⚠️ Warning running patch-worker:', pErr.message);
+}
+
 console.log('⚡️ Cloudflare Pages preparation completed successfully.');
