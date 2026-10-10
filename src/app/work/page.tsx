@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PortfolioExplorer from "@/components/PortfolioExplorer";
+import MasterPortfolioExplorer from "@/components/MasterPortfolioExplorer";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import TrackingPdfLink from "@/components/TrackingPdfLink";
@@ -9,6 +10,7 @@ import {
   getPortfolioProjects,
   getPortfolioStats,
 } from "@/lib/portfolio";
+import { masterPortfolioProjects } from "@/lib/masterPortfolio";
 import { SITE_URL, buildPageMetadata } from "@/lib/seo";
 
 const workPreviewImages = getPortfolioProjects().slice(0, 3).map((project) => ({
@@ -165,6 +167,7 @@ export default function WorkPage() {
             <div className="mt-14">
               <PortfolioExplorer projects={projects} />
             </div>
+            <MasterPortfolioExplorer projects={masterPortfolioProjects} />
           </div>
         </section>
       </main>

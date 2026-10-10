@@ -112,6 +112,8 @@ export default function SiteFooter() {
                   <Link href="/">Home</Link>
                   <Link href="/studio">Studio</Link>
                   <Link href="/services">Services</Link>
+                  <Link href="/product">Product</Link>
+                  <Link href="/activity">Activity</Link>
                   <Link href="/work">Work</Link>
                   <Link href="/international">International</Link>
                   <Link href="/instagram">Instagram</Link>

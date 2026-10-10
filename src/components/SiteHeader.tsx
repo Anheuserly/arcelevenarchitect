@@ -9,6 +9,8 @@ import StartProjectTrigger from "@/components/StartProjectTrigger";
 const navItems = [
   { label: "Studio", href: "/studio" },
   { label: "Services", href: "/services" },
+  { label: "Product", href: "/product" },
+  { label: "Activity", href: "/activity" },
   { label: "Work", href: "/work" },
   { label: "Estimator", href: "/estimator" },
   { label: "Careers", href: "/careers" },

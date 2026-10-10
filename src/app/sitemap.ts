@@ -60,6 +60,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       images: [shareImage],
     },
     {
+      url: `${SITE_URL}/activity`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+      images: [shareImage],
+    },
+    {
       url: `${SITE_URL}/product`,
       lastModified: now,
       changeFrequency: "weekly",
