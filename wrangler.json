@@ -6,7 +6,6 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "keep_vars": true,
   "vars": {
     "DATABASE_URL": "postgresql://sge_datahub:AnheVps2022@v2202501191704311155.ultrasrv.de:5432/amcmep",
     "DATABASE_SSL": "false",
