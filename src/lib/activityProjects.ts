@@ -1,3 +1,5 @@
+import { activityProjectAssetFiles } from "./portfolio-assets.generated";
+
 export type ActivityProject = {
   client: string;
   completionValue?: number;
@@ -8,12 +10,14 @@ export type ActivityProject = {
   partner: string;
   progressState: "In progress" | "Completed";
   sector: string;
+  slug: string;
   status: "Under Execution";
   targetValue?: number;
 };
 
 export const activityProjects: ActivityProject[] = [
   {
+    slug: "vegwati-hospital-saharanpur",
     name: "Vegwati Hospital Saharanpur",
     client: "Dr Anuj Kumar",
     sector: "Commercial & Industrial Building",
@@ -27,6 +31,7 @@ export const activityProjects: ActivityProject[] = [
     location: "Saharanpur, Uttar Pradesh",
   },
   {
+    slug: "saraswati-vihar-pitampura",
     name: "E-826 Saraswati Vihar, Pitampura",
     client: "Private Client / Direct",
     sector: "Engineering & Turnkey Projects",
@@ -38,6 +43,7 @@ export const activityProjects: ActivityProject[] = [
     location: "E-826, Saraswati Vihar, Pitampura, Delhi",
   },
   {
+    slug: "elite-fitness-rohini",
     name: "Elite Fitness, Rohini Sector 22",
     client: "Private Client / Direct",
     sector: "Commercial & Industrial Building",
@@ -56,4 +62,17 @@ export function getActivityProgress(project: ActivityProject) {
   }
 
   return Math.min(100, Math.round((project.completionValue / project.targetValue) * 100));
+}
+
+export function getActivityProject(slug: string) {
+  return activityProjects.find((project) => project.slug === slug);
+}
+
+export function getActivityProjectImages(project: ActivityProject) {
+  const folder = `activity-projects/${project.slug}`;
+
+  return (activityProjectAssetFiles[folder] ?? []).map((filename) => ({
+    alt: `${project.name} - ${filename.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ")}`,
+    src: `/${folder}/${filename}`,
+  }));
 }

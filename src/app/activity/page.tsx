@@ -81,7 +81,7 @@ export default function ActivityPage() {
                 const progress = getActivityProgress(project);
 
                 return (
-                  <article key={project.name} className="card grid gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_15rem] lg:p-8">
+                  <article key={project.slug} className="card grid gap-6 p-6 lg:grid-cols-[minmax(0,1fr)_15rem] lg:p-8">
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="tag-pill">{project.status}</span>
@@ -114,6 +114,12 @@ export default function ActivityPage() {
                       <p className="mt-5 text-xs leading-relaxed text-[var(--muted-2)]">
                         Delivery partner: {project.partner}
                       </p>
+                      <Link
+                        href={`/activity/${project.slug}`}
+                        className="mt-6 inline-flex text-xs font-semibold uppercase tracking-[0.18em] text-[var(--foreground)] underline decoration-[var(--accent)] decoration-2 underline-offset-4"
+                      >
+                        Open project details and photos
+                      </Link>
                     </div>
 
                     <div className="border-t border-[var(--line)] pt-6 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">

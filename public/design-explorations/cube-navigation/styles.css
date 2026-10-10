@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #111312;
+}
+
+.study-shell {
+  min-height: 100svh;
+  position: relative;
+  background: url("../../portfolio/residential/mr-tushar-faridabad/gallery/exterior.png") center / cover;
+}
+
+.study-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 10, 9, 0.2);
+  pointer-events: none;
+}
+
+.cube-stage {
+  position: fixed;
+  z-index: 1;
+  left: clamp(1rem, 3vw, 2.5rem);
+  bottom: clamp(1rem, 3vw, 2.5rem);
+  width: clamp(9rem, 16vw, 13.5rem);
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.cube-stage canvas { display: block; width: 100%; height: 100%; outline: none; }
+
+@media (max-width: 700px) {
+  .cube-stage { width: 8rem; }
+}

@@ -112,3 +112,4 @@ export const portfolioAssetFiles: Record<string, readonly string[]> = {
     "mr-vikram-exterior-16.png"
   ]
 } as const;
+export const activityProjectAssetFiles: Record<string, readonly string[]> = {} as const;
