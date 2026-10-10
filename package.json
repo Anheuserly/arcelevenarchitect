@@ -4,12 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "next:build": "node ./scripts/patch-opennext.js && next build --webpack",
-    "build": "node ./scripts/patch-opennext.js && npm run next:build && opennextjs-cloudflare build --skipNextBuild && node ./scripts/patch-worker.js",
-    "build:pages": "npm run build && node ./scripts/prepare-pages.js",
-    "build:cf:pages": "npm run build:pages",
-    "pages:build": "npm run build:pages",
-    "postinstall": "node ./scripts/patch-opennext.js && node ./scripts/cloudflare-shim.js",
+    "generate:portfolio": "node ./scripts/generate-portfolio-assets.js",
+    "next:build": "next build --webpack",
+    "build": "npm run generate:portfolio && npm run next:build && opennextjs-cloudflare build --skipNextBuild",
+    "preview": "opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "eslint"
   },
@@ -24,7 +23,7 @@
     "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.6",
+    "@opennextjs/cloudflare": "^1.20.10",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -1,15 +1,34 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "arcelevenarchitect",
-  "pages_build_output_dir": ".open-next/assets",
+  "name": "arcelevenarchitect-runtime",
+  "main": ".open-next/worker.js",
   "compatibility_date": "2026-08-13",
   "compatibility_flags": [
-    "nodejs_compat"
+    "nodejs_compat",
+    "global_fetch_strictly_public"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "arcelevenarchitect-runtime"
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "arcelevenarchitect.com/*",
+      "zone_name": "arcelevenarchitect.com"
+    },
+    {
+      "pattern": "www.arcelevenarchitect.com/*",
+      "zone_name": "arcelevenarchitect.com"
+    }
   ],
   "vars": {
-    "DATABASE_URL": "postgresql://sge_datahub:AnheVps2022@v2202501191704311155.ultrasrv.de:5432/amcmep",
     "DATABASE_SSL": "false",
-    "DATA_HUB_INTERNAL_API_KEY": "SGE_live_amcmep_ekTZVFKxhs-VoNqGbTS0RPMB3Vx3WJwi",
     "NEXT_PUBLIC_DATA_HUB_API_URL": "https://storage.amcmep.in/v1",
     "NEXT_PUBLIC_MAIN_WEB_BASE_URL": "https://amcmep.in",
     "NEXT_PUBLIC_SGE_CLOUD_BASE_URL": "https://cloud.sge.amcmep.in",
@@ -18,8 +37,6 @@
     "NEXT_PUBLIC_OPERATIONAL_DATABASE_ID": "amcmep",
     "NEXT_PUBLIC_BUSINESS_ID": "3bc9edf1-68df-4dcf-98be-fc3295651c28",
     "NEXT_PUBLIC_BUSINESS_NAME": "ARC 11 ARCHITECT",
-    "ARC_ELEVEN_BUSINESS_ID": "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687",
-    "JWT_SECRET": "sge-amcmep-platform-super-secret-key-2026-production",
-    "SESSION_SECRET": "sge-amcmep-platform-super-secret-key-2026-production"
+    "ARC_ELEVEN_BUSINESS_ID": "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687"
   }
 }

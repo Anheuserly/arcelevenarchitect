@@ -1,8 +1,7 @@
 import "server-only";
 
-import fs from "node:fs";
-import path from "node:path";
 import { cache } from "react";
+import { portfolioAssetFiles } from "./portfolio-assets.generated";
 
 export type PortfolioCategory = "Residential" | "Commercial";
 
@@ -43,10 +42,6 @@ type ProjectConfig = Omit<
 > & {
   heroFile: string;
 };
-
-const publicDirectory = path.join(process.cwd(), "public");
-
-const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 
 const projectConfigs: ProjectConfig[] = [
   {
@@ -116,7 +111,7 @@ const projectConfigs: ProjectConfig[] = [
 ];
 
 function toPublicSrc(relativePath: string) {
-  return encodeURI(`/${relativePath.split(path.sep).join("/")}`);
+  return encodeURI(`/${relativePath}`);
 }
 
 function normalizeLabel(name: string) {
@@ -130,30 +125,14 @@ function normalizeLabel(name: string) {
 }
 
 function listImages(folder: string, title: string) {
-  const directory = path.join(publicDirectory, folder);
-
-  if (!fs.existsSync(directory)) {
-    return [];
-  }
-
-  return fs
-    .readdirSync(directory, { withFileTypes: true })
-    .filter((entry) => entry.isFile())
-    .filter((entry) => imageExtensions.has(path.extname(entry.name).toLowerCase()))
-    .sort((left, right) =>
-      left.name.localeCompare(right.name, undefined, {
-        numeric: true,
-        sensitivity: "base",
-      }),
-    )
-    .map((entry) => {
-      const label = normalizeLabel(entry.name);
+  return (portfolioAssetFiles[folder] ?? []).map((filename) => {
+      const label = normalizeLabel(filename);
 
       return {
         alt: `${title} - ${label}`,
-        filename: entry.name,
+        filename,
         label,
-        src: toPublicSrc(path.join(folder, entry.name)),
+        src: toPublicSrc(`${folder}/${filename}`),
       } satisfies PortfolioImage;
     });
 }
@@ -162,15 +141,11 @@ function createProject(config: ProjectConfig): PortfolioProject {
   const gallery = listImages(config.folder, config.title);
   const heroAsset = gallery.find((image) => image.filename === config.heroFile) ?? gallery[0];
 
-  if (!heroAsset) {
-    throw new Error(`No images found for portfolio folder: ${config.folder}`);
-  }
-
   return {
     ...config,
     gallery,
-    heroImage: heroAsset.src,
-    heroLabel: heroAsset.label,
+    heroImage: heroAsset?.src ?? "",
+    heroLabel: heroAsset?.label ?? "Gallery pending",
     href: `/work/${config.slug}`,
     imageCount: gallery.length,
   };
