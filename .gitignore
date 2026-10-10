@@ -43,3 +43,15 @@ next-env.d.ts
 # cloudflare / opennext
 .open-next
 .wrangler
+
+# large data folders, spreadsheets, and archives
+/data/
+/data/*
+/EXTRACT SHASHANK DRIVE/
+/assets-archive/
+/portfolio/
+public/data/
+*.xlsx
+*.xls
+*.csv
+

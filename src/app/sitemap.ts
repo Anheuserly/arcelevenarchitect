@@ -6,6 +6,7 @@ import {
   getMoodboardImages,
   getPortfolioProjects,
 } from "@/lib/portfolio";
+import { ARC11_PRODUCTS } from "@/lib/products";
 
 type CareerRole = { slug?: string; status?: string };
 
@@ -58,6 +59,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
       images: [shareImage],
     },
+    {
+      url: `${SITE_URL}/product`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.85,
+      images: [shareImage],
+    },
+    ...ARC11_PRODUCTS.map((prod) => ({
+      url: `${SITE_URL}/product/${prod.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+      images: [absoluteUrl(prod.heroImage)],
+    })),
     {
       url: `${SITE_URL}/work`,
       lastModified: now,

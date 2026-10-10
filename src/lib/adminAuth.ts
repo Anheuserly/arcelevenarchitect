@@ -1,5 +1,4 @@
 import { query } from "@/lib/db";
-import { normalizeRole } from "@/lib/adminRoles";
 
 const textEncoder = new TextEncoder();
 
@@ -9,7 +8,7 @@ function bytesToHex(bytes: Uint8Array): string {
 
 async function hashHex(algorithm: "sha256" | "sha512", input: string): Promise<string> {
   const digest = await crypto.subtle.digest(
-    algorithm.toUpperCase(),
+    algorithm === "sha256" ? "SHA-256" : "SHA-512",
     textEncoder.encode(input)
   );
   return bytesToHex(new Uint8Array(digest));
@@ -39,9 +38,9 @@ export async function authenticateAdmin(email: string, password: string) {
   let rows: any[] = [];
   try {
     rows = await query(
-      `SELECT id, email, password_hash, is_active 
+      `SELECT id, email, password_hash
        FROM auth_accounts 
-       WHERE LOWER(email) = $1 AND is_active = true 
+       WHERE LOWER(email) = $1 AND status = 'active'
        LIMIT 1`,
       [cleanEmail]
     );
@@ -60,19 +59,6 @@ export async function authenticateAdmin(email: string, password: string) {
       adminId: account.id,
       email: account.email,
       name: "Studio Admin",
-      role: "admin",
-    };
-  }
-
-  // Fallback studio admin check for direct access if database account isn't initialized yet
-  const fallbackAdminEmail = (process.env.ADMIN_EMAIL || "admin@arcelevenarchitect.com").toLowerCase().trim();
-  const fallbackAdminPass = process.env.ADMIN_PASSWORD || "ArcEleven@2026";
-
-  if (cleanEmail === fallbackAdminEmail && password === fallbackAdminPass) {
-    return {
-      adminId: "arc11-superadmin",
-      email: cleanEmail,
-      name: "Principal Architect",
       role: "admin",
     };
   }

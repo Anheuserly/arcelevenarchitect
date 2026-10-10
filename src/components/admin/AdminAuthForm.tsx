@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AdminAuthForm() {
+export default function AdminAuthForm({ nextPath = "/admin" }: { nextPath?: string }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +27,7 @@ export default function AdminAuthForm() {
         throw new Error(data.message || "Authentication failed");
       }
 
-      router.push("/admin");
+      router.push(nextPath);
       router.refresh();
     } catch (err) {
       setStatus("error");
