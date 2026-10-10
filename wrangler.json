@@ -2,7 +2,6 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "arcelevenarchitect",
   "pages_build_output_dir": ".open-next/assets",
-  "main": ".open-next/worker.js",
   "compatibility_date": "2026-08-13",
   "compatibility_flags": [
     "nodejs_compat"
@@ -23,9 +22,5 @@
     "ARC_ELEVEN_BUSINESS_ID": "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687",
     "JWT_SECRET": "sge-amcmep-platform-super-secret-key-2026-production",
     "SESSION_SECRET": "sge-amcmep-platform-super-secret-key-2026-production"
-  },
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
   }
 }
