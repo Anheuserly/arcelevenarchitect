@@ -347,8 +347,7 @@ export async function getProducts(): Promise<ArchitecturalProduct[]> {
     const arcRows = rows.filter(
       (r: any) =>
         r.business_name?.toLowerCase().includes("arc") ||
-        r.business_id === "hlvogd5aqa_t59a8tmwaql9wtme" ||
-        r.business_id === "3bc9edf1-68df-4dcf-98be-fc3295651c28"
+        r.business_id === "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687"
     );
 
     if (!arcRows.length) return ARC11_PRODUCTS;
