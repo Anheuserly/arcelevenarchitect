@@ -29,7 +29,7 @@ export const metadata = buildPageMetadata({
 
 async function getArchitecturalPackages() {
   const dataHubUrl = process.env.NEXT_PUBLIC_DATA_HUB_API_URL || "https://storage.amcmep.in/v1";
-  const businessId = process.env.ARC_ELEVEN_BUSINESS_ID || process.env.NEXT_PUBLIC_BUSINESS_ID || "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687";
+  const businessId = process.env.NEXT_PUBLIC_BUSINESS_ID || "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687";
   try {
     const res = await fetch(`${dataHubUrl}/listings`, {
       next: { revalidate: 60 },

@@ -6,9 +6,10 @@
     "dev": "next dev",
     "generate:portfolio": "node ./scripts/generate-portfolio-assets.js",
     "next:build": "next build --webpack",
-    "build": "npm run generate:portfolio && npm run next:build && opennextjs-cloudflare build --skipNextBuild",
-    "preview": "opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare deploy",
+    "build": "npm run generate:portfolio && npm run next:build",
+    "build:cloudflare": "opennextjs-cloudflare build",
+    "preview": "npm run build:cloudflare && opennextjs-cloudflare preview",
+    "deploy": "npm run build:cloudflare && opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "eslint"
   },
