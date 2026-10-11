@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "arcelevenarchitect-runtime",
+  "name": "arcelevenarchitect",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-08-13",
   "compatibility_flags": [
@@ -14,7 +14,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "arcelevenarchitect-runtime"
+      "service": "arcelevenarchitect"
     }
   ],
   "routes": [
