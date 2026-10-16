@@ -15,7 +15,7 @@ export default function PortfolioProjectCard({
   index,
 }: PortfolioProjectCardProps) {
   return (
-    <article id={project.slug} className="group card overflow-hidden">
+    <article id={project.slug} className="portfolio-project-card group card overflow-hidden">
       <Link href={project.href} className="block">
         <div className="relative aspect-[16/11] overflow-hidden bg-[var(--surface)]">
           <img

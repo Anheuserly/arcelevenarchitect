@@ -1,22 +1,44 @@
-import type { ReactNode } from "react";
+import { isValidElement, type ReactNode } from "react";
 
 type AdminRecordCardsProps = {
   items: Array<{
     id: string;
     title: string;
     subtitle?: string;
-    createdAt?: string;
+    createdAt?: unknown;
     status?: string;
-    fields: Array<{ label: string; value: ReactNode }>;
+    fields: Array<{ label: string; value: unknown }>;
   }>;
   emptyText: string;
 };
 
-function renderValue(value: ReactNode) {
+function formatDate(value: Date) {
+  return new Intl.DateTimeFormat("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: "Asia/Kolkata",
+  }).format(value);
+}
+
+function renderValue(value: unknown): ReactNode {
+  if (value instanceof Date) {
+    return formatDate(value);
+  }
   if (typeof value === "string") {
     return value === "-" ? <span className="text-[var(--muted-2)]">Not provided</span> : value;
   }
-  return value;
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  if (isValidElement(value)) {
+    return value;
+  }
+  if (Array.isArray(value)) {
+    return value.map((entry) => renderValue(entry)).reduce<ReactNode[]>((entries, entry, index) => (
+      index === 0 ? [entry] : [...entries, ", ", entry]
+    ), []);
+  }
+  return <span className="text-[var(--muted-2)]">Not provided</span>;
 }
 
 export default function AdminRecordCards({ items, emptyText }: AdminRecordCardsProps) {
@@ -43,7 +65,7 @@ export default function AdminRecordCards({ items, emptyText }: AdminRecordCardsP
               ) : null}
               {item.createdAt ? (
                 <span className="rounded-full border border-[var(--line)] bg-white px-3 py-1 text-xs text-[var(--muted)]">
-                  {item.createdAt}
+                  {renderValue(item.createdAt)}
                 </span>
               ) : null}
             </div>

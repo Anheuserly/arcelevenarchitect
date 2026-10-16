@@ -30,7 +30,7 @@ export async function createDocumentServer({
     const col = (collectionId || "").toLowerCase();
 
     if (col.includes("feedback")) {
-      const rows = await query(
+      const rows = await query<{ id: string }>(
         `INSERT INTO feedback (
           business_id, business_name, customer_name, customer_email, customer_phone,
           rating, message, source, page_url, status, created_at, updated_at
@@ -54,7 +54,7 @@ export async function createDocumentServer({
     if (col.includes("request") || col.includes("contact")) {
       const sourceRecordId = `arc11-inq-${Date.now()}`;
       const requestNumber = `ARC-${Date.now().toString().slice(-6)}`;
-      const rows = await query(
+      const rows = await query<{ id: string }>(
         `INSERT INTO work_requests (
           source_record_id, request_number, request_type, title, description,
           requester_name, requester_phone, requester_email, assigned_business_id,
@@ -79,7 +79,7 @@ export async function createDocumentServer({
     }
 
     if (col.includes("career") || col.includes("application")) {
-      const rows = await query(
+      const rows = await query<{ id: string }>(
         `INSERT INTO career_applications (
           business_id, business_name, applicant_name, phone, email, position,
           experience, location, work_description, portfolio_link, source, status,
@@ -103,7 +103,7 @@ export async function createDocumentServer({
     }
 
     if (col.includes("estimator")) {
-      const rows = await query(
+      const rows = await query<{ id: string }>(
         `INSERT INTO estimator_submissions (
           business_id, business_name, client_name, phone, email, project_type,
           total_area, estimated_budget, currency, configuration, source, status,

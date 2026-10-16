@@ -34,13 +34,19 @@ async function verifyPassword(password: string, storedHash: string): Promise<boo
 export async function authenticateAdmin(email: string, password: string) {
   const cleanEmail = email.toLowerCase().trim();
 
-  // Primary check: PostgreSQL auth_accounts table
+  // Admin access is an explicit platform role, not merely an active user account.
   let rows: any[] = [];
   try {
     rows = await query(
-      `SELECT id, email, password_hash
-       FROM auth_accounts 
-       WHERE LOWER(email) = $1 AND status = 'active'
+      `SELECT auth.id, auth.email, auth.password_hash, roles.code AS role
+       FROM auth_accounts auth
+       INNER JOIN platform_admin_memberships membership
+         ON membership.auth_account_id = auth.id::text
+         AND membership.user_id = auth.user_id
+         AND membership.status = 'active'
+         AND (membership.expires_at IS NULL OR membership.expires_at > now())
+       INNER JOIN platform_roles roles ON roles.id = membership.role_id
+       WHERE auth.email = $1 AND auth.status = 'active'
        LIMIT 1`,
       [cleanEmail]
     );
@@ -59,7 +65,7 @@ export async function authenticateAdmin(email: string, password: string) {
       adminId: account.id,
       email: account.email,
       name: "Studio Admin",
-      role: "admin",
+      role: account.role,
     };
   }
 

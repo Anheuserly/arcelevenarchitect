@@ -13,12 +13,14 @@ type AdminShellProps = {
 const navItems = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/requests", label: "Requests" },
+  { href: "/admin/meta-inbox", label: "Meta Inbox" },
   { href: "/admin/feedback", label: "Feedback" },
   { href: "/admin/applications", label: "Applications" },
   { href: "/admin/projects", label: "Projects" },
   { href: "/admin/team", label: "Team" },
   { href: "/admin/estimator", label: "Estimator" },
   { href: "/admin/journal", label: "Journal" },
+  { href: "/admin/theme", label: "Website Theme" },
   { href: "/admin/settings", label: "Settings" },
 ];
 
@@ -31,10 +33,10 @@ export default function AdminShell({
   email,
 }: AdminShellProps) {
   return (
-    <main className="min-h-screen bg-[var(--background)]">
+    <main className="admin-app-shell min-h-screen bg-[var(--background)]">
       <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(141,133,115,0.25),transparent_42%),radial-gradient(circle_at_bottom_left,rgba(0,0,0,0.05),transparent_50%)]" />
 
-      <aside className="hidden border-r border-[var(--line)] bg-[linear-gradient(180deg,#f9f8f3_0%,#f5f5f2_100%)] lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:flex lg:w-[300px] lg:flex-col">
+      <aside className="admin-sidebar hidden border-r border-[var(--line)] bg-[linear-gradient(180deg,#f9f8f3_0%,#f5f5f2_100%)] lg:flex lg:w-[300px] lg:flex-col">
         <div className="border-b border-[var(--line)] px-7 pb-6 pt-7">
           <p className="kicker">Admin</p>
           <h1 className="mt-3 text-2xl">Arc 11 Panel</h1>
@@ -52,7 +54,7 @@ export default function AdminShell({
         </div>
       </aside>
 
-      <section className="relative z-10 px-4 py-6 md:px-6 md:py-8 lg:ml-[300px] lg:px-9 lg:py-10">
+      <section className="admin-main-scroll relative z-10 px-4 py-6 md:px-6 md:py-8 lg:ml-[300px] lg:px-9 lg:py-10">
         <div className="mx-auto w-full max-w-[1320px] space-y-6">
           <div className="card p-6 md:p-8">
             <p className="kicker">Control Center</p>

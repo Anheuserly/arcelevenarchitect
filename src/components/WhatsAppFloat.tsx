@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const message =
   "Hello Arc 11 Architect, I would like to discuss a project. Location: ____ , Project type: ____ , Budget: ____ , Timeline: ____.";
@@ -9,6 +12,12 @@ const whatsappUrl =
   "&type=phone_number&app_absent=0";
 
 export default function WhatsAppFloat() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <div className="fixed bottom-6 right-6 z-50" data-whatsapp-float="true">
       <Link

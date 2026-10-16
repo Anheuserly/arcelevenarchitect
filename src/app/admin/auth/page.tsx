@@ -24,7 +24,7 @@ export default async function AdminAuthPage() {
           <p className="kicker">Admin</p>
           <h1 className="mt-4 text-3xl">Control panel access</h1>
           <p className="mt-3 text-sm">
-            Authenticate with your admin account from the `admin` collection.
+            Sign in with an account that has an active Arc 11 administrative role.
           </p>
           <div className="mt-8">
             <AdminAuthForm />

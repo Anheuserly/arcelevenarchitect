@@ -17,22 +17,25 @@ type Slide = {
 
 export default function WorkSlider({ slides }: { slides: Slide[] }) {
   const [active, setActive] = useState(0);
+  const [motionStyle] = useState(() =>
+    typeof document === "undefined" ? "restrained" : document.documentElement.dataset.motionStyle || "restrained"
+  );
   const total = slides.length;
   const advanceSlide = useEffectEvent(() => {
     setActive((prev) => (prev + 1) % total);
   });
 
   useEffect(() => {
-    if (total <= 1) {
+    if (total <= 1 || motionStyle === "still") {
       return;
     }
 
     const timer = setInterval(() => {
       advanceSlide();
-    }, 5000);
+    }, motionStyle === "gallery" ? 6500 : 5000);
 
     return () => clearInterval(timer);
-  }, [total]);
+  }, [motionStyle, total]);
 
   const current = slides[active];
 

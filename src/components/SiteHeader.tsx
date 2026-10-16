@@ -1,21 +1,33 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import StartProjectTrigger from "@/components/StartProjectTrigger";
 
-const navItems = [
+const primaryNavItems = [
   { label: "Studio", href: "/studio" },
   { label: "Services", href: "/services" },
   { label: "Product", href: "/product" },
   { label: "Activity", href: "/activity" },
   { label: "Work", href: "/work" },
-  { label: "Estimator", href: "/estimator" },
   { label: "Careers", href: "/careers" },
   { label: "Contact", href: "/contact" },
 ];
+
+const mobileNavItems = [
+  ...primaryNavItems.slice(0, 5),
+  { label: "Estimator", href: "/estimator" },
+  ...primaryNavItems.slice(5),
+];
+
+const brandMarkStyle = {
+  backgroundColor: "#fff",
+  backgroundImage: 'url("/brand/proportion-study.png")',
+  backgroundPosition: "center top",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover",
+};
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -27,7 +39,7 @@ export default function SiteHeader() {
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   const menuOpen = openMenuPath === pathname;
 
-  const activeIndex = navItems.findIndex(
+  const activeIndex = primaryNavItems.findIndex(
     (item) => pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href))
   );
 
@@ -115,14 +127,12 @@ export default function SiteHeader() {
       <div
         className={`site-header-bar mx-auto max-w-7xl ${isScrolled ? "site-header-bar-scrolled" : ""}`}
       >
-        <Link href="/" className="hidden items-center gap-4 md:flex">
-          <div className="overflow-hidden rounded-[18px] border border-[var(--line-strong)] bg-white p-2 shadow-[var(--shadow-soft)]">
-            <Image
-              src="/brand/proportion-study.png"
-              alt="Arc 11 Architect"
-              width={44}
-              height={44}
-              className="h-10 w-10 object-contain"
+        <Link href="/" className="hidden items-center gap-4 lg:flex">
+          <div className="flex h-[3.75rem] w-[3.75rem] shrink-0 items-center justify-center overflow-hidden rounded-[18px] border border-[var(--line-strong)] bg-white p-1.5 shadow-[var(--shadow-soft)]">
+            <span
+              className="site-brand-mark h-[3.25rem] w-[3.25rem]"
+              aria-hidden="true"
+              style={brandMarkStyle}
             />
           </div>
           <div>
@@ -135,14 +145,12 @@ export default function SiteHeader() {
           </div>
         </Link>
 
-        <Link href="/" className="flex min-w-0 max-w-[15rem] flex-1 items-center gap-2.5 md:hidden">
-          <div className="overflow-hidden rounded-[14px] border border-[var(--line-strong)] bg-white p-1.5 shadow-[var(--shadow-soft)]">
-            <Image
-              src="/brand/proportion-study.png"
-              alt="Arc 11 Architect"
-              width={36}
-              height={36}
-              className="h-8.5 w-8.5 object-contain"
+        <Link href="/" className="flex min-w-0 max-w-[15rem] flex-1 items-center gap-2.5 lg:hidden">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-[14px] border border-[var(--line-strong)] bg-white p-1 shadow-[var(--shadow-soft)]">
+            <span
+              className="site-brand-mark h-9.5 w-9.5"
+              aria-hidden="true"
+              style={brandMarkStyle}
             />
           </div>
           <div className="min-w-0">
@@ -155,7 +163,7 @@ export default function SiteHeader() {
           </div>
         </Link>
 
-        <div className="hidden md:flex">
+        <div className="hidden lg:flex">
           <nav ref={navRef} className="site-nav-shell" aria-label="Primary">
             <span
               className="site-nav-indicator"
@@ -166,7 +174,7 @@ export default function SiteHeader() {
                 width: indicator.width,
               }}
             />
-            {navItems.map((item, index) => {
+            {primaryNavItems.map((item, index) => {
               const isActive = index === activeIndex;
 
               return (
@@ -190,7 +198,7 @@ export default function SiteHeader() {
         </div>
 
         <div className="site-header-actions">
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               type="button"
               onClick={() => {
@@ -208,7 +216,10 @@ export default function SiteHeader() {
               </span>
             </button>
           </div>
-          <div className="hidden md:flex">
+          <div className="hidden lg:flex">
+            <Link href="/estimator" className="site-estimator-link">
+              Estimator
+            </Link>
             <StartProjectTrigger className="button-secondary" source="header_desktop">
               Start a Project
             </StartProjectTrigger>
@@ -223,7 +234,7 @@ export default function SiteHeader() {
       </div>
 
       {menuOpen ? (
-        <div className="mx-auto mt-3 max-w-7xl px-2 md:hidden">
+        <div className="mx-auto mt-3 max-w-7xl px-2 lg:hidden">
           <div className="site-mobile-panel-shell">
             <div className="site-mobile-panel" id="site-mobile-panel">
               <div className="site-mobile-panel-header">
@@ -233,7 +244,7 @@ export default function SiteHeader() {
                 </p>
               </div>
               <nav className="site-mobile-list">
-                {navItems.map((item) => {
+                {mobileNavItems.map((item) => {
                   const isActive =
                     pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
 

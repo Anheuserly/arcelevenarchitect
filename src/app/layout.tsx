@@ -17,6 +17,7 @@ import {
 import { Playfair_Display, Roboto } from "next/font/google";
 import SeoJsonLd from "@/components/SeoJsonLd";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import { getSiteAppearance, toCssVariables, toThemeDataAttributes } from "@/lib/siteTheme";
 import "./globals.css";
 
 const bodyFont = Roboto({
@@ -97,14 +98,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteAppearance = await getSiteAppearance();
   return (
-    <html lang="en">
-      <body className={`${bodyFont.variable} ${displayFont.variable} antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      data-theme={siteAppearance.theme}
+      data-scroll-behavior="smooth"
+      {...toThemeDataAttributes(siteAppearance.customization)}
+      style={toCssVariables(siteAppearance.customization)}
+    >
+      <body
+        suppressHydrationWarning
+        className={`${bodyFont.variable} ${displayFont.variable} antialiased`}
+      >
         <StartProjectModalProvider>
           <AnalyticsScripts />
           <MediaProtection />

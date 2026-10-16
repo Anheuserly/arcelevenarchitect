@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { notifyBusinessOwnerOfWorkRequest } from "@/lib/workRequestSync";
 
 const BUSINESS_ID = process.env.NEXT_PUBLIC_BUSINESS_ID || "6ab5e485-5b76-4ceb-9f3f-bc61f9bd4687";
 const BUSINESS_NAME = process.env.NEXT_PUBLIC_BUSINESS_NAME || "ARC 11 ARCHITECT";
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     const sourceRecordId = `arc11-wr-${Date.now()}`;
     const requestNumber = `ARC-${Math.floor(100000 + Math.random() * 900000)}`;
 
-    const rows = await query(
+    const rows = await query<{ id: string; requester_email?: string | null; [key: string]: unknown }>(
       `INSERT INTO work_requests (
         source_record_id, request_number, request_type, title, description,
         requester_name, requester_phone, requester_email, assigned_business_id,
@@ -44,10 +45,13 @@ export async function POST(request: NextRequest) {
       [sourceRecordId, requestNumber, requestType, title, description, name, phone, email, BUSINESS_ID, BUSINESS_NAME, address, amount, JSON.stringify(metadata)]
     );
 
+    const created = rows[0];
+    notifyBusinessOwnerOfWorkRequest(created);
+
     return NextResponse.json({
       success: true,
       message: "Architectural commission work request successfully registered.",
-      request: rows[0],
+      request: created,
     });
   } catch (error: any) {
     console.error("Inquiry submission error:", error);

@@ -18,7 +18,7 @@ export default async function AdminSettingsPage() {
   return (
     <AdminShell
       heading="Settings & Access"
-      subheading="Environment checks and role permissions for this admin session."
+      subheading="Role permissions and secure service configuration for this admin session."
       role={role}
       name={session.name}
       email={session.email}
@@ -26,7 +26,7 @@ export default async function AdminSettingsPage() {
       <div className="grid gap-6 md:grid-cols-2">
         <div className="card p-6">
           <h3 className="text-2xl">Role</h3>
-          <p className="mt-3 text-sm text-[var(--muted)]">Current role detected from admin table.</p>
+          <p className="mt-3 text-sm text-[var(--muted)]">Current role resolved from the platform admin membership.</p>
           <p className="mt-4 text-xl">{role}</p>
         </div>
         <div className="card p-6">
@@ -42,12 +42,9 @@ export default async function AdminSettingsPage() {
       <div className="card p-6">
         <h3 className="text-2xl">Runtime Notes</h3>
         <ul className="mt-4 space-y-2 text-sm text-[var(--muted)]">
-          <li>Ensure `APPWRITE_API_KEY` is present in environment.</li>
-          <li>Ensure `NEXT_PUBLIC_APPWRITE_DATABASE_ID` points to active database.</li>
-          <li>
-            Ensure collection IDs are correct for requests, feedback, careers, projects, team,
-            and journal.
-          </li>
+          <li>Admin authentication uses PostgreSQL `auth_accounts` plus `platform_admin_memberships`.</li>
+          <li>Admin access requires an active platform role and a valid signed session cookie.</li>
+          <li>Public website theme is stored in PostgreSQL `website_theme_settings` per business.</li>
         </ul>
       </div>
 
