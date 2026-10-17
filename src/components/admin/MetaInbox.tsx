@@ -20,6 +20,18 @@ function channelLabel(channel: MetaChannel) {
   return channel === "whatsapp" ? "WhatsApp" : "Instagram";
 }
 
+function MediaAttachment({ url, mimeType, name }: { url: string; mimeType: string | null; name: string | null }) {
+  const kind = mimeType?.split("/")[0] || "";
+  if (kind === "image") {
+    // The image is served through the authenticated admin media route.
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={url} alt={name || "Message attachment"} className="mt-3 max-h-80 w-auto rounded-[6px] border border-black/10 object-contain" />;
+  }
+  if (kind === "video") return <video controls preload="metadata" className="mt-3 max-h-80 w-full rounded-[6px]" src={url} />;
+  if (kind === "audio") return <audio controls preload="metadata" className="mt-3 w-full" src={url} />;
+  return <a href={url} target="_blank" rel="noreferrer" className="mt-3 inline-flex rounded-[6px] border border-current/30 px-3 py-2 text-xs uppercase tracking-[0.12em]">{name || "Open attachment"}</a>;
+}
+
 export default function MetaInbox({ conversations }: MetaInboxProps) {
   const router = useRouter();
   const [channel, setChannel] = useState<MetaChannel | "all">("all");
@@ -90,16 +102,26 @@ export default function MetaInbox({ conversations }: MetaInboxProps) {
     setNotice("");
     startTransition(async () => {
       try {
-        const response = await fetch("/api/admin/meta-inbox", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "sync_instagram" }),
-        });
-        const result = await response.json() as { message?: string; conversations?: number; messages?: number };
-        if (!response.ok) throw new Error(result.message || "Instagram sync could not be completed.");
+        let totalConversations = 0;
+        let totalMessages = 0;
+        let hasMore = true;
+        let batches = 0;
+        while (hasMore && batches < 25) {
+          const response = await fetch("/api/admin/meta-inbox", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "sync_instagram" }),
+          });
+          const result = await response.json() as { message?: string; conversations?: number; messages?: number; hasMore?: boolean };
+          if (!response.ok) throw new Error(result.message || "Instagram sync could not be completed.");
+          totalConversations += result.conversations || 0;
+          totalMessages += result.messages || 0;
+          hasMore = Boolean(result.hasMore);
+          batches += 1;
+        }
         setChannel("instagram");
         setSelectedId("");
-        setNotice(`Instagram synced: ${result.conversations || 0} chats checked, ${result.messages || 0} new messages imported.`);
+        setNotice(`Instagram synced: ${totalConversations} chats checked, ${totalMessages} new messages imported.${hasMore ? " More history remains; run sync again to continue." : ""}`);
         router.refresh();
       } catch (error) {
         setNotice(error instanceof Error ? error.message : "Instagram sync could not be completed.");
@@ -195,6 +217,7 @@ export default function MetaInbox({ conversations }: MetaInboxProps) {
                 {selected.messages.map((item) => (
                   <div key={item.id} className={`max-w-[85%] rounded-[8px] border p-4 ${item.direction === "outbound" ? "ml-auto border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)]" : "border-[var(--line)] bg-white text-[var(--foreground)]"}`}>
                     <p className="whitespace-pre-wrap text-sm leading-6">{item.body}</p>
+                    {item.mediaUrl ? <MediaAttachment url={item.mediaUrl} mimeType={item.mediaMimeType} name={item.mediaName} /> : null}
                     <p className={`mt-2 text-[11px] uppercase tracking-[0.14em] ${item.direction === "outbound" ? "text-white/65" : "text-[var(--muted-2)]"}`}>
                       {formatTime(item.createdAt)}{item.direction === "outbound" ? ` · ${item.deliveryStatus}` : ""}
                     </p>
