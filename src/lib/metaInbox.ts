@@ -298,25 +298,26 @@ async function claimWhatsAppAutoReply(conversationId: string) {
   return Boolean(rows[0]);
 }
 
-function getWhatsAppAutoReply(message: string) {
-  const normalized = message.trim().toLowerCase();
-  if (/^(hi|hello|hey|menu|start)[!. ]*$/.test(normalized)) {
-    return [
-      "Welcome to ARC 11 Architect.",
-      "We can help with architecture, interiors, 3D visualisation, renovation, and turnkey execution.",
-      "Reply with the project type, site location, approximate area, and your intended timeline. Our studio team will guide the next step.",
-    ].join("\n\n");
-  }
-  if (/\b(1|architecture|planning|residential|commercial)\b/.test(normalized)) {
-    return "Thank you. Please share the site location, plot or built-up area, project type, and target timeline so our architectural team can review the right scope.";
-  }
-  if (/\b(2|interior|renovation|remodel)\b/.test(normalized)) {
-    return "Thank you. Please share the location, rooms or area involved, current site condition, preferred style, and timeline for the interior review.";
-  }
-  if (/\b(3|3d|visuali[sz]ation|render)\b/.test(normalized)) {
-    return "For 3D visualisation, please share the project type, available plan or dimensions, preferred style references, and expected delivery timeline.";
-  }
-  return "Thank you for contacting ARC 11 Architect. Please share your project type, site location, approximate area, and intended timeline. Our team will review the details and respond shortly.";
+function getWhatsAppAutoReply() {
+  return [
+    "Welcome to ARC 11 Architect.",
+    "We can help with architecture, interiors, 3D visualisation, renovation, and turnkey execution.",
+    "Reply with the project type, site location, approximate area, and your intended timeline. Our studio team will guide the next step.",
+  ].join("\n\n");
+}
+
+function isWhatsAppAutomationGreeting(message: string) {
+  return /^(hi|hello|hey|menu|start)[!. ]*$/i.test(message.trim());
+}
+
+function isFreshWhatsAppMessage(timestamp: unknown) {
+  const seconds = Number(timestamp);
+  if (!Number.isFinite(seconds) || seconds <= 0) return false;
+
+  // Meta timestamps are Unix seconds. Stale deliveries are still recorded in the inbox,
+  // but must never wake the assistant and send an unexpected reply.
+  const ageInSeconds = Math.floor(Date.now() / 1000) - seconds;
+  return ageInSeconds >= -60 && ageInSeconds <= 120;
 }
 
 async function deliverWhatsAppMessage(input: {
@@ -459,7 +460,7 @@ async function processWhatsAppPayload(payload: Record<string, unknown>) {
       const contact = Array.isArray(value.contacts) ? value.contacts[0] as { profile?: { name?: string } } | undefined : undefined;
       for (const message of Array.isArray(value.messages) ? value.messages : []) {
         if (!message || typeof message !== "object") continue;
-        const item = message as { id?: string; from?: string; type?: string; text?: { body?: string }; interactive?: { button_reply?: { title?: string }; list_reply?: { title?: string } }; button?: { text?: string } };
+        const item = message as { id?: string; from?: string; timestamp?: string; type?: string; text?: { body?: string }; interactive?: { button_reply?: { title?: string }; list_reply?: { title?: string } }; button?: { text?: string } };
         if (!item.from) continue;
         const type = item.type || "text";
         const body = type === "text" ? normalizeMessageBody(item.text?.body, "[Text message]")
@@ -471,14 +472,18 @@ async function processWhatsAppPayload(payload: Record<string, unknown>) {
         if (
           inbound.inserted
           && !inbound.isHumanActive
-          && process.env.WHATSAPP_AUTOMATION_ENABLED !== "false"
+          // Automation is deliberately opt-in. It stays silent unless explicitly enabled
+          // in the production environment, and only greets a new, current conversation.
+          && process.env.WHATSAPP_AUTOMATION_ENABLED === "true"
+          && isWhatsAppAutomationGreeting(body)
+          && isFreshWhatsAppMessage(item.timestamp)
           && await claimWhatsAppAutoReply(inbound.conversationId)
         ) {
           try {
             await deliverWhatsAppMessage({
               conversationId: inbound.conversationId,
               phoneNumber: item.from,
-              body: getWhatsAppAutoReply(body),
+              body: getWhatsAppAutoReply(),
               senderType: "automation",
             });
           } catch (error) {
