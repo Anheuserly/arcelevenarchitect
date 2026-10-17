@@ -24,6 +24,7 @@ export default async function AdminMetaInboxPage() {
       role={role}
       name={session.name}
       email={session.email}
+      immersive
     >
       <MetaInbox {...data} />
     </AdminShell>

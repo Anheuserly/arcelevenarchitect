@@ -8,6 +8,7 @@ type AdminShellProps = {
   role: string;
   name: string;
   email: string;
+  immersive?: boolean;
 };
 
 const navItems = [
@@ -31,6 +32,7 @@ export default function AdminShell({
   role,
   name,
   email,
+  immersive = false,
 }: AdminShellProps) {
   return (
     <main className="admin-app-shell min-h-screen bg-[var(--background)]">
@@ -54,9 +56,9 @@ export default function AdminShell({
         </div>
       </aside>
 
-      <section className="admin-main-scroll relative z-10 px-4 py-6 md:px-6 md:py-8 lg:ml-[300px] lg:px-9 lg:py-10">
-        <div className="mx-auto w-full max-w-[1320px] space-y-6">
-          <div className="card p-6 md:p-8">
+      <section className={`admin-main-scroll relative z-10 px-4 py-6 md:px-6 md:py-8 lg:ml-[300px] lg:px-9 lg:py-10 ${immersive ? "lg:overflow-hidden" : ""}`}>
+        <div className={`mx-auto w-full max-w-[1320px] ${immersive ? "lg:h-full" : "space-y-6"}`}>
+          {!immersive ? <div className="card p-6 md:p-8">
             <p className="kicker">Control Center</p>
             <h2 className="mt-3 text-3xl md:text-4xl">{heading}</h2>
             <p className="mt-3 max-w-3xl text-sm text-[var(--muted)] md:text-base">{subheading}</p>
@@ -64,7 +66,14 @@ export default function AdminShell({
               <AdminSidebarNav items={navItems} />
               <AdminLogoutButton />
             </div>
-          </div>
+          </div> : <div className="mb-5 lg:hidden">
+            <p className="kicker">Control Center</p>
+            <h2 className="mt-3 text-3xl">{heading}</h2>
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <AdminSidebarNav items={navItems} />
+              <AdminLogoutButton />
+            </div>
+          </div>}
           {children}
         </div>
       </section>
