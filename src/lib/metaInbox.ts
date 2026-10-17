@@ -281,6 +281,23 @@ async function createInboundMessage(input: {
   return { conversationId, inserted, isHumanActive: conversationRows[0].is_human_active };
 }
 
+async function claimWhatsAppAutoReply(conversationId: string) {
+  const rows = await query<{ id: string }>(
+    `UPDATE arc11_meta_conversations
+     SET metadata = jsonb_set(metadata, '{last_automated_reply_at}', to_jsonb(now()::text), true),
+         updated_at = now()
+     WHERE id = $1
+       AND is_human_active = false
+       AND (
+         NOT (metadata ? 'last_automated_reply_at')
+         OR (metadata->>'last_automated_reply_at')::timestamptz < now() - interval '24 hours'
+       )
+     RETURNING id`,
+    [conversationId]
+  );
+  return Boolean(rows[0]);
+}
+
 function getWhatsAppAutoReply(message: string) {
   const normalized = message.trim().toLowerCase();
   if (/^(hi|hello|hey|menu|start)[!. ]*$/.test(normalized)) {
@@ -451,7 +468,12 @@ async function processWhatsAppPayload(payload: Record<string, unknown>) {
           channel: "whatsapp", providerUserId: item.from, providerMessageId: item.id || null,
           displayName: contact?.profile?.name || null, phoneNumber: item.from, body, messageType: type, rawPayload: item,
         });
-        if (inbound.inserted && !inbound.isHumanActive && process.env.WHATSAPP_AUTOMATION_ENABLED !== "false") {
+        if (
+          inbound.inserted
+          && !inbound.isHumanActive
+          && process.env.WHATSAPP_AUTOMATION_ENABLED !== "false"
+          && await claimWhatsAppAutoReply(inbound.conversationId)
+        ) {
           try {
             await deliverWhatsAppMessage({
               conversationId: inbound.conversationId,
