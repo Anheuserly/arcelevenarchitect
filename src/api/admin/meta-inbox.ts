@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/adminSession";
 import { getPermissions, normalizeRole } from "@/lib/adminRoles";
-import { getMetaInboxData, sendWhatsAppReply, setHumanTakeover, startWhatsAppChat } from "@/lib/metaInbox";
+import { getMetaInboxData, sendWhatsAppReply, setHumanTakeover, startWhatsAppChat, syncInstagramInbox } from "@/lib/metaInbox";
 
 async function requireInboxAccess() {
   const session = await getAdminSession();
@@ -36,6 +36,10 @@ export async function POST(request: NextRequest) {
         message: String(body.initialMessage || ""),
         language: String(body.templateLanguage || "en_US"),
       });
+      return NextResponse.json({ ok: true, ...result });
+    }
+    if (body.action === "sync_instagram") {
+      const result = await syncInstagramInbox();
       return NextResponse.json({ ok: true, ...result });
     }
     const conversationId = String(body.conversationId || "").trim();

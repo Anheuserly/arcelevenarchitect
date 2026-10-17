@@ -86,6 +86,27 @@ export default function MetaInbox({ conversations }: MetaInboxProps) {
     });
   }
 
+  function syncInstagram() {
+    setNotice("");
+    startTransition(async () => {
+      try {
+        const response = await fetch("/api/admin/meta-inbox", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "sync_instagram" }),
+        });
+        const result = await response.json() as { message?: string; conversations?: number; messages?: number };
+        if (!response.ok) throw new Error(result.message || "Instagram sync could not be completed.");
+        setChannel("instagram");
+        setSelectedId("");
+        setNotice(`Instagram synced: ${result.conversations || 0} chats checked, ${result.messages || 0} new messages imported.`);
+        router.refresh();
+      } catch (error) {
+        setNotice(error instanceof Error ? error.message : "Instagram sync could not be completed.");
+      }
+    });
+  }
+
   return (
     <>
       <section className="card flex min-h-[680px] flex-col overflow-hidden lg:h-full lg:min-h-0">
@@ -112,6 +133,14 @@ export default function MetaInbox({ conversations }: MetaInboxProps) {
                 className="rounded-full border border-[var(--line)] bg-white px-4 py-2 text-xs uppercase tracking-[0.16em] text-[var(--muted)] transition hover:border-[var(--foreground)]"
               >
                 Refresh inbox
+              </button>
+              <button
+                type="button"
+                onClick={syncInstagram}
+                disabled={isPending}
+                className="rounded-full border border-[var(--line)] bg-white px-4 py-2 text-xs uppercase tracking-[0.16em] text-[var(--muted)] transition hover:border-[var(--foreground)] disabled:opacity-50"
+              >
+                Sync Instagram
               </button>
               <button type="button" onClick={() => setShowStartChat(true)} className="rounded-full bg-[var(--accent)] px-4 py-2 text-xs uppercase tracking-[0.16em] text-white">
                 New chat
@@ -208,7 +237,7 @@ export default function MetaInbox({ conversations }: MetaInboxProps) {
             <label className="grid gap-2 text-sm">WhatsApp number<input value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)} placeholder="+91 81714 86963" inputMode="tel" className="rounded-[8px] border border-[var(--line)] bg-white px-4 py-3 outline-none focus:border-[var(--foreground)]" /></label>
             <div className="grid gap-2 text-sm md:col-span-2"><span>Delivery mode</span><div className="flex rounded-[8px] border border-[var(--line)] bg-white p-1 text-xs"><button type="button" onClick={() => setStartMode("message")} className={`flex-1 rounded-[5px] px-3 py-2 ${startMode === "message" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--muted)]"}`}>Active reply window</button><button type="button" onClick={() => setStartMode("template")} className={`flex-1 rounded-[5px] px-3 py-2 ${startMode === "template" ? "bg-[var(--foreground)] text-[var(--background)]" : "text-[var(--muted)]"}`}>Approved template</button></div></div>
             {startMode === "message" ? <label className="grid gap-2 text-sm md:col-span-2">Message<textarea value={initialMessage} onChange={(event) => setInitialMessage(event.target.value)} maxLength={4096} className="min-h-28 rounded-[8px] border border-[var(--line)] bg-white px-4 py-3 outline-none focus:border-[var(--foreground)]" /></label> : <label className="grid gap-2 text-sm md:col-span-2">Approved Meta template<input value={templateName} onChange={(event) => setTemplateName(event.target.value)} placeholder="arc11_consultation_followup" className="rounded-[8px] border border-[var(--line)] bg-white px-4 py-3 outline-none focus:border-[var(--foreground)]" /></label>}
-            <p className="text-xs leading-5 text-[var(--muted)] md:col-span-2">A normal message is available only during Meta's 24-hour reply window. Use an approved template to begin a new conversation.</p>
+            <p className="text-xs leading-5 text-[var(--muted)] md:col-span-2">A normal message is available only during Meta&apos;s 24-hour reply window. Use an approved template to begin a new conversation.</p>
             <button type="button" onClick={startWhatsAppChat} disabled={isPending || !phoneNumber.trim() || (startMode === "message" ? !initialMessage.trim() : !templateName.trim())} className="justify-self-end rounded-full bg-[var(--accent)] px-5 py-3 text-xs uppercase tracking-[0.16em] text-white disabled:opacity-50 md:col-span-2">{startMode === "message" ? "Send message" : "Send template"}</button>
           </div>
         </div>

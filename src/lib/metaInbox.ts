@@ -48,7 +48,9 @@ function metaEnv(channel: MetaChannel) {
     };
   }
 
-  const accountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID || "";
+  // INSTAGRAM_ACCOUNT_ID is accepted for the temporary operator account while
+  // INSTAGRAM_BUSINESS_ACCOUNT_ID remains the production Arc 11 convention.
+  const accountId = process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID || process.env.INSTAGRAM_ACCOUNT_ID || "";
   return {
     accountId,
     phoneNumberId: "",
@@ -76,8 +78,8 @@ export function verifyMetaSignature(rawBody: string, signatureHeader: string | n
 
 export function validateWebhookChallenge(channel: MetaChannel, token: string | null) {
   const expected = channel === "instagram"
-    ? process.env.INSTAGRAM_VERIFY_TOKEN || process.env.WHATSAPP_VERIFY_TOKEN
-    : process.env.WHATSAPP_VERIFY_TOKEN;
+    ? process.env.INSTAGRAM_VERIFY_TOKEN || process.env.META_WEBHOOK_VERIFY_TOKEN || process.env.WHATSAPP_VERIFY_TOKEN
+    : process.env.WHATSAPP_VERIFY_TOKEN || process.env.META_WEBHOOK_VERIFY_TOKEN;
   if (!expected || !token || token.length !== expected.length) return false;
   return crypto.timingSafeEqual(Buffer.from(token), Buffer.from(expected));
 }
@@ -279,6 +281,137 @@ async function createInboundMessage(input: {
     );
   }
   return { conversationId, inserted, isHumanActive: conversationRows[0].is_human_active };
+}
+
+type InstagramGraphParticipant = { id?: string; username?: string };
+type InstagramGraphMessage = {
+  id?: string;
+  from?: InstagramGraphParticipant;
+  message?: string;
+  created_time?: string;
+  attachments?: { data?: unknown[] };
+};
+type InstagramGraphConversation = {
+  id?: string;
+  participants?: { data?: InstagramGraphParticipant[] };
+  messages?: { data?: InstagramGraphMessage[] };
+};
+
+function instagramAccessToken() {
+  return process.env.INSTAGRAM_GRAPH_ACCESS_TOKEN || process.env.META_INSTAGRAM_ACCESS_TOKEN || process.env.META_ACCESS_TOKEN || "";
+}
+
+async function getInstagramConversations() {
+  const accountId = metaEnv("instagram").accountId;
+  const accessToken = instagramAccessToken();
+  if (!accountId || !accessToken) throw new Error("Instagram Graph credentials are not configured.");
+
+  const conversations: InstagramGraphConversation[] = [];
+  let after = "";
+  // A sync fetches every available thread page, while keeping a sensible upper bound
+  // for a single admin request in the Worker runtime.
+  for (let page = 0; page < 25; page += 1) {
+    const url = new URL(`https://graph.facebook.com/${GRAPH_API_VERSION}/${encodeURIComponent(accountId)}/conversations`);
+    url.searchParams.set("fields", "id,participants{id,username},messages.limit(100){id,from,message,created_time,attachments}");
+    url.searchParams.set("limit", "100");
+    url.searchParams.set("access_token", accessToken);
+    if (after) url.searchParams.set("after", after);
+
+    const response = await fetch(url);
+    const payload = await response.json().catch(() => ({})) as {
+      data?: InstagramGraphConversation[];
+      paging?: { cursors?: { after?: string } };
+      error?: { message?: string };
+    };
+    if (!response.ok) throw new Error(payload.error?.message || "Instagram conversation sync was rejected by Meta.");
+    const items = Array.isArray(payload.data) ? payload.data : [];
+    conversations.push(...items);
+    const nextAfter = payload.paging?.cursors?.after || "";
+    if (!items.length || !nextAfter || nextAfter === after) break;
+    after = nextAfter;
+  }
+  return conversations;
+}
+
+async function importInstagramMessage(input: {
+  contact: Required<Pick<InstagramGraphParticipant, "id">> & InstagramGraphParticipant;
+  threadId: string;
+  message: InstagramGraphMessage;
+  connectedAccountId: string;
+}) {
+  const sender = input.message.from;
+  if (!input.message.id || !sender?.id) return false;
+  const createdAt = input.message.created_time && !Number.isNaN(new Date(input.message.created_time).getTime())
+    ? new Date(input.message.created_time).toISOString()
+    : new Date().toISOString();
+  const isInbound = sender.id !== input.connectedAccountId;
+  const contactRows = await query<{ id: string }>(
+    `INSERT INTO arc11_meta_contacts (business_id, channel, provider_user_id, display_name, username, profile_data)
+     VALUES ($1, 'instagram', $2, $3, $4, $5::jsonb)
+     ON CONFLICT (business_id, channel, provider_user_id) DO UPDATE SET
+       display_name = COALESCE(NULLIF(EXCLUDED.display_name, ''), arc11_meta_contacts.display_name),
+       username = COALESCE(EXCLUDED.username, arc11_meta_contacts.username), updated_at = now()
+     RETURNING id`,
+    [BUSINESS_ID, input.contact.id, input.contact.username || "Instagram contact", input.contact.username || null, JSON.stringify({ providerThreadId: input.threadId })]
+  );
+  const channelAccountId = await getChannelAccountId("instagram");
+  const conversationRows = await query<{ id: string }>(
+    `INSERT INTO arc11_meta_conversations (business_id, channel, channel_account_id, contact_id, provider_thread_id, last_message_at)
+     VALUES ($1, 'instagram', $2, $3, $4, $5::timestamptz)
+     ON CONFLICT (business_id, channel, contact_id) DO UPDATE SET
+       provider_thread_id = EXCLUDED.provider_thread_id,
+       last_message_at = GREATEST(COALESCE(arc11_meta_conversations.last_message_at, '-infinity'::timestamptz), EXCLUDED.last_message_at),
+       updated_at = now()
+     RETURNING id`,
+    [BUSINESS_ID, channelAccountId, contactRows[0].id, input.threadId, createdAt]
+  );
+  const body = normalizeMessageBody(input.message.message, input.message.attachments?.data?.length ? "[Instagram media]" : "[Instagram message]");
+  const messageRows = await query<{ id: string }>(
+    `INSERT INTO arc11_meta_messages (
+       business_id, conversation_id, channel, provider_message_id, direction, sender_type,
+       message_type, body, delivery_status, raw_payload, created_at
+     ) VALUES ($1, $2, 'instagram', $3, $4, $5, $6, $7, $8, $9::jsonb, $10::timestamptz)
+     ON CONFLICT (channel, provider_message_id) WHERE provider_message_id IS NOT NULL DO NOTHING
+     RETURNING id`,
+    [
+      BUSINESS_ID,
+      conversationRows[0].id,
+      input.message.id,
+      isInbound ? "inbound" : "outbound",
+      isInbound ? "customer" : "human_agent",
+      input.message.attachments?.data?.length ? "media" : "text",
+      body,
+      isInbound ? "received" : "sent",
+      JSON.stringify(input.message),
+      createdAt,
+    ]
+  );
+  return Boolean(messageRows[0]);
+}
+
+export async function syncInstagramInbox() {
+  await ensureMetaChannelAccounts();
+  const connectedAccountId = metaEnv("instagram").accountId;
+  if (!connectedAccountId) throw new Error("Instagram account is not configured.");
+  const conversations = await getInstagramConversations();
+  let importedMessages = 0;
+  let importedConversations = 0;
+
+  for (const conversation of conversations) {
+    if (!conversation.id) continue;
+    const contact = conversation.participants?.data?.find((participant) => participant.id && participant.id !== connectedAccountId);
+    if (!contact?.id) continue;
+    importedConversations += 1;
+    // Meta returns the newest message first. The database query is ordered by
+    // timestamp, so importing in either order preserves the true conversation flow.
+    for (const message of conversation.messages?.data || []) {
+      if (await importInstagramMessage({ contact: { ...contact, id: contact.id }, threadId: conversation.id, message, connectedAccountId })) {
+        importedMessages += 1;
+      }
+    }
+  }
+
+  return { conversations: importedConversations, messages: importedMessages };
 }
 
 async function claimWhatsAppAutoReply(conversationId: string) {
@@ -523,6 +656,10 @@ export async function processMetaWebhook(channel: MetaChannel, payload: Record<s
       }
       await processWhatsAppPayload(payload);
     } else {
+      if (payload.object !== "instagram") {
+        await markWebhookEvent(event.id, "ignored");
+        return { ignored: true };
+      }
       await processInstagramPayload(payload);
     }
     await markWebhookEvent(event.id, "processed");
